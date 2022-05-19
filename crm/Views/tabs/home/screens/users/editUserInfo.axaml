@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="crm.Views.tabs.home.screens.users.editUserInfo">
+	<Grid
+		RowDefinitions="Auto, *">
+		<TextBlock
+			Text="Основная информация"
+			Grid.Row="0"
+			FontSize="16"
+			FontWeight="Bold"/>
+		<StackPanel
+			Margin="0, 30, 0, 0"
+			Grid.Row="1"
+			Orientation="Vertical">
+			<Border>
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock
+						Grid.Column="0">						
+						ФИО
+					</TextBlock>
+					<TextBlock
+						Grid.Column="1">
+						Коновалов АЛексей Сергеевич
+					</TextBlock>
+				</Grid>
+			</Border>			
+			<StackPanel.Styles>
+				<Style Selector="StackPanel Grid">
+					<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				</Style>
+			</StackPanel.Styles>
+			<StackPanel.Styles>
+				<Style Selector="StackPanel Border">
+					<Setter Property="Height" Value="50"/>
+					<Setter Property="Width" Value="600"/>
+					<Setter Property="HorizontalAlignment" Value="Left"/>
+					<Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
+					<Setter Property="BorderBrush" Value="#FFE5E5E5"/>					
+				</Style>
+			</StackPanel.Styles>
+			<StackPanel.Styles>
+				<Style Selector="StackPanel TextBlock">
+					<Setter Property="VerticalAlignment" Value="Center"/>
+					<Setter Property="FontSize" Value="12"/>
+					<Setter Property="FontWeight" Value="Bold"/>
+				</Style>
+			</StackPanel.Styles>
+		</StackPanel>
+	</Grid>
+</UserControl>

@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:crm.ViewModels.dialogs"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="200"
+        x:Class="crm.Views.dialogs.tagsDlg" 		
+		ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"		
+        Height="200" Width="450" WindowStartupLocation="CenterOwner">
+	<Design.DataContext>
+		<vm:tagsDlgVM/>
+	</Design.DataContext>
+	<Window.Styles>
+		<!--<StyleInclude Source="/Styles/TabStyles.axaml"/>-->
+		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
+		<StyleInclude Source="/Styles/UserListStyle.axaml"/>
+	</Window.Styles>
+	<Grid RowDefinitions="Auto, *, Auto">
+		<TextBlock Grid.Row="0" Text="{Binding Title}" Margin="10" FontWeight="Bold"/>
+		<Grid
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			HorizontalAlignment="Center">
+			<ItemsControl Items="{Binding Tags}">				
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.DataTemplates>
+					<DataTemplate>
+						<Border
+							CornerRadius="2"							
+							Background="{DynamicResource DialogPrimaryElementBackground}"
+							Height="28"
+							Width="120"
+							Margin="2"
+							BorderThickness="1">
+							<Grid
+								ColumnDefinitions="20, *"
+								Margin="4">
+								<Svg
+									Path="/Assets/svgs/common/tag.svg"
+									VerticalAlignment="Center">
+								</Svg>
+								<TextBlock
+									Text="{Binding}"
+									Grid.Column="1"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center">
+								</TextBlock>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.DataTemplates>
+			</ItemsControl>
+		</Grid>
+		<Button
+			Command="{Binding okCmd}"
+			Grid.Row="2"
+			Classes="Button Dialog"
+			HorizontalAlignment="Right"
+			Width="100"
+			Margin="10">
+			OK
+		</Button>
+	</Grid>
+</Window>

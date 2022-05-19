@@ -1,0 +1,88 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+			<Button Classes="Button Top">				
+			</Button>
+        </Border>
+    </Design.PreviewWith>
+	<Styles.Resources>
+		<Color x:Key="SeparatorColor">#FFE5E5E5</Color>
+		<Color x:Key="ScreenControlsBorderBrush">#FF464646</Color>
+	</Styles.Resources>
+	<!--TextBlock-->
+	<Style Selector="TextBlock">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Foreground" Value="#FF464646"/>
+	</Style>	
+	<!--Buttons-->	
+	<Style Selector="Button.Top">
+		<Style.Resources>
+			<Color x:Key="ButtonBackgroundPressed">#FFFFFFFF</Color>
+			<Color x:Key="ButtonBackgroundPointerOver">#FFF5F5F5</Color>
+			<Color x:Key="ButtonBorderBrushPointerOver">#FF464646</Color>
+			<Color x:Key="ButtonBorderBrushPressed">#FF464646</Color>			
+		</Style.Resources>
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="Height" Value="50"/>
+		<Setter Property="Width" Value="200"/>
+		<Setter Property="Margin" Value="0, 20, 30, 20"/>		
+	</Style>
+	<!--Pages-->
+	<Style Selector="Border.Page">
+		<Setter Property="Margin" Value="5, 0, 5, 0"/>
+		<Setter Property="MinWidth" Value="24"/>
+		<Setter Property="MinHeight" Value="24"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="BorderThickness" Value="1"/>
+	</Style>
+	<Style Selector="Border.Page TextBlock">
+		<Setter Property="Margin" Value="5, 0, 5, 0"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
+	
+	<Style Selector="Button.PageLeft">
+		<Style.Resources>
+			<Color x:Key="ButtonBackgroundPressed">#FFFFFFFF</Color>
+			<Color x:Key="ButtonBackgroundPointerOver">#FFF5F5F5</Color>
+			<Color x:Key="ButtonBorderBrushPointerOver">Transparent</Color>
+			<Color x:Key="ButtonBorderBrushPressed">#00000000</Color>
+		</Style.Resources>
+		<Setter Property="Width" Value="24"/>		
+		<Setter Property="Height" Value="24"/>
+		<Setter Property="Background" Value="#FFF2F2F2"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>		
+	</Style>
+	<Style Selector="Button.PageLeft:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="BorderBrush" Value="Transparent"/>
+	</Style>
+	<Style Selector="Button.PageLeft Svg">
+		<Setter Property="Path" Value="/Assets/svgs/screens/arrow_left.svg"/>
+	</Style>
+
+	<Style Selector="Button.PageRight">
+		<Style.Resources>
+			<Color x:Key="ButtonBackgroundPressed">#FFFFFFFF</Color>
+			<Color x:Key="ButtonBackgroundPointerOver">#FFF5F5F5</Color>
+			<Color x:Key="ButtonBorderBrushPointerOver">Transparent</Color>
+			<Color x:Key="ButtonBorderBrushPressed">#00000000</Color>
+		</Style.Resources>
+		<Setter Property="Width" Value="24"/>
+		<Setter Property="Height" Value="24"/>		
+		<Setter Property="Background" Value="#FFF2F2F2"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+	</Style>
+	<Style Selector="Button.PageRight:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="BorderBrush" Value="Transparent"/>
+	</Style>
+	<Style Selector="Button.PageRight Svg">
+		<Setter Property="Path" Value="/Assets/svgs/screens/arrow_right.svg"/>
+	</Style>
+	
+	
+</Styles>
