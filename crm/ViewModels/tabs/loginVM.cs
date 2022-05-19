@@ -1,4 +1,4 @@
-﻿#define ALLOK
+﻿//#define ALLOK
 
 using Avalonia.Data;
 using crm.Models.api.server;

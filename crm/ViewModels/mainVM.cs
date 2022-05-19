@@ -1,16 +1,20 @@
 using Avalonia.Controls;
 using crm.Models.api.server;
+using crm.Models.api.socket;
 using crm.Models.appcontext;
 using crm.Models.user;
 using crm.ViewModels.tabs;
 using crm.ViewModels.tabs.tabservice;
 using ReactiveUI;
+using SocketIOClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace crm.ViewModels
 {
@@ -56,6 +60,8 @@ namespace crm.ViewModels
             #region dependencies
             ApplicationContext AppContext = new ApplicationContext();
             AppContext.ServerApi = new ServerApi("http://185.46.9.229:4000");
+            AppContext.SocketApi = new SocketApi("http://185.46.9.229:4000");
+            
             AppContext.TabService = this;            
             #endregion
 
@@ -107,9 +113,13 @@ namespace crm.ViewModels
             #region loginTab
             loginTab = new loginVM(AppContext);
             //loginTab.CloseTabEvent += CloseTab;
-            loginTab.onLoginDone += (user) => {
+            loginTab.onLoginDone += async (user) => {
 
-                AppContext.User = user;                
+                AppContext.User = user;
+                
+                await AppContext.SocketApi.Connect(user.Token);
+                AppContext.SocketApi.RequestConnectedUsers();
+                
                 homeVM homeTab = new homeVM(AppContext);                
                 homeTab.CloseTabEvent += (tab) =>
                 {
