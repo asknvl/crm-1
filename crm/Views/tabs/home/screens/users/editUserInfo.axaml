@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="crm.Views.tabs.home.screens.users.editUserInfo">
+	<UserControl.Styles>
+		<StyleInclude Source="/Styles/DataValidationErros.axaml"/>
+		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
+	</UserControl.Styles>
 	<Grid
 		RowDefinitions="Auto, *">
 		<TextBlock
@@ -15,39 +19,69 @@
 			Margin="0, 30, 0, 0"
 			Grid.Row="1"
 			Orientation="Vertical">
-			<Border>
+			<Border				
+				Classes="Border Separator">
 				<Grid ColumnDefinitions="1*, 1*">
 					<TextBlock
-						Grid.Column="0">						
+						Classes="TextBlock Param"
+						Grid.Column="0">	
 						ФИО
 					</TextBlock>
-					<TextBlock
-						Grid.Column="1">
-						Коновалов АЛексей Сергеевич
+					<TextBox						
+						Text="{Binding FullName}"
+						Grid.Column="1">												
+					</TextBox>
+				</Grid>			
+			</Border>
+			<Border Classes="Border Separator">
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock					
+						Classes="TextBlock Param"
+						Grid.Column="0">	
+						E-mail
 					</TextBlock>
-				</Grid>
-			</Border>			
+					<TextBox			
+						Text="{Binding Email}"
+						Grid.Column="1">
+					</TextBox>
+				</Grid>				
+			</Border>
 			<StackPanel.Styles>
-				<Style Selector="StackPanel Grid">
-					<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				<Style Selector="Grid">
+					<Setter Property="HorizontalAlignment" Value="Stretch"/>					
 				</Style>
-			</StackPanel.Styles>
-			<StackPanel.Styles>
-				<Style Selector="StackPanel Border">
+				<Style Selector="Border.Separator">
 					<Setter Property="Height" Value="50"/>
-					<Setter Property="Width" Value="600"/>
+					<Setter Property="Width" Value="600"/>					
 					<Setter Property="HorizontalAlignment" Value="Left"/>
 					<Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
-					<Setter Property="BorderBrush" Value="#FFE5E5E5"/>					
+					<Setter Property="BorderBrush" Value="#FFE5E5E5"/>
 				</Style>
-			</StackPanel.Styles>
-			<StackPanel.Styles>
-				<Style Selector="StackPanel TextBlock">
+				<Style Selector="TextBlock.Param">
 					<Setter Property="VerticalAlignment" Value="Center"/>
 					<Setter Property="FontSize" Value="12"/>
 					<Setter Property="FontWeight" Value="Bold"/>
 				</Style>
-			</StackPanel.Styles>
+				<Style Selector="TextBox">		
+					<Setter Property="VerticalAlignment" Value="Center"/>					
+					<Setter Property="VerticalContentAlignment" Value="Center"/>				
+					<Setter Property="FontSize" Value="12"/>
+					<Setter Property="Padding" Value="6"/>
+					<Setter Property="FontWeight" Value="Bold"/>
+				</Style>
+				<Style Selector="TextBox:not(:pointerover) /template/ Border#PART_BorderElement">
+					<Setter Property="BorderThickness" Value="10"/>
+					<Setter Property="BorderBrush" Value="Transparent"/>
+				</Style>
+				<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+					<Setter Property="BorderThickness" Value="10"/>
+					<Setter Property="BorderBrush" Value="Transparent"/>
+				</Style>
+				<Style Selector="TextBox DataValidationErrors">
+					<Setter Property="Template" Value="{DynamicResource TooltipDataValidationContentTemplate}"/>
+					<Setter Property="ErrorTemplate" Value="{DynamicResource TooltipDataValidationErrorTemplate}" />
+				</Style>				
+			</StackPanel.Styles>		
 		</StackPanel>
 	</Grid>
 </UserControl>

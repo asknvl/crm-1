@@ -15,6 +15,11 @@
 		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="Foreground" Value="#FF464646"/>
 	</Style>	
+	<!--TextBox-->
+	<Style Selector="TextBox">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Foreground" Value="#FF464646"/>
+	</Style>
 	<!--Buttons-->	
 	<Style Selector="Button.Top">
 		<Style.Resources>

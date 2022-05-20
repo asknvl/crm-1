@@ -4,6 +4,7 @@ using crm.Models.api.socket;
 using crm.Models.appcontext;
 using crm.Models.user;
 using crm.ViewModels.tabs;
+using crm.ViewModels.tabs.home.screens.users;
 using crm.ViewModels.tabs.tabservice;
 using ReactiveUI;
 using SocketIOClient;
@@ -30,9 +31,7 @@ namespace crm.ViewModels
         #endregion
 
         #region properties      
-        public ObservableCollection<Tab> TabsList { get; set; } = new ObservableCollection<Tab>()
-        {            
-        };
+        public ObservableCollection<Tab> TabsList { get; set; } = new ObservableCollection<Tab>();
 
         object? content;
         public object? Content
@@ -46,13 +45,41 @@ namespace crm.ViewModels
             get => windowState; 
             set => this.RaiseAndSetIfChanged(ref windowState, value); 
         }
+
+        BaseUser user;
+        BaseUser User
+        {
+            get => user;
+            set => this.RaiseAndSetIfChanged(ref user, value);
+
+        }
+
+        bool isUserMenuVisible;
+        public bool IsUserMenuVisible
+        {
+            get => isUserMenuVisible;
+            set => this.RaiseAndSetIfChanged(ref isUserMenuVisible, value);
+        }
+
+        bool isProfileMenuOpen;
+        public bool IsProfileMenuOpen
+        {
+            get => isProfileMenuOpen;
+            set
+            {
+                isProfileMenuOpen = value;
+                this.RaisePropertyChanged("IsProfileMenuOpen");
+            }
+        }
         #endregion
 
         #region commands
         public ReactiveCommand<Unit, Unit> closeCmd { get; }
         public ReactiveCommand<Unit, Unit> maximizeCmd { get; }
-        public ReactiveCommand<Unit, Unit> minimizeCmd { get; }
-        public ReactiveCommand<Unit, Unit> homeCmd { get; }
+        public ReactiveCommand<Unit, Unit> minimizeCmd { get; }        
+        public ReactiveCommand<Unit, Unit> profileMenuOpenCmd { get; }
+        public ReactiveCommand<Unit, Unit> editUserCmd { get; }
+        public ReactiveCommand<Unit, Unit> quitCmd { get; }
         #endregion
         public mainVM()
         {
@@ -69,8 +96,7 @@ namespace crm.ViewModels
             WindowState = WindowState.Normal;
             #endregion
 
-            #region commands
-            closeCmd = ReactiveCommand.Create(() => { });
+            #region commands           
             maximizeCmd = ReactiveCommand.Create(() => {
                 if (WindowState == WindowState.Maximized)
                     WindowState = WindowState.Normal;
@@ -80,23 +106,30 @@ namespace crm.ViewModels
                 else
                 if (WindowState == WindowState.Minimized)
                     WindowState = WindowState.Maximized;
-
-
             });
+
             closeCmd = ReactiveCommand.Create(() => {
                 OnCloseRequest();
             });
+
             minimizeCmd = ReactiveCommand.Create(() => {
                 WindowState = WindowState.Normal;
                 WindowState = WindowState.Minimized;
             });
-            homeCmd = ReactiveCommand.Create(() => {
-                //ShowTab(homeTab);
-            });
-            #endregion
 
-            #region homeTab
-            //homeTab = new homeVM(api, new User() { FullName = "Ко Ал Се" }, this);
+            profileMenuOpenCmd = ReactiveCommand.Create(() => {
+                IsProfileMenuOpen = true;
+            });
+
+            editUserCmd = ReactiveCommand.Create(() =>
+            {
+                AppContext.TabService.ShowTab(new ScreenTab(new UserEdit(AppContext, AppContext.User)));
+            });
+
+            quitCmd = ReactiveCommand.Create(() =>
+            {
+                //разлогин для юзера OnDeactivate для всех экранов
+            });
             #endregion
 
             #region registrationTab
@@ -111,14 +144,16 @@ namespace crm.ViewModels
             #endregion
 
             #region loginTab
-            loginTab = new loginVM(AppContext);
-            //loginTab.CloseTabEvent += CloseTab;
+            loginTab = new loginVM(AppContext);            
             loginTab.onLoginDone += async (user) => {
+
+                User = user;
+                IsUserMenuVisible = true;
 
                 AppContext.User = user;
                 
-                await AppContext.SocketApi.Connect(user.Token);
-                AppContext.SocketApi.RequestConnectedUsers();
+                //await AppContext.SocketApi.Connect(user.Token);
+                //AppContext.SocketApi.RequestConnectedUsers();
                 
                 homeVM homeTab = new homeVM(AppContext);                
                 homeTab.CloseTabEvent += (tab) =>

@@ -35,32 +35,12 @@ namespace crm.ViewModels.tabs
         //    get => screen;
         //    set => this.RaiseAndSetIfChanged(ref screen, value);
         //}
-
-        BaseUser user;
-        BaseUser User
-        {
-            get => user;            
-            set => this.RaiseAndSetIfChanged(ref user, value);                         
-            
-        }
-
         string initialLetter;
         public string InitialLetter
         {
             get => initialLetter;
             set => this.RaiseAndSetIfChanged(ref initialLetter, value);
         }
-
-        bool isProfileMenuOpen;
-        public bool IsProfileMenuOpen
-        {
-            get => isProfileMenuOpen;
-            set {
-                isProfileMenuOpen = value;
-                this.RaisePropertyChanged("IsProfileMenuOpen");
-            }
-        }
-
         #endregion
 
         #region commands        
@@ -70,32 +50,13 @@ namespace crm.ViewModels.tabs
         #endregion
 
         public homeVM() : base()
-        {
-            User = new TestUser();
+        {            
             Menu = new admin_menu();
         }
 
         public homeVM(ApplicationContext appcontext) : base()
-        {
+       {
 
-
-            #region commands
-            profileMenuOpenCmd = ReactiveCommand.Create(() => {                        
-                IsProfileMenuOpen = true;
-            });
-
-            editUserCmd = ReactiveCommand.Create(() =>
-            {
-                appcontext.TabService.ShowTab(new ScreenTab(new UserEdit(appcontext, appcontext.User)));
-            });
-
-            quitCmd = ReactiveCommand.Create(() =>
-            {
-                OnCloseTab();
-            });
-            #endregion
-
-            User = appcontext.User;                        
             Title = "Домой";
 
             Menu = new admin_menu(appcontext);
