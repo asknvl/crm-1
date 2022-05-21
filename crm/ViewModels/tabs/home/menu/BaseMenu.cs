@@ -106,7 +106,6 @@ namespace crm.ViewModels.tabs.home.menu
 
         public BaseMenu(ApplicationContext context)
         {
-
             IsMenuExpanded = true;
             MenuExpandedEvent += Menu_ExpandedEvent;
         }

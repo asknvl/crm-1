@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace crm.Models.api.server
 {
-    public abstract class BaseServerApi
+    public abstract class BaseServerApi : IServerApi
     {
 
         #region const

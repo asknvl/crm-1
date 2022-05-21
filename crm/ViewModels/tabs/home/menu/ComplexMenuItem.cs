@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,10 +22,11 @@ namespace crm.ViewModels.tabs.home.menu
             get => isItemExpanded;
             set
             {
+                if (!Screens[0].IsChecked && !IsItemExpanded)
+                    Screens[0].IsChecked = true;
                 this.RaiseAndSetIfChanged(ref isItemExpanded, value);
                 if (value && NeedInvoke)
                     IsItemExpandedEvent?.Invoke();
-
             }
         }
 
@@ -36,15 +38,22 @@ namespace crm.ViewModels.tabs.home.menu
         }
         #endregion
 
+        #region commands
+        public ReactiveCommand<Unit, Unit> expanderClickCmd { get; }
+        #endregion
+
         public ComplexMenuItem()
         {
             ExpanderBackground = Brushes.Transparent;
+            expanderClickCmd = ReactiveCommand.Create(() => {            
+            
+            });
         }
 
         #region public
         public void Expand()
-        {
-            NeedInvoke = false;
+        {            
+            NeedInvoke = false;          
             IsItemExpanded = true;
             NeedInvoke = true;
         }

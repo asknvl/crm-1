@@ -1,5 +1,6 @@
 ﻿using Avalonia.Threading;
 using crm.Models.api.server;
+using crm.Models.api.socket;
 using crm.Models.appcontext;
 using crm.Models.user;
 using crm.ViewModels.dialogs;
@@ -28,14 +29,19 @@ namespace crm.ViewModels.tabs.home.screens
         #region vars
         CancellationTokenSource cts;
         IWindowService ws = WindowService.getInstance();
-        BaseServerApi api;
+        IServerApi srvApi;
+        ISocketApi sckApi;
         string token;
         #endregion
 
         #region properties       
         public override string Title => "Список сотрудников";
 
-        public ObservableCollection<UserListItem> Users { get; set; } = new ObservableCollection<UserListItem>();
+        ObservableCollection<UserListItem> users = new();
+        public ObservableCollection<UserListItem> Users {
+            get => users;
+            set => this.RaiseAndSetIfChanged(ref users, value);
+        }
         
         int page = 1;
         public int SelectedPage
@@ -102,8 +108,9 @@ namespace crm.ViewModels.tabs.home.screens
         public UserList(ApplicationContext context) : base(context)
         {
 
-            api = AppContext.ServerApi;
+            srvApi = AppContext.ServerApi;
             token = AppContext.User.Token;
+            sckApi = AppContext.SocketApi;
             SelectedPage = 1;
 
             #region commands
@@ -143,29 +150,32 @@ namespace crm.ViewModels.tabs.home.screens
         #region public
         #endregion
 
-        #region helpers
+        #region helpers        
         async Task updatePageInfo(int page, int pagesize)
         {
             await Task.Run(async () =>
             {
-                List<User> users;
+                List<User> users;                
 
                 await Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     Users.Clear();
                 });
 
-                (users, TotalPages) = await api.GetUsers(page - 1, pagesize, token);
+                (users, TotalPages) = await srvApi.GetUsers(page - 1, pagesize, token);
 
                 foreach (var user in users)
                 {
                     var tmp = new UserListItem();
                     tmp.Copy(user);
+
                     await Dispatcher.UIThread.InvokeAsync(() =>
                     {
-                        Users.Add(tmp);
+                        Users.Add(tmp);                    
                     });
                 }
+
+                sckApi.RequestConnectedUsers();
             });
 
             //Users.Add(new UserItemTest());
@@ -182,44 +192,14 @@ namespace crm.ViewModels.tabs.home.screens
         #region override
         public override async void OnActivate()
         {       
-            base.OnActivate();
-
+            base.OnActivate();            
             cts = new CancellationTokenSource();
+
+            sckApi.ReceivedConnectedUsersEvent += SckApi_ReceivedConnectedUsersEvent;
 
             try
             {
-                await updatePageInfo(SelectedPage, PageSize);
-
-                await Task.Run(async () =>
-                {
-                    while (true)
-                    {
-                        List<User> users = new List<User>();
-                        (users, TotalPages) = await api.GetUsers(SelectedPage - 1, PageSize, token);
-
-                        foreach (var user in users)
-                        {
-                            var found = Users.FirstOrDefault(u => u.Id == user.Id);
-                            if (found != null)
-                            {
-                                found.Copy(user);
-                            }
-                            else
-                            {
-                                var tmp = new UserListItem();
-                                tmp.Copy(user);
-                                await Dispatcher.UIThread.InvokeAsync(() =>
-                                {
-                                    Users.Add(tmp);
-                                });
-                            }
-                        }
-
-                        cts?.Token.ThrowIfCancellationRequested();
-                        Thread.Sleep(update_period);
-                    }
-                });
-
+                await updatePageInfo(SelectedPage, PageSize);               
             }
             catch (OperationCanceledException ex)
             {                
@@ -229,10 +209,24 @@ namespace crm.ViewModels.tabs.home.screens
                 ws.ShowDialog(new errMsgVM(ex.Message));
             }
         }
+
         public override void OnDeactivate()
         {
+            sckApi.ReceivedConnectedUsersEvent -= SckApi_ReceivedConnectedUsersEvent;
             cts?.Cancel();
             base.OnDeactivate();
+        }
+        #endregion
+
+        #region callbacks
+        private void SckApi_ReceivedConnectedUsersEvent(List<usersOnlineDTO> connectedUsers)
+        {
+            foreach (var connected in connectedUsers)
+            {
+                var user = Users.FirstOrDefault(u => u.Id.Equals(connected.user_id));
+                if (user != null)
+                    user.Status = connected.connected;
+            }
         }
         #endregion
     }

@@ -152,7 +152,7 @@ namespace crm.ViewModels
 
                 AppContext.User = user;
                 
-                //await AppContext.SocketApi.Connect(user.Token);
+                await AppContext.SocketApi.Connect(user.Token);
                 //AppContext.SocketApi.RequestConnectedUsers();
                 
                 homeVM homeTab = new homeVM(AppContext);                

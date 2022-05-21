@@ -13,7 +13,7 @@ namespace crm.Models.appcontext
 {
     public class ApplicationContext
     {
-        public BaseServerApi ServerApi { get; set; }
+        public IServerApi ServerApi { get; set; }
         public ISocketApi SocketApi { get; set; }        
         public BaseUser User { get; set; }
         public ITabService TabService { get; set; }

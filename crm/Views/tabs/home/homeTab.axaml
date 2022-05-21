@@ -91,6 +91,7 @@
 												<ToggleButton
 													x:Name="PART_Expand"
 													Classes="ToggleButton Collapse"
+													Command="{Binding expanderClickCmd}"
 													IsChecked="{Binding IsItemExpanded}"
 													Padding="4"
 													HorizontalAlignment="Stretch">

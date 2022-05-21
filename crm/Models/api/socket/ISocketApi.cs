@@ -10,8 +10,9 @@ namespace crm.Models.api.socket
     {
         Task Connect(string token);
         void RequestConnectedUsers();
+        Task Disconnect();
 
-        public event Action<List<string>> ReceivedConnectedUsersEvent;
+        public event Action<List<usersOnlineDTO>> ReceivedConnectedUsersEvent;
     }
 
     public class SocketApiException : Exception

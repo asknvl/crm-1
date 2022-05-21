@@ -1,4 +1,6 @@
-﻿using SocketIOClient;
+﻿using Newtonsoft.Json;
+using SocketIOClient;
+using SocketIOClient.JsonSerializer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +17,7 @@ namespace crm.Models.api.socket
         SocketIO client;
         bool isConnected;
 
-        public event Action<List<string>> ReceivedConnectedUsersEvent;
+        public event Action<List<usersOnlineDTO>> ReceivedConnectedUsersEvent;
         #endregion
 
         public BaseSocketApi(string url)
@@ -24,21 +26,47 @@ namespace crm.Models.api.socket
         }
 
         #region public
-        public async Task Connect(string token)
+        public virtual async Task Connect(string token)
         {
             client = new SocketIO(uri, new SocketIOOptions()
             {
                 ExtraHeaders = new Dictionary<string, string>() {
-                    { "Authorization", $"Bearer {token}" }
-                }
-
+                    { "Authorization", $"Bearer {token}" }                    
+                }               
             });
+            //var jsonSerializer = client.JsonSerializer as SystemTextJsonSerializer;
             client.OnConnected += Client_OnConnected;
             client.OnError += Client_OnError;
             client.OnDisconnected += Client_OnDisconnected;
+
+            client.On("connected-users", (response) => {
+                usersOnlineDTO[] users = response.GetValue<usersOnlineDTO[]>(1);
+                ReceivedConnectedUsersEvent?.Invoke(users.ToList());
+            });
+
+            client.On("connected", (response) => {
+                usersOnlineDTO[] users = response.GetValue<usersOnlineDTO[]>(1);
+                ReceivedConnectedUsersEvent?.Invoke(users.ToList());
+            });
+
             await client.ConnectAsync();            
         }
 
+        public async Task Disconnect()
+        {
+            await client.DisconnectAsync();
+        }
+
+        public virtual void RequestConnectedUsers()
+        {
+            if (!isConnected)
+                throw new SocketApiException("Соединение с сервером не установлено (sock)");
+
+            client.EmitAsync("get-connected-users");
+        }
+        #endregion
+
+        #region callbacks
         private void Client_OnDisconnected(object? sender, string e)
         {
             isConnected = false;
@@ -50,20 +78,7 @@ namespace crm.Models.api.socket
 
         private void Client_OnConnected(object? sender, EventArgs e)
         {
-            isConnected = true;
-            client.On("connected-users", (arg) => {
-                Debug.WriteLine(arg);
-            });
-            client.On("", (arg) => { });
-        }
-
-        public void RequestConnectedUsers()
-        {
-            //if (!isConnected)
-            //    throw new SocketApiException("Соединение с сервером не установлено (sock)");
-
-            client.EmitAsync("get-connected-users");
-
+            isConnected = true;                    
         }
         #endregion
     }
