@@ -7,6 +7,7 @@ using crm.Models.autocompletions;
 using crm.Models.user;
 using crm.Models.validators;
 using crm.ViewModels.dialogs;
+using crm.ViewModels.tabs.tabservice;
 using crm.WS;
 using ReactiveUI;
 using System;
@@ -74,7 +75,7 @@ namespace crm.ViewModels.tabs
         public ReactiveCommand<Unit, Unit> forgotCmd { get; }
         #endregion
 
-        public loginVM(ApplicationContext appcontext) : base()
+        public loginVM(ITabService ts, ApplicationContext appcontext) : base(ts)
         {
             Title = "Вход";
 

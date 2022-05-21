@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using crm.ViewModels.tabs.tabservice;
+using ReactiveUI;
 using System;
 using System.Linq;
 using System.Reactive;
@@ -7,6 +8,9 @@ namespace crm.ViewModels.tabs
 {
     public abstract class Tab : ViewModelBase
     {
+        #region vars
+        ITabService tabService;
+        #endregion
         #region properties       
         string title;
         public string Title
@@ -28,10 +32,12 @@ namespace crm.ViewModels.tabs
         public ReactiveCommand<Unit, Unit> closeCmd { get; }
         #endregion
 
-        public Tab()
-        {           
+        public Tab(ITabService ts)
+        {
+            tabService = ts;            
+
             closeCmd = ReactiveCommand.Create(() => {
-                CloseTabRequest?.Invoke(this);
+                Close();
             });
         }
 
@@ -42,29 +48,28 @@ namespace crm.ViewModels.tabs
         }
         protected virtual void CloseRequest()
         {
-            CloseTabRequest?.Invoke(this);
+            TabClosedEvent?.Invoke(this);
         }
         #endregion
 
         #region public                
         public virtual void Show()
-        {
-            ShowTabRequest?.Invoke(this);
+        {            
+            tabService.ShowTab(this);
         }
 
         public virtual void Close()
-        {
-            CloseTabRequest?.Invoke(this);
+        {         
+            tabService.CloseTab(this);
         }
         #endregion
 
-        #region abstract        
+        #region virtual
         public virtual void Clear() { }
         #endregion
 
         #region callbacks
-        public event Action<Tab> CloseTabRequest;
-        public event Action<Tab> ShowTabRequest;
+        public event Action<Tab> TabClosedEvent;        
         #endregion
     }
 }

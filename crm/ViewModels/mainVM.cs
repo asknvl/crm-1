@@ -122,30 +122,31 @@ namespace crm.ViewModels
             });
 
             editUserCmd = ReactiveCommand.Create(() =>
-            {
-                AppContext.TabService.ShowTab(new ScreenTab(new UserEdit(AppContext, AppContext.User)));
+            {                
+                Tab edit = new ScreenTab(this, new UserEdit(AppContext, AppContext.User));
+                edit.Show();
+                IsProfileMenuOpen = false;
             });
 
             quitCmd = ReactiveCommand.Create(() =>
             {
-
                 //разлогин для юзера OnDeactivate для всех экранов
+                IsProfileMenuOpen = false;
             });
             #endregion
 
             #region registrationTab
-            registrationTab = new registrationVM(AppContext);
+            registrationTab = new registrationVM(this, AppContext);
             registrationTab.onUserRegistered += () => 
             {
-                CloseTab(registrationTab);
+                registrationTab.Close();
                 loginTab.Clear();
-                ShowTab(loginTab);
-            };
-            //registrationTab.CloseTabEvent += CloseTab;
+                loginTab.Show();
+            };            
             #endregion
 
             #region loginTab
-            loginTab = new loginVM(AppContext);            
+            loginTab = new loginVM(this, AppContext);            
             loginTab.onLoginDone += async (user) => {
 
                 User = user;
@@ -153,27 +154,26 @@ namespace crm.ViewModels
 
                 AppContext.User = user;
                 
-                await AppContext.SocketApi.Connect(user.Token);
-                //AppContext.SocketApi.RequestConnectedUsers();
+                AppContext.SocketApi.Connect(user.Token);
                 
-                homeVM homeTab = new homeVM(AppContext);                
-                homeTab.CloseTabRequest += (tab) =>
-                {
-                    CloseTab(tab);
+
+                homeVM homeTab = new homeVM(this, AppContext);                
+                homeTab.TabClosedEvent += (tab) =>
+                {                 
                     loginTab.Password = "";
-                    ShowTab(loginTab);
+                    loginTab.Show();
                 };
-                CloseTab(loginTab);                
-                ShowTab(homeTab);
+                loginTab.Close();
+                homeTab.Show();
             };
             loginTab.onCreateUserAction += () =>
             {
-                ShowTab(tokenTab);
+                tokenTab.Show();
             };
             #endregion
 
             #region tokenTab
-            tokenTab = new tokenVM(AppContext);
+            tokenTab = new tokenVM(this, AppContext);
             //tokenTab.CloseTabEvent += CloseTab;
             tokenTab.onTokenCheckResult += (result, token) =>
             {
@@ -186,11 +186,11 @@ namespace crm.ViewModels
                 }
             };
             #endregion
-                        
-            ShowTab(loginTab);            
+
+            loginTab.Show();
         }
 
-        #region helpers
+        #region tabservice
         public void ShowTab(Tab tab)
         {
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
@@ -206,7 +206,7 @@ namespace crm.ViewModels
             if (fTab == null)
             {
 
-                tab.CloseTabRequest += CloseTab;
+                //tab.CloseTabEvent += CloseTab;
 
                 if (tab is homeVM)
                 {              
@@ -227,7 +227,7 @@ namespace crm.ViewModels
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
             if (fTab == null)
             {
-                tab.CloseTabRequest += CloseTab;
+                tab.TabClosedEvent += CloseTab;
 
                 TabsList.Add(tab);                
             }            

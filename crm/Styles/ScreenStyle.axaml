@@ -3,6 +3,7 @@
     <Design.PreviewWith>
         <Border Padding="20">
 			<Button Classes="Button Top">				
+				123
 			</Button>
         </Border>
     </Design.PreviewWith>
@@ -21,18 +22,31 @@
 		<Setter Property="Foreground" Value="#FF464646"/>
 	</Style>
 	<!--Buttons-->	
-	<Style Selector="Button.Top">
-		<Style.Resources>
-			<Color x:Key="ButtonBackgroundPressed">#FFFFFFFF</Color>
-			<Color x:Key="ButtonBackgroundPointerOver">#FFF5F5F5</Color>
-			<Color x:Key="ButtonBorderBrushPointerOver">#FF464646</Color>
-			<Color x:Key="ButtonBorderBrushPressed">#FF464646</Color>			
-		</Style.Resources>
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FF464646"/>
-		<Setter Property="Height" Value="50"/>
-		<Setter Property="Width" Value="200"/>
-		<Setter Property="Margin" Value="0, 20, 30, 20"/>		
+	<Style Selector="Button.Top">						
+		<Setter Property="Height" Value="35"/>
+		<Setter Property="Width" Value="300"/>
+		<Setter Property="Margin" Value="0, 20, 20, 20"/>
+	</Style>
+	<Style Selector="Button.Top Grid TextBlock">
+		<Setter Property="Foreground" Value="#FFFFFFFF"/>		
+		<Setter Property="TextAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="Button.Top Grid Border">
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="BorderBrush" Value="#FF939393"/>
+		<Setter Property="BorderThickness" Value="1, 0, 0, 0"/>
+	</Style>
+	<Style Selector="Button.Top:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF747374" />
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF" />
+	</Style>
+	<Style Selector="Button.Top /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF747374" />
+		<Setter Property="BorderBrush" Value="Transparent"/>		
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="Margin" Value="0"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF" />		
 	</Style>
 	<!--Pages-->
 	<Style Selector="Border.Page">

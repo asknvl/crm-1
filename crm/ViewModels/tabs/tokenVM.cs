@@ -4,6 +4,7 @@ using crm.Models.api.server;
 using crm.Models.appcontext;
 using crm.Models.validators;
 using crm.ViewModels.dialogs;
+using crm.ViewModels.tabs.tabservice;
 using crm.Views.dialogs;
 using crm.WS;
 using ReactiveUI;
@@ -46,7 +47,7 @@ namespace crm.ViewModels.tabs
         public ReactiveCommand<Unit, Unit> returnCmd { get; }
         #endregion
 
-        public tokenVM(ApplicationContext appcontext) : base()
+        public tokenVM(ITabService ts, ApplicationContext appcontext) : base(ts)
         {
             Title = "Токен";
 #if DEBUG

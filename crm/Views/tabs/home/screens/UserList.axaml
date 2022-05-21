@@ -36,80 +36,58 @@
 			<StackPanel
 				Orientation="Horizontal">
 				<Button Classes="Button Top">
-					<Grid>
-						<StackPanel
-							VerticalAlignment="Center"
-							Orientation="Vertical">
-							<TextBlock
-								FontWeight="Bold"
-								Margin="2">
-								Новый пользователь
-							</TextBlock>
-							<TextBlock
-								FontSize="10"
-								Margin="2">
-								Скопировать токен
-							</TextBlock>
-						</StackPanel>
+					<Grid ColumnDefinitions="*, 40">
 						<TextBlock
-							FontSize="16"
-							Margin="10"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Right">
-							+
+							Grid.Column="0"
+							VerticalAlignment="Center">							
+							Новый пользователь
 						</TextBlock>
-					</Grid>
-				</Button>				
-				<Button Classes="Button Top">
-					<Grid>
-						<StackPanel
-							VerticalAlignment="Center"
-							Orientation="Vertical">
-							<TextBlock
-								FontWeight="Bold"
-								Margin="2">
-								Фильтры
-							</TextBlock>
-							<TextBlock
-								FontSize="10"
-								Margin="2">
-								TBD...
-							</TextBlock>
-						</StackPanel>
-						<TextBlock
-							FontSize="16"
-							Margin="10"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Right">
-							+
-						</TextBlock>
+						<Border							
+							Grid.Column="1">
+							<Svg
+								Height="15"
+								Width="15"
+								Path="/Assets/svgs/screens/new_user.svg">								
+							</Svg>
+						</Border>
 					</Grid>
 				</Button>
-				<Button Classes="Button Top">
-					<Grid>
-						<StackPanel
-							VerticalAlignment="Center"
-							Orientation="Vertical">
-							<TextBlock
-								FontWeight="Bold"
-								Margin="2">
-								Настройка полей
-							</TextBlock>
-							<TextBlock
-								FontSize="10"
-								Margin="2">
-								TBD...
-							</TextBlock>
-						</StackPanel>
+				<Button
+					IsEnabled="False"
+					Classes="Button Top">
+					<Grid ColumnDefinitions="*, 40">
 						<TextBlock
-							FontSize="16"
-							Margin="10"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Right">
-							+
+							Grid.Column="0"
+							VerticalAlignment="Center">
+							Фильтры и редактирование полей
 						</TextBlock>
+						<Border
+							Grid.Column="1">
+							<Svg
+								Height="15"
+								Width="15"
+								Path="/Assets/svgs/screens/filters.svg">
+							</Svg>
+						</Border>
 					</Grid>
 				</Button>
+				<!--<Button Classes="Button Top">
+					<Grid ColumnDefinitions="*, 40">
+						<TextBlock
+							Grid.Column="0"
+							VerticalAlignment="Center">
+							Новый пользователь
+						</TextBlock>
+						<Border
+							Grid.Column="1">
+							<Svg
+								Height="15"
+								Width="15"
+								Path="/Assets/svgs/screens/new_user.svg">
+							</Svg>
+						</Border>
+					</Grid>
+				</Button>-->
 			</StackPanel>
 		</Grid>
 		<Grid

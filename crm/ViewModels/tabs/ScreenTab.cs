@@ -1,5 +1,6 @@
 ﻿using crm.Models.appcontext;
 using crm.ViewModels.tabs.home.screens;
+using crm.ViewModels.tabs.tabservice;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace crm.ViewModels.tabs
         }
         #endregion
 
-        public ScreenTab(BaseScreen screen) : base()
+        public ScreenTab(ITabService ts, BaseScreen screen) : base(ts)
         {
             Title = screen.Title;
             Screen = screen;

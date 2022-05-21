@@ -18,6 +18,7 @@ using crm.ViewModels.dialogs;
 using System.ComponentModel;
 using System.Collections;
 using crm.Models.appcontext;
+using crm.ViewModels.tabs.tabservice;
 
 namespace crm.ViewModels.tabs
 {
@@ -229,7 +230,7 @@ namespace crm.ViewModels.tabs
         public ReactiveCommand<Unit, Unit> registerCmd { get; }
         #endregion
 
-        public registrationVM(ApplicationContext appcontext) : base()
+        public registrationVM(ITabService ts, ApplicationContext appcontext) : base(ts)
         {
             Title = "Регистрация";
 #if DEBUG

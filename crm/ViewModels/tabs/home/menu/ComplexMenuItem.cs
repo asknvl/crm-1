@@ -22,8 +22,8 @@ namespace crm.ViewModels.tabs.home.menu
             get => isItemExpanded;
             set
             {
-                if (!Screens[0].IsChecked && !IsItemExpanded)
-                    Screens[0].IsChecked = true;
+                //if (!Screens[0].IsChecked && !IsItemExpanded)
+                //    Screens[0].IsChecked = true;
                 this.RaiseAndSetIfChanged(ref isItemExpanded, value);
                 if (value && NeedInvoke)
                     IsItemExpandedEvent?.Invoke();
@@ -45,8 +45,9 @@ namespace crm.ViewModels.tabs.home.menu
         public ComplexMenuItem()
         {
             ExpanderBackground = Brushes.Transparent;
-            expanderClickCmd = ReactiveCommand.Create(() => {            
-            
+            expanderClickCmd = ReactiveCommand.Create(() => {
+                if (!Screens[0].IsChecked && !IsItemExpanded)
+                    Screens[0].IsChecked = true;
             });
         }
 

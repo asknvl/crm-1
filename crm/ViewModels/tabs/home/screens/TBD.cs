@@ -9,10 +9,11 @@ namespace crm.ViewModels.tabs.home.screens
 {
     public class TBD : BaseScreen
     {
-        public TBD(ApplicationContext context) : base(context)
+        public TBD(ApplicationContext context, string title) : base(context)
         {
+            Title = title;
         }
 
-        public override string Title => "TBD...";
+        public override string Title { get; }
     }
 }

@@ -127,6 +127,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\svgs\screens\" />
-    <Folder Include="ViewModels\Новая папка\" />
   </ItemGroup>
 </Project>
