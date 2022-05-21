@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +9,9 @@ namespace crm.Models.api.socket
 {
     public class usersOnlineDTO
     {
-        [JsonProperty("user_id")]
+        [JsonPropertyName("user_id")]
         public string user_id { get; set; }
-        [JsonProperty("connected")]
+        [JsonPropertyName("connected")]
         public bool connected { get; set; }
 
     }
