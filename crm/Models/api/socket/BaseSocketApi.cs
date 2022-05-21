@@ -40,13 +40,13 @@ namespace crm.Models.api.socket
             client.OnDisconnected += Client_OnDisconnected;
 
             client.On("connected-users", (response) => {
-                usersOnlineDTO user = response.GetValue<usersOnlineDTO>(1);
-                var users = new usersOnlineDTO[1] { user };
+                usersOnlineDTO[] users = response.GetValue<usersOnlineDTO[]>(1);                
                 ReceivedConnectedUsersEvent?.Invoke(users.ToList());
             });
 
             client.On("connected", (response) => {
-                usersOnlineDTO[] users = response.GetValue<usersOnlineDTO[]>(1);
+                usersOnlineDTO user = response.GetValue<usersOnlineDTO>(1);
+                var users = new usersOnlineDTO[1] { user };
                 ReceivedConnectedUsersEvent?.Invoke(users.ToList());
             });
 
