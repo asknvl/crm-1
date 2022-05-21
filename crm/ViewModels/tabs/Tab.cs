@@ -1,12 +1,7 @@
 ﻿using ReactiveUI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace crm.ViewModels.tabs
 {
@@ -36,7 +31,7 @@ namespace crm.ViewModels.tabs
         public Tab()
         {           
             closeCmd = ReactiveCommand.Create(() => {
-                CloseTabEvent?.Invoke(this);
+                CloseTabRequest?.Invoke(this);
             });
         }
 
@@ -45,18 +40,31 @@ namespace crm.ViewModels.tabs
         {
             return !fields.Any(p => p == false);
         }
+        protected virtual void CloseRequest()
+        {
+            CloseTabRequest?.Invoke(this);
+        }
         #endregion
 
-        #region public
-        public event Action<Tab> CloseTabEvent;
-        public virtual void OnCloseTab()
+        #region public                
+        public virtual void Show()
         {
-            CloseTabEvent?.Invoke(this);
+            ShowTabRequest?.Invoke(this);
+        }
+
+        public virtual void Close()
+        {
+            CloseTabRequest?.Invoke(this);
         }
         #endregion
 
         #region abstract        
-        public virtual void Clear() { }        
+        public virtual void Clear() { }
+        #endregion
+
+        #region callbacks
+        public event Action<Tab> CloseTabRequest;
+        public event Action<Tab> ShowTabRequest;
         #endregion
     }
 }

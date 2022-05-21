@@ -128,6 +128,7 @@ namespace crm.ViewModels
 
             quitCmd = ReactiveCommand.Create(() =>
             {
+
                 //разлогин для юзера OnDeactivate для всех экранов
             });
             #endregion
@@ -156,7 +157,7 @@ namespace crm.ViewModels
                 //AppContext.SocketApi.RequestConnectedUsers();
                 
                 homeVM homeTab = new homeVM(AppContext);                
-                homeTab.CloseTabEvent += (tab) =>
+                homeTab.CloseTabRequest += (tab) =>
                 {
                     CloseTab(tab);
                     loginTab.Password = "";
@@ -205,7 +206,7 @@ namespace crm.ViewModels
             if (fTab == null)
             {
 
-                tab.CloseTabEvent += CloseTab;
+                tab.CloseTabRequest += CloseTab;
 
                 if (tab is homeVM)
                 {              
@@ -226,7 +227,7 @@ namespace crm.ViewModels
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
             if (fTab == null)
             {
-                tab.CloseTabEvent += CloseTab;
+                tab.CloseTabRequest += CloseTab;
 
                 TabsList.Add(tab);                
             }            

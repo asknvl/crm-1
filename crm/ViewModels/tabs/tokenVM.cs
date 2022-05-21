@@ -75,19 +75,14 @@ namespace crm.ViewModels.tabs
             });
             returnCmd = ReactiveCommand.Create(() =>
             {
-                OnCloseTab();
+                CloseRequest();
             });
 
             #endregion
         }
 
         #region public
-        public event Action<bool, string> onTokenCheckResult;
-        public event Action onReturnCmd;
-
-        public override void Clear()
-        {            
-        }
+        public event Action<bool, string> onTokenCheckResult;        
         #endregion
     }
 }

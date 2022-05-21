@@ -26,8 +26,7 @@ namespace crm.ViewModels.tabs.home.screens
         const int displayed_lines_num = 20;
         #endregion
 
-        #region vars
-        CancellationTokenSource cts;
+        #region vars        
         IWindowService ws = WindowService.getInstance();
         IServerApi srvApi;
         ISocketApi sckApi;
@@ -192,8 +191,7 @@ namespace crm.ViewModels.tabs.home.screens
         #region override
         public override async void OnActivate()
         {       
-            base.OnActivate();            
-            cts = new CancellationTokenSource();
+            base.OnActivate();                        
 
             sckApi.ReceivedConnectedUsersEvent += SckApi_ReceivedConnectedUsersEvent;
 
@@ -212,8 +210,7 @@ namespace crm.ViewModels.tabs.home.screens
 
         public override void OnDeactivate()
         {
-            sckApi.ReceivedConnectedUsersEvent -= SckApi_ReceivedConnectedUsersEvent;
-            cts?.Cancel();
+            sckApi.ReceivedConnectedUsersEvent -= SckApi_ReceivedConnectedUsersEvent;            
             base.OnDeactivate();
         }
         #endregion

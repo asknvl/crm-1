@@ -180,5 +180,11 @@ namespace crm.Models.user
 
         }
         #endregion
+
+        #region callbacks
+        public event Action LoginEvent;
+        public event Action LogoutEvent;
+        #endregion
+
     }
 }
