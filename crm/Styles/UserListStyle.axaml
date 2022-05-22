@@ -6,7 +6,7 @@
 				123
 			</Button>
         </Border>
-    </Design.PreviewWith>
+    </Design.PreviewWith>	
 	<!--CheckBox-->
 	<Style Selector="ToggleButton.CheckButton">
 		<Style.Resources>
@@ -35,6 +35,9 @@
 		<Setter Property="Path" Value="/Assets/svgs/screens/checkbox_un.svg"/>
 	</Style>
 	<!--Buttons-->
+	<Style Selector="Button">
+		<Setter Property="FontSize" Value="12"/>
+	</Style>
 	<Style Selector="Button.List">
 		<Style.Resources>
 			<Color x:Key="ButtonBackgroundPressed">#FFFFFFFF</Color>
@@ -56,7 +59,7 @@
 			<Color x:Key="ButtonBackgroundPointerOver">#FFF5F5F5</Color>
 			<Color x:Key="ButtonBorderBrushPointerOver">#FF464646</Color>
 			<Color x:Key="ButtonBorderBrushPressed">#FF464646</Color>
-		</Style.Resources>
+		</Style.Resources>		
 		<Setter Property="Background" Value="#FFFFFFFF"/>
 		<Setter Property="BorderBrush" Value="#FF464646"/>
 		<Setter Property="CornerRadius" Value="3"/>

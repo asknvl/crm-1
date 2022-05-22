@@ -88,7 +88,6 @@
 				<Style Selector="ListBox ListBoxItem:selected Svg">
 					<Setter Property="Path" Value="/Assets/svgs/common/tag_selected.svg"/>
 				</Style>
-
 			</ListBox.Styles>
 		</ListBox>
 		<StackPanel				
@@ -97,7 +96,7 @@
 			Orientation="Horizontal"
 			VerticalAlignment="Center"
 			HorizontalAlignment="Center">
-			<Button				
+			<Button								
 				Command="{Binding cancelCmd}"
 				IsCancel="True"
 				Grid.Row="2"				
