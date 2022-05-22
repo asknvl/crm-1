@@ -87,6 +87,11 @@ namespace crm.WS
                 wnd = new tagsDlg();
             }
 
+            if (vm is rolesDlgVM)
+            {
+                wnd = new rolesDlg();
+            }
+
             wnd.DataContext = vm;
             windowList.Add(wnd);
             wnd.Closed += (s, e) =>

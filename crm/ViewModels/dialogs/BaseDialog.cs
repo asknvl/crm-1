@@ -11,7 +11,7 @@ namespace crm.ViewModels.dialogs
     public abstract class BaseDialog : ViewModelBase
     {
         #region properties
-        public abstract string Title { get; }
+        public virtual string Title { get; }
         #endregion
 
         #region commands

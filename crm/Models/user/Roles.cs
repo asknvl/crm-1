@@ -25,6 +25,15 @@ namespace crm.Models.user
 
     public class Role
     {
+        public const string admin = "Админ";
+        public const string financier = "Кассир";
+        public const string comment = "Комментарии";
+        public const string creative = "Креативщик";
+        public const string media = "Медиа";
+        public const string teamlead = "Тим-лид";
+        public const string link = "Связка";
+        public const string farm = "Фарм";
+
         [JsonProperty("id")]
         public int Id { get; set; }
         [JsonProperty("name")]

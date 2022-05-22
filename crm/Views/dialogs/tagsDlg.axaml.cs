@@ -28,5 +28,10 @@ namespace crm.Views.dialogs
             Close();
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            Close();
+        }
+
     }
 }

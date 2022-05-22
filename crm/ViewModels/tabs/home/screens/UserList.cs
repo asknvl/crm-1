@@ -33,6 +33,10 @@ namespace crm.ViewModels.tabs.home.screens
         string token;
         #endregion
 
+        #region commands
+        public ReactiveCommand<Unit, Unit> addUserCmd { get; }
+        #endregion
+
         #region properties       
         public override string Title => "Список сотрудников";
 
@@ -113,6 +117,12 @@ namespace crm.ViewModels.tabs.home.screens
             SelectedPage = 1;
 
             #region commands
+            addUserCmd = ReactiveCommand.Create(() => {
+
+                ws.ShowDialog(new rolesDlgVM(AppContext));
+
+            });
+
             editUserCmd = ReactiveCommand.Create(() => {                 
             });
 

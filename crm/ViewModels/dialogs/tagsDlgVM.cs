@@ -9,87 +9,41 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace crm.ViewModels.dialogs
-{
-    public class tagsListItem : ViewModelBase
-    {
-        string name;
-        public string Name {
-            get => name;
-            set => this.RaiseAndSetIfChanged(ref name, value);  
-        }
-
-        bool ischecked;
-        public bool IsChecked
-        {
-            get => ischecked;
-            set => this.RaiseAndSetIfChanged(ref ischecked, value);
-        }
-
-        public tagsListItem(string name)
-        {
-            Name = name;
-            IsChecked = false;
-        }
-    }
+{    
     public class tagsDlgVM : BaseDialog
     {
-        #region const
-        const string admin = "Админ";
-        const string financier = "Кассир";
-        const string comment = "Комментарии";
-        const string creative = "Креативщик";
-        const string media = "Медиа";
-        const string teamlead = "Тим-лид";
-        const string link = "Связка";
-        const string farm = "Фарм";
-        #endregion
-
-        #region properties
-        public override string Title => "Тэги";
+        #region properties        
         public ObservableCollection<tagsListItem> Tags { get; } = new ObservableCollection<tagsListItem>();
         public List<tagsListItem> SelectedTags { get; } = new();
         #endregion
 
-        #region commands
-        public ReactiveCommand<Unit, Unit> closeCmd { get; }
-        #endregion
-
         public tagsDlgVM()
-        {
-            #region commands
-            closeCmd = ReactiveCommand.Create(() => {
-                OnCloseRequest();
-            });
-            #endregion
+        {        
             Tags = new ObservableCollection<tagsListItem>() {
-                new tagsListItem(admin),
-                new tagsListItem(financier),
-                new tagsListItem(comment),
-                new tagsListItem(creative),
-                new tagsListItem(media),
-                new tagsListItem(teamlead),
-                new tagsListItem(link),
-                new tagsListItem(farm),
-                new tagsListItem(creative)
+                new tagsListItem(Role.admin),
+                new tagsListItem(Role.financier),
+                new tagsListItem(Role.comment),
+                new tagsListItem(Role.creative),
+                new tagsListItem(Role.media),
+                new tagsListItem(Role.teamlead),
+                new tagsListItem(Role.link),
+                new tagsListItem(Role.farm),
+                new tagsListItem(Role.creative)
             };
-
         }
 
         public tagsDlgVM(List<Role> roles)
-        {
-            closeCmd = ReactiveCommand.Create(() => {
-                OnCloseRequest();
-            });
+        {           
 
-            var adminItem = new tagsListItem(admin);
-            var financierItem = new tagsListItem(financier);
-            var commentItem = new tagsListItem(comment);
-            var creativeItem = new tagsListItem(creative);
-            var mediaItem = new tagsListItem(media);
-            var teamleadItem = new tagsListItem(teamlead);
-            var linkItem = new tagsListItem(link);
-            var farmItem = new tagsListItem(farm);
-            var tagsItem = new tagsListItem(creative);
+            var adminItem = new tagsListItem(Role.admin);
+            var financierItem = new tagsListItem(Role.financier);
+            var commentItem = new tagsListItem(Role.comment);
+            var creativeItem = new tagsListItem(Role.creative);
+            var mediaItem = new tagsListItem(Role.media);
+            var teamleadItem = new tagsListItem(Role.teamlead);
+            var linkItem = new tagsListItem(Role.link);
+            var farmItem = new tagsListItem(Role.farm);
+            var tagsItem = new tagsListItem(Role.creative);
 
             Tags = new ObservableCollection<tagsListItem>() {
                 adminItem,

@@ -2,10 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-			<Button Classes="Button Passport">
-				<Svg Height="20" Width="40">
-					
-				</Svg>
+			<Button Classes="Button Dialog" IsEnabled="False">
+				123
 			</Button>
         </Border>
     </Design.PreviewWith>
@@ -68,6 +66,13 @@
 		<Setter Property="Height" Value="30"/>
 		<Setter Property="Padding" Value="10, 0, 10, 0"/>
 	</Style>
+	<Style Selector="Button.Dialog:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
+	</Style>
+
+
 
 	<Style Selector="Button.Hyper">
 		<Setter Property="Background" Value="Transparent"/>

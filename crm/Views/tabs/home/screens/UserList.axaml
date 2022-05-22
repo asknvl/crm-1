@@ -35,8 +35,11 @@
 			Grid.Row="1">
 			<StackPanel
 				Orientation="Horizontal">
-				<Button Classes="Button Top">
-					<Grid ColumnDefinitions="*, 40">
+				<Button
+					Command="{Binding addUserCmd}"
+					Classes="Button Top">
+					<Grid
+						ColumnDefinitions="*, 40">
 						<TextBlock
 							Grid.Column="0"
 							VerticalAlignment="Center">							
