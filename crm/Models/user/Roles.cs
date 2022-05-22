@@ -28,37 +28,27 @@ namespace crm.Models.user
         [JsonProperty("id")]
         public int Id { get; set; }
         [JsonProperty("name")]
-        public string Name { get; set; }
-        public RoleType Type => (RoleType)Id;
+        public string Name { get; set; }        
+        public RoleType Type { get; }
 
-        public override string ToString()
+        public Role(RoleType type)
         {
-            switch (Type)
-            {
-                case RoleType.admin:
-                    return "Админ";
-                case RoleType.financier:
-                    return "Кассир";
-                case RoleType.team_lead_media:
-                    return "Медиа";
-                case RoleType.team_lead_link:
-                    return "Связка";
-                case RoleType.team_lead_farm:
-                    return "Фарм";
-                case RoleType.team_lead_comment:
-                    return "Комментарии";
-                case RoleType.buyer_media:
-                    return "Медиа";
-                case RoleType.buyer_link:
-                    return "Связка";
-                case RoleType.buyer_farm:
-                    return "Фарм";
-                case RoleType.buyer_comment:
-                    return "Комментарии";
-                default:
-                    return "?";                    
-            }
+            Type = type;
+            Id = (int)type;
+            Name = type.ToString();
         }
+
+        public Role(int id)
+        {
+            Type = (RoleType)id;
+            Id = id;
+            Name = Type.ToString();
+        }
+
+        public Role()
+        {
+        }    
+       
     }
 
 }

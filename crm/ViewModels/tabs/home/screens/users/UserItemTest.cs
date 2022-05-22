@@ -31,7 +31,7 @@ namespace crm.ViewModels.tabs.home.screens.users
             };
             Roles = new List<Role>
             {
-                new Role() { Id = 1, Name = "admin"}                
+                new Role(RoleType.admin)
             };
 
             Status = true;

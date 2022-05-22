@@ -176,7 +176,7 @@ namespace crm.Models.user
 
             Roles = new List<Role>();
             foreach (var item in user.Roles)
-                Roles.Add(new Role() { Id = item.Id, Name = item.Name });
+                Roles.Add(new Role(item.Id) { Id = item.Id, Name = item.Name });
 
         }
         #endregion

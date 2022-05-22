@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\png\screens\TBD.png" />
-    <None Remove="Assets\svgs\common\Tag.svg" />
+    <None Remove="Assets\svgs\common\tag_selected.svg" />
     <None Remove="Assets\svgs\leftslidemenu\burger_off.svg" />
     <None Remove="Assets\svgs\leftslidemenu\burger_on.svg" />
     <None Remove="Assets\svgs\leftslidemenu\expand.svg" />
