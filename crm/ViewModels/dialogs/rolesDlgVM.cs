@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls.Selection;
+using crm.Models.api.server;
 using crm.Models.appcontext;
 using crm.Models.user;
+using crm.WS;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,16 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using TextCopy;
 
 namespace crm.ViewModels.dialogs
 {
     public class rolesDlgVM : BaseDialog
     {
+        #region vars
+        IWindowService ws = WindowService.getInstance();
+        #endregion
+
         #region properties
         bool isValidSelection = false;
         public bool IsValidSelection
@@ -29,7 +36,7 @@ namespace crm.ViewModels.dialogs
 
         #region commands
         public ReactiveCommand<Unit, Unit> cancelCmd { get; }
-        public ReactiveCommand<Unit, Unit> accpetCmd { get; }
+        public ReactiveCommand<Unit, Unit> acceptCmd { get; }
         #endregion
 
         public rolesDlgVM()
@@ -52,6 +59,9 @@ namespace crm.ViewModels.dialogs
 
         public rolesDlgVM(ApplicationContext appcontext)
         {
+            IServerApi api = appcontext.ServerApi;
+            string token = appcontext.User.Token;
+
             Selection = new SelectionModel<tagsListItem>();
             Selection.SingleSelect = false;
             Selection.SelectionChanged += Selection_SelectionChanged;
@@ -74,7 +84,70 @@ namespace crm.ViewModels.dialogs
                 OnCloseRequest();
             });
 
-            accpetCmd = ReactiveCommand.CreateFromTask(async () => {
+            acceptCmd = ReactiveCommand.CreateFromTask(async () => {
+
+                List<Role> roles = new List<Role>();
+
+                bool isAdmin = SelectedTags.Any(t => t.Name.Equals(Role.admin));
+                bool isTeamLead = SelectedTags.Any(t => t.Name.Equals(Role.teamlead));                
+                bool isComment = SelectedTags.Any(t => t.Name.Equals(Role.comment));                
+                bool isMedia = SelectedTags.Any(t => t.Name.Equals(Role.media));
+                bool isLink = SelectedTags.Any(t => t.Name.Equals(Role.link));
+                bool isFarm = SelectedTags.Any(t => t.Name.Equals(Role.farm));
+                bool isCreative = SelectedTags.Any(t => t.Name.Equals(Role.creative));
+                bool isFinancier = SelectedTags.Any(t => t.Name.Equals(Role.financier));
+
+                if (isAdmin)
+                    roles.Add(new Role(RoleType.admin));
+
+                if (isTeamLead)
+                {                    
+                    if (isComment)
+                        roles.Add(new Role(RoleType.team_lead_comment));
+                    if (isMedia)
+                        roles.Add(new Role(RoleType.team_lead_media));
+                    if (isLink)
+                        roles.Add(new Role(RoleType.team_lead_link));
+                    if (isFarm)
+                        roles.Add(new Role(RoleType.team_lead_farm));
+                } else
+                {
+                    if (isComment)
+                        roles.Add(new Role(RoleType.buyer_comment));
+                    if (isMedia)
+                        roles.Add(new Role(RoleType.buyer_media));
+                    if (isLink)
+                        roles.Add(new Role(RoleType.buyer_link));
+                    if (isFarm)
+                        roles.Add(new Role(RoleType.buyer_farm));
+                }
+
+                if (isFinancier)
+                    roles.Add(new Role(RoleType.financier));
+                if (isCreative)
+                    roles.Add(new Role(RoleType.creative));
+
+                //Debug.WriteLine("----------");
+                //foreach (var item in roles)
+                //    Debug.WriteLine(item.Name);
+
+                string newtoken = "";
+                try
+                {
+                    newtoken = await api.GetNewUserToken(roles, token);
+
+                    OnCloseRequest();
+
+                } catch (Exception ex)
+                {
+                    ws.ShowDialog(new errMsgVM(ex.Message));
+                }
+
+                Clipboard clipboard = new Clipboard();
+                try
+                {
+                    clipboard.SetText(newtoken);
+                } catch { }
 
             });
             #endregion

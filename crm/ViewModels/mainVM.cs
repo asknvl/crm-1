@@ -131,6 +131,16 @@ namespace crm.ViewModels
             quitCmd = ReactiveCommand.Create(() =>
             {
                 //разлогин для юзера OnDeactivate для всех экранов
+                //for (int i = 0; i < TabsList.Count; i++)
+                //    TabsList[i].Close();
+                int index = TabsList.Count;
+                while (index > 0)
+                {
+                    index = TabsList.Count - 1;
+                    TabsList[index].Close();
+                }
+
+                loginTab.Show();
                 IsProfileMenuOpen = false;
             });
             #endregion

@@ -36,8 +36,10 @@ namespace crm.Models.user
 
         [JsonProperty("id")]
         public int Id { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }        
+        //[JsonProperty("name")]
+        [JsonIgnore]
+        public string Name { get; set; }
+        [JsonIgnore]
         public RoleType Type { get; }
 
         public Role(RoleType type)

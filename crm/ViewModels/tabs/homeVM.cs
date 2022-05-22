@@ -99,5 +99,16 @@ namespace crm.ViewModels.tabs
             //Menu = menu;
             Menu = new admin_menu(appcontext);
         }
+
+        public override void Close()
+        {
+
+            foreach (var item in Menu.Items)
+                foreach (var screen in item.Screens)
+                    screen.OnDeactivate();
+
+
+            base.Close();
+        }
     }
 }

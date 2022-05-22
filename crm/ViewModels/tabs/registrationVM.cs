@@ -272,8 +272,8 @@ namespace crm.ViewModels.tabs
 
                 string[] splt = FullName.Split(" ");
 
-                user.FirstName = splt[2];
-                user.MiddleName = splt[1];
+                user.FirstName = splt[1];
+                user.MiddleName = splt[2];
                 user.LastName = splt[0];
 
                 bool res = false;

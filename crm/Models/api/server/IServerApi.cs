@@ -13,6 +13,7 @@ namespace crm.Models.api.server
         Task<bool> RegisterUser(string token, BaseUser user);
         Task<BaseUser> Login(string login, string password);
         Task<User> GetUser(string id, string token);
-        Task<(List<User>, int)> GetUsers(int page, int size, string token);
+        Task<(List<User>, int, int)> GetUsers(int page, int size, string token);
+        Task<string> GetNewUserToken(List<Role> roles, string token);
     }
 }

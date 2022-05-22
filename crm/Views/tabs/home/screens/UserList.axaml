@@ -375,7 +375,7 @@
 			Grid.Row="4">
 			<StackPanel
 				Margin="15"
-				HorizontalAlignment="Center"
+				HorizontalAlignment="Right"
 				Orientation="Horizontal">
 				<Button
 					Command="{Binding prevPageCmd}"
@@ -392,7 +392,12 @@
 					Classes="Button PageRight">
 					<Svg/>
 				</Button>
-			</StackPanel>		
+			</StackPanel>
+			<TextBlock
+				Text="{Binding PageInfo}"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Left">				
+			</TextBlock>
 		</Grid>		
 	</Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿//#define ALLOK
 
+using Avalonia.Data;
 using crm.Models.api.server;
 using crm.Models.appcontext;
 using crm.Models.validators;
@@ -35,7 +36,7 @@ namespace crm.ViewModels.tabs
             {
                 IsInputValid = token_vl.IsValid(value);
                 if (!IsInputValid)
-                    throw new DataMisalignedException(token_vl.Message);
+                    throw new DataValidationException(token_vl.Message);
                 this.RaiseAndSetIfChanged(ref token, value);
             }
         }
@@ -51,13 +52,12 @@ namespace crm.ViewModels.tabs
         {
             Title = "Токен";
 #if DEBUG
-            Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZXMiOlsxLDJdLCJpYXQiOjE2NTA4MzQxMjV9.4zwJ7FjyynpJyhfdknr9PbWAN3HlLAD9nMGDd6Z5oSQ";
+            //Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZXMiOlsxLDJdLCJpYXQiOjE2NTA4MzQxMjV9.4zwJ7FjyynpJyhfdknr9PbWAN3HlLAD9nMGDd6Z5oSQ";
 #endif
 
             #region commands
             continueCmd = ReactiveCommand.CreateFromTask(async () =>
             {
-
 #if ALLOK
                 onTokenCheckResult?.Invoke(true, Token);
 #else
@@ -76,7 +76,7 @@ namespace crm.ViewModels.tabs
             });
             returnCmd = ReactiveCommand.Create(() =>
             {
-                CloseRequest();
+                Close();
             });
 
             #endregion

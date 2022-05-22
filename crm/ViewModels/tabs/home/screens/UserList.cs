@@ -21,8 +21,7 @@ namespace crm.ViewModels.tabs.home.screens
 {
     public class UserList : BaseScreen
     {
-        #region const
-        const int update_period = 2000;
+        #region const        
         const int displayed_lines_num = 20;
         #endregion
 
@@ -45,27 +44,27 @@ namespace crm.ViewModels.tabs.home.screens
             get => users;
             set => this.RaiseAndSetIfChanged(ref users, value);
         }
-        
+
         int page = 1;
         public int SelectedPage
         {
             get => page;
             set
-            {                
+            {
                 IsPrevActive = (value > 1);
                 IsNextActive = (value < TotalPages);
                 this.RaiseAndSetIfChanged(ref page, value);
             }
         }
 
-        int totalPages = 0;
+        int totalPages = 1;
         public int TotalPages
         {
             get => totalPages;
             set
             {
                 IsPrevActive = (SelectedPage > 1);
-                IsNextActive = (SelectedPage < TotalPages || TotalPages == 0);
+                IsNextActive = (SelectedPage < value || TotalPages == 0);
                 this.RaiseAndSetIfChanged(ref totalPages, value);
             }
         }
@@ -118,18 +117,16 @@ namespace crm.ViewModels.tabs.home.screens
 
             #region commands
             addUserCmd = ReactiveCommand.Create(() => {
-
                 ws.ShowDialog(new rolesDlgVM(AppContext));
-
             });
 
-            editUserCmd = ReactiveCommand.Create(() => {                 
+            editUserCmd = ReactiveCommand.Create(() => {
             });
 
-            showTagsCmd = ReactiveCommand.Create(() => { 
+            showTagsCmd = ReactiveCommand.Create(() => {
             });
 
-            showPaspCmd = ReactiveCommand.Create(() => { 
+            showPaspCmd = ReactiveCommand.Create(() => {
             });
 
             prevPageCmd = ReactiveCommand.CreateFromTask(async () => {
@@ -159,19 +156,28 @@ namespace crm.ViewModels.tabs.home.screens
         #region public
         #endregion
 
-        #region helpers        
+        #region helpers
+        string getPageInfo(int page, int users_count, int total_users)
+        {
+            int p = (users_count < displayed_lines_num) ? (page - 1) * displayed_lines_num + users_count : page * displayed_lines_num;
+            return $"{(page - 1) * displayed_lines_num + 1}-{p} из {total_users}";
+        }
+
         async Task updatePageInfo(int page, int pagesize)
         {
             await Task.Run(async () =>
             {
-                List<User> users;                
+                List<User> users;
+                int total_users;
 
                 await Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     Users.Clear();
                 });
+                
+                (users, TotalPages, total_users) = await srvApi.GetUsers(page - 1, pagesize, token);
 
-                (users, TotalPages) = await srvApi.GetUsers(page - 1, pagesize, token);
+                PageInfo = getPageInfo(page, users.Count, total_users);
 
                 foreach (var user in users)
                 {

@@ -9,6 +9,7 @@ using System.Net;
 using crm.Models.user;
 using crm.Models.api.server.valuesconverter;
 using Newtonsoft.Json;
+using crm.Models.api.server.serialization;
 
 namespace crm.Models.api.server
 {
@@ -226,10 +227,11 @@ namespace crm.Models.api.server
             return user;
         }
         
-        public virtual async Task<(List<User>, int)> GetUsers(int page, int size, string token)
+        public virtual async Task<(List<User>, int, int)> GetUsers(int page, int size, string token)
         {
             List<User> users = new List<User>();
             int total_pages = 0;
+            int total_users = 0;
 
             var client = new RestClient($"{url}/v1/users/");
             var request = new RestRequest(Method.GET);
@@ -246,6 +248,7 @@ namespace crm.Models.api.server
                 {
                     users = JsonConvert.DeserializeObject<List<User>>(data.ToString());
                     total_pages = json["total_pages"].ToObject<int>();
+                    total_users = json["total_users"].ToObject<int>();
                 }
             } else
             {
@@ -253,7 +256,43 @@ namespace crm.Models.api.server
                 List<ServerError>? errors = JsonConvert.DeserializeObject<List<ServerError>>(e);
                 throw new ServerException($"{getErrMsg(errors)}");
             }
-            return (users, total_pages);
+            return (users, total_pages, total_users);
+        }
+
+        public async Task<string> GetNewUserToken(List<Role> roles, string token)
+        {
+            string newtoken = string.Empty;
+
+            await Task.Run(async () => {
+                var client = new RestClient($"{url}/v1/admintools/getRegToken/");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+
+                sroles r = new sroles(roles);
+                string jroles = JsonConvert.SerializeObject(r);
+
+                request.AddParameter("application/json", jroles, ParameterType.RequestBody);
+                var response = client.Execute(request);
+                var json = JObject.Parse(response.Content);
+                var res = json["success"].ToObject<bool>();
+                if (res)
+                {
+                    JToken data = json["data"];
+                    if (data != null)
+                    {
+                        newtoken = data["token"].ToString();                        
+                    }
+
+                } else
+                {
+                    string e = json["errors"].ToString();
+                    List<ServerError>? errors = JsonConvert.DeserializeObject<List<ServerError>>(e);
+                    throw new ServerException($"{getErrMsg(errors)}");
+                }
+
+            });
+
+            return newtoken;
         }
 
         #endregion

@@ -59,7 +59,7 @@ namespace crm.ViewModels.tabs
         }
 
         public virtual void Close()
-        {         
+        {   
             tabService.CloseTab(this);
         }
         #endregion
