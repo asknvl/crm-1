@@ -126,11 +126,8 @@ namespace crm.Models.api.server
                 p.firstname = user.FirstName;
                 p.middlename = user.MiddleName;
                 p.lastname = user.LastName;
-                p.fullname = $"{user.LastName} {user.FirstName} {user.MiddleName}";
-                //p.devices = new JArray();
-                //foreach (var device in user.Devices) 
-                //    p.devices.Add(device);
-                p.device = user.Devices[0].Name;
+                p.fullname = $"{user.LastName} {user.FirstName} {user.MiddleName}";               
+                
                 request.AddParameter("application/json", p.ToString(), ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
                 if (!response.IsSuccessful)

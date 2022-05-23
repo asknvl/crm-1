@@ -2,11 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:crm.ViewModels.tabs.home.screens.users"
+			 xmlns:cust="using:crm.Views.custom"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="crm.Views.tabs.home.screens.users.editUserInfo">
+	<UserControl.DataContext>
+		<vm:editUserInfo/>
+	</UserControl.DataContext>
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/DataValidationErros.axaml"/>
 		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
+		<StyleInclude Source="/Styles/TabStyles.axaml"/>
 	</UserControl.Styles>
 	<Grid
 		RowDefinitions="Auto, *">
@@ -19,40 +25,94 @@
 			Margin="0, 30, 0, 0"
 			Grid.Row="1"
 			Orientation="Vertical">
-			<Border				
+			<Border
 				Classes="Border Separator">
 				<Grid ColumnDefinitions="1*, 1*">
 					<TextBlock
 						Classes="TextBlock Param"
-						Grid.Column="0">	
+						Grid.Column="0">
 						ФИО
 					</TextBlock>
-					<TextBox						
+					<TextBox
 						Text="{Binding FullName}"
-						Grid.Column="1">												
+						Grid.Column="1">
 					</TextBox>
-				</Grid>			
+				</Grid>
 			</Border>
 			<Border Classes="Border Separator">
 				<Grid ColumnDefinitions="1*, 1*">
-					<TextBlock					
+					<TextBlock
 						Classes="TextBlock Param"
-						Grid.Column="0">	
+						Grid.Column="0">
 						E-mail
 					</TextBlock>
-					<TextBox			
+					<TextBox
 						Text="{Binding Email}"
 						Grid.Column="1">
 					</TextBox>
-				</Grid>				
+				</Grid>
+			</Border>
+			<Border Classes="Border Separator">
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock
+						Classes="TextBlock Param"
+						Grid.Column="0">
+						Телефон
+					</TextBlock>
+					<TextBox
+						Text="{Binding PhoneNumber}"
+						Grid.Column="1"/>
+				</Grid>
+			</Border>
+			<Border Classes="Border Separator">
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock
+						Classes="TextBlock Param"
+						Grid.Column="0">
+						Дата рождения
+					</TextBlock>
+					<TextBox
+						Text="{Binding BirthDate}"
+						Grid.Column="1"/>
+				</Grid>
+			</Border>
+			<Border Classes="Border Separator">
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock
+						Classes="TextBlock Param"
+						Grid.Column="0">
+						Соц. сети
+					</TextBlock>
+					<TextBox
+						Text="{Binding SocialNetworks[0].Address}"
+						Grid.Column="1"/>
+				</Grid>
+			</Border>
+			<Border Classes="Border Separator">
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock
+						Classes="TextBlock Param"
+						Grid.Column="0">
+						Телеграм
+					</TextBlock>
+					<Button
+						Command="{Binding openTelegram}"
+						Classes="Button Hyper"
+						Grid.Column="1"
+						Content="{Binding Telegram}">						
+						<!--<TextBox
+							Text="{Binding Telegram}"/>-->						
+					</Button>
+
+				</Grid>
 			</Border>
 			<StackPanel.Styles>
 				<Style Selector="Grid">
-					<Setter Property="HorizontalAlignment" Value="Stretch"/>					
+					<Setter Property="HorizontalAlignment" Value="Stretch"/>
 				</Style>
 				<Style Selector="Border.Separator">
 					<Setter Property="Height" Value="50"/>
-					<Setter Property="Width" Value="600"/>					
+					<Setter Property="Width" Value="600"/>
 					<Setter Property="HorizontalAlignment" Value="Left"/>
 					<Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
 					<Setter Property="BorderBrush" Value="#FFE5E5E5"/>
@@ -62,9 +122,9 @@
 					<Setter Property="FontSize" Value="12"/>
 					<Setter Property="FontWeight" Value="Bold"/>
 				</Style>
-				<Style Selector="TextBox">		
-					<Setter Property="VerticalAlignment" Value="Center"/>					
-					<Setter Property="VerticalContentAlignment" Value="Center"/>				
+				<Style Selector="TextBox">
+					<Setter Property="VerticalAlignment" Value="Center"/>
+					<Setter Property="VerticalContentAlignment" Value="Center"/>
 					<Setter Property="FontSize" Value="12"/>
 					<Setter Property="Padding" Value="6"/>
 					<Setter Property="FontWeight" Value="Bold"/>
@@ -80,8 +140,8 @@
 				<Style Selector="TextBox DataValidationErrors">
 					<Setter Property="Template" Value="{DynamicResource TooltipDataValidationContentTemplate}"/>
 					<Setter Property="ErrorTemplate" Value="{DynamicResource TooltipDataValidationErrorTemplate}" />
-				</Style>				
-			</StackPanel.Styles>		
+				</Style>
+			</StackPanel.Styles>
 		</StackPanel>
 	</Grid>
 </UserControl>

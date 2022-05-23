@@ -33,6 +33,13 @@ namespace crm.ViewModels.tabs.home.screens.users
             {
                 new Role(RoleType.admin)
             };
+            SocialNetworks = new List<SocialNetwork>()
+            {
+                new SocialNetwork()
+                {
+                    Address = "www.instagram.com/xeylov"
+                }
+            };
 
             Status = true;
         }

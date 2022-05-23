@@ -21,7 +21,24 @@ namespace crm.Models.user
             PhoneNumber = "+7 (925) 618-69-36";
             Telegram = "@xeylov";
             Wallet = "$$$$$$";
-            
+
+            Devices = new List<Device> {
+                new Device() { Id = 1, Name = "Mac 1", Serial = "123"},
+                new Device() { Id = 2, Name = "Mac 2", Serial = "123"}
+            };
+
+            Roles = new List<Role>
+            {
+                new Role(RoleType.admin)
+            };
+
+            SocialNetworks = new List<SocialNetwork>()
+            {
+                new SocialNetwork()
+                {
+                    Address = "www.instagram.com/xeylov"
+                }
+            };
 
         }
     }

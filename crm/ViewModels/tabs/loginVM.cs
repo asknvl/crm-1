@@ -105,11 +105,12 @@ namespace crm.ViewModels.tabs
                 }
             });
 
-            createCmd = ReactiveCommand.CreateFromTask(async () => { 
+            createCmd = ReactiveCommand.Create(() => { 
                 onCreateUserAction?.Invoke();
             });
 
-            forgotCmd = ReactiveCommand.CreateFromTask(async () => {                 
+            forgotCmd = ReactiveCommand.Create(() => {
+                ws.ShowDialog(new msgDlgVM("Обратитесь к администратору для смены пароля"));                
             });
 #endregion
         }

@@ -25,7 +25,8 @@ namespace crm.ViewModels.tabs.home.screens.users
         }
         #endregion
 
-        public UserEdit() : base(new ApplicationContext() { User = new UserItemTest() })
+        public UserEdit() : base(new ApplicationContext() { 
+            User = new UserItemTest() })
         {
             EditActions = new ObservableCollection<BaseScreen>();
             EditActions.Add(new editUserInfo(AppContext));

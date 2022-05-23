@@ -54,6 +54,10 @@
     <None Remove="Assets\svgs\leftslidemenu\subscriptions.svg" />
     <None Remove="Assets\svgs\leftslidemenu\vector_d.svg" />
     <None Remove="Assets\svgs\user.svg" />
+    <None Remove="Assets\svgs\window\close.svg" />
+    <None Remove="Assets\svgs\window\curtail.svg" />
+    <None Remove="Assets\svgs\window\empty.svg" />
+    <None Remove="Assets\svgs\window\expand_max.svg" />
     <None Remove="Assets\vector_r.svg" />
   </ItemGroup>
   <ItemGroup>

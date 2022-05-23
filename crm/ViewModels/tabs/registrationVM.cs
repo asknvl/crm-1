@@ -45,8 +45,7 @@ namespace crm.ViewModels.tabs
         IAutoComplete birth_ac = new BirtDateAutoCompletion();
         IValidator<string> phone_vl = new PhoneNumberValidator();
         IValidator<string> tg_vl = new TelegramValidator();
-        IValidator<string> wallet_vl = new WalletValidator();
-        IValidator<string> device_vl = new DeviceValidator();
+        IValidator<string> wallet_vl = new WalletValidator();        
 
         IWindowService ws = WindowService.getInstance();
 
@@ -200,28 +199,7 @@ namespace crm.ViewModels.tabs
                 this.RaiseAndSetIfChanged(ref wallet, value);
             }
         }
-
-        public List<string> Devices { get; } = new List<string>() {
-            "MacBook Pro 13",
-            "MacBook Pro 14",
-            "MacBook Aero 13",
-            "MacBook Aero 14"
-        };
-
-        string device;
-        public string Device
-        {
-            get => device;
-            set
-            {
-                isDevice = device_vl.IsValid(value);
-                if (!isDevice)
-                    throw new DataValidationException(device_vl.Message);
-                System.Diagnostics.Debug.WriteLine(value);
-                this.RaiseAndSetIfChanged(ref device, value);
-
-            }
-        }
+                
         public string Token { get; set; }
         #endregion
 
@@ -241,8 +219,7 @@ namespace crm.ViewModels.tabs
             BirthDate = "28.06.1986";
             PhoneNumber = "+7 (925) 618-69-36";
             Telegram = "@xeylov";
-            Wallet = "$$$$$$";
-            Device = "Big Gun";
+            Wallet = "$$$$$$";            
 #endif
 
             #region commands
@@ -259,19 +236,16 @@ namespace crm.ViewModels.tabs
             {
 
                 User user = new User() {
-
                     Email = Email,
                     Password = Password1,
                     FullName = FullName,
                     BirthDate = BirthDate,
                     PhoneNumber = PhoneNumber,
                     Telegram = Telegram,
-                    Wallet = Wallet,
-                    Devices = new List<Device> { new Device() { Name = Device } }                    
+                    Wallet = Wallet,                    
                 };
 
                 string[] splt = FullName.Split(" ");
-
                 user.FirstName = splt[1];
                 user.MiddleName = splt[2];
                 user.LastName = splt[0];

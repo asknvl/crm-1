@@ -88,7 +88,7 @@
 					</Style>
 				</TextBox.Styles>				
 			</TextBox>
-			<AutoCompleteBox
+			<!--<AutoCompleteBox
 				Text="{Binding Device}"
 				Items="{Binding Devices}"
 				Classes="TextBox CenterBlack"
@@ -99,7 +99,7 @@
 						<TextBlock Text="{Binding}" FontSize="12"/>
 					</DataTemplate>
 				</AutoCompleteBox.ItemTemplate>				
-			</AutoCompleteBox>
+			</AutoCompleteBox>-->
 			
 			<Button Command="{Binding registerCmd}" IsEnabled="{Binding IsInputValid}" Classes="Button CenterBlack" Content="Зарегистрироваться"/>
 		</StackPanel>

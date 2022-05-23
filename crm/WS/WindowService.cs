@@ -82,6 +82,11 @@ namespace crm.WS
                 wnd = new errMsgDlg();
             }
 
+            if (vm is msgDlgVM)
+            {
+                wnd = new msgDlg();
+            }
+
             if (vm is tagsDlgVM)
             {
                 wnd = new tagsDlg();
