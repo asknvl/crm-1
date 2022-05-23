@@ -149,14 +149,15 @@ namespace crm.ViewModels.tabs.home.screens.users
             PhoneNumber = user.PhoneNumber;
             BirthDate = user.BirthDate;
             Telegram = user.Telegram;
+            Wallet = user.Wallet;
 
             foreach (var item in user.SocialNetworks)
                 SocialNetworks.Add(item);
 
             openTelegram = ReactiveCommand.Create(() => {
-                System.Diagnostics.Process.Start(new ProcessStartInfo
+                Process.Start(new ProcessStartInfo
                 {
-                    FileName = "tg://resolve?domain=@xeylov",
+                    FileName = $"tg://resolve?domain={Telegram}",
                     UseShellExecute = true
                 });
             });
@@ -175,6 +176,7 @@ namespace crm.ViewModels.tabs.home.screens.users
             PhoneNumber = user.PhoneNumber;
             BirthDate = user.BirthDate;
             Telegram = user.Telegram;
+            Wallet = user.Wallet;
 
             foreach (var item in user.SocialNetworks)
                 SocialNetworks.Add(item);

@@ -11,19 +11,20 @@
 	</UserControl.DataContext>
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/DataValidationErros.axaml"/>
-		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
-		<StyleInclude Source="/Styles/TabStyles.axaml"/>
+		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>		
 	</UserControl.Styles>
 	<Grid
-		RowDefinitions="Auto, *">
+		RowDefinitions="Auto, *"
+		ColumnDefinitions="1*, 1*">
 		<TextBlock
 			Text="Основная информация"
 			Grid.Row="0"
 			FontSize="16"
 			FontWeight="Bold"/>
-		<StackPanel
+		<StackPanel						
 			Margin="0, 30, 0, 0"
 			Grid.Row="1"
+			Grid.Column="0"
 			Orientation="Vertical">
 			<Border
 				Classes="Border Separator">
@@ -96,14 +97,30 @@
 						Телеграм
 					</TextBlock>
 					<Button
+						IsVisible="False"
+						Background="Yellow"
 						Command="{Binding openTelegram}"
-						Classes="Button Hyper"
-						Grid.Column="1"
-						Content="{Binding Telegram}">						
-						<!--<TextBox
-							Text="{Binding Telegram}"/>-->						
+						HorizontalAlignment="Left"
+						Classes="Button HyperLink"						
+						Grid.Column="1"					
+						Content="{Binding Telegram}">															
 					</Button>
-
+					<TextBox	
+						IsVisible="True"
+						Text="{Binding Telegram}"
+						Grid.Column="1"/>
+				</Grid>				
+			</Border>
+			<Border Classes="Border Separator">
+				<Grid ColumnDefinitions="1*, 1*">
+					<TextBlock
+						Classes="TextBlock Param"
+						Grid.Column="0">
+						USDT TRC20
+					</TextBlock>
+					<TextBox
+						Text="{Binding Wallet}"
+						Grid.Column="1"/>
 				</Grid>
 			</Border>
 			<StackPanel.Styles>
@@ -111,9 +128,8 @@
 					<Setter Property="HorizontalAlignment" Value="Stretch"/>
 				</Style>
 				<Style Selector="Border.Separator">
-					<Setter Property="Height" Value="50"/>
-					<Setter Property="Width" Value="600"/>
-					<Setter Property="HorizontalAlignment" Value="Left"/>
+					<Setter Property="Height" Value="50"/>					
+					<Setter Property="HorizontalAlignment" Value="Stretch"/>
 					<Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
 					<Setter Property="BorderBrush" Value="#FFE5E5E5"/>
 				</Style>

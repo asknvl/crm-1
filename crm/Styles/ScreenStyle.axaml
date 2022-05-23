@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-			<Button Classes="Button Top">				
+			<Button Classes="Button HyperLink">				
 				123
 			</Button>
         </Border>
@@ -47,6 +47,23 @@
 		<Setter Property="Padding" Value="0"/>
 		<Setter Property="Margin" Value="0"/>
 		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF" />		
+	</Style>
+	<Style Selector="Button.HyperLink">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="#FF464646"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="BorderBrush" Value="Transparent" />		
+		<Setter Property="Padding" Value="4" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+	</Style>
+	<Style Selector="Button.HyperLink:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>
+	</Style>
+	<Style Selector="Button.HyperLink /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
 	</Style>
 	<!--Pages-->
 	<Style Selector="Border.Page">
