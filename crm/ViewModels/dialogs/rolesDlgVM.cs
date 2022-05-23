@@ -2,6 +2,7 @@
 using crm.Models.api.server;
 using crm.Models.appcontext;
 using crm.Models.user;
+using crm.ViewModels.Helpers;
 using crm.WS;
 using ReactiveUI;
 using System;
@@ -20,6 +21,7 @@ namespace crm.ViewModels.dialogs
     {
         #region vars
         IWindowService ws = WindowService.getInstance();
+        TagsAndRolesConvetrer convetrer = new();
         #endregion
 
         #region properties
@@ -41,20 +43,8 @@ namespace crm.ViewModels.dialogs
 
         public rolesDlgVM()
         {
-
             IsValidSelection = false;
-
-            Tags = new ObservableCollection<tagsListItem>() {
-                new tagsListItem(Role.admin),
-                new tagsListItem(Role.financier),
-                new tagsListItem(Role.comment),
-                new tagsListItem(Role.creative),
-                new tagsListItem(Role.media),
-                new tagsListItem(Role.teamlead),
-                new tagsListItem(Role.link),
-                new tagsListItem(Role.farm),
-                new tagsListItem(Role.creative)
-            };
+            Tags = convetrer.GetAllTags();
         }
 
         public rolesDlgVM(ApplicationContext appcontext)
@@ -65,19 +55,8 @@ namespace crm.ViewModels.dialogs
             Selection = new SelectionModel<tagsListItem>();
             Selection.SingleSelect = false;
             Selection.SelectionChanged += Selection_SelectionChanged;
-            
 
-            Tags = new ObservableCollection<tagsListItem>() {
-                new tagsListItem(Role.admin),
-                new tagsListItem(Role.financier),
-                new tagsListItem(Role.comment),
-                new tagsListItem(Role.creative),
-                new tagsListItem(Role.media),
-                new tagsListItem(Role.teamlead),
-                new tagsListItem(Role.link),
-                new tagsListItem(Role.farm),
-                new tagsListItem(Role.creative)
-            };
+            Tags = convetrer.GetAllTags();
 
             #region commands    
             cancelCmd = ReactiveCommand.Create(() => {
@@ -86,50 +65,7 @@ namespace crm.ViewModels.dialogs
 
             acceptCmd = ReactiveCommand.CreateFromTask(async () => {
 
-                List<Role> roles = new List<Role>();
-
-                bool isAdmin = SelectedTags.Any(t => t.Name.Equals(Role.admin));
-                bool isTeamLead = SelectedTags.Any(t => t.Name.Equals(Role.teamlead));                
-                bool isComment = SelectedTags.Any(t => t.Name.Equals(Role.comment));                
-                bool isMedia = SelectedTags.Any(t => t.Name.Equals(Role.media));
-                bool isLink = SelectedTags.Any(t => t.Name.Equals(Role.link));
-                bool isFarm = SelectedTags.Any(t => t.Name.Equals(Role.farm));
-                bool isCreative = SelectedTags.Any(t => t.Name.Equals(Role.creative));
-                bool isFinancier = SelectedTags.Any(t => t.Name.Equals(Role.financier));
-
-                if (isAdmin)
-                    roles.Add(new Role(RoleType.admin));
-
-                if (isTeamLead)
-                {                    
-                    if (isComment)
-                        roles.Add(new Role(RoleType.team_lead_comment));
-                    if (isMedia)
-                        roles.Add(new Role(RoleType.team_lead_media));
-                    if (isLink)
-                        roles.Add(new Role(RoleType.team_lead_link));
-                    if (isFarm)
-                        roles.Add(new Role(RoleType.team_lead_farm));
-                } else
-                {
-                    if (isComment)
-                        roles.Add(new Role(RoleType.buyer_comment));
-                    if (isMedia)
-                        roles.Add(new Role(RoleType.buyer_media));
-                    if (isLink)
-                        roles.Add(new Role(RoleType.buyer_link));
-                    if (isFarm)
-                        roles.Add(new Role(RoleType.buyer_farm));
-                }
-
-                if (isFinancier)
-                    roles.Add(new Role(RoleType.financier));
-                if (isCreative)
-                    roles.Add(new Role(RoleType.creative));
-
-                //Debug.WriteLine("----------");
-                //foreach (var item in roles)
-                //    Debug.WriteLine(item.Name);
+                var roles = convetrer.TagsToRoles(SelectedTags);
 
                 string newtoken = "";
                 try

@@ -31,8 +31,7 @@
 				Выберите роли для пользователя
 			</TextBlock>
 		</Grid>
-		<ListBox	
-			
+		<ListBox				
 			Grid.Row="1"
 			Items="{Binding Tags}"			
 			Selection="{Binding Selection}"

@@ -130,9 +130,13 @@ namespace crm.Models.api.server
                 
                 request.AddParameter("application/json", p.ToString(), ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
-                if (!response.IsSuccessful)
-                    throw new ServerResponseException(response.StatusCode);
                 JObject json = JObject.Parse(response.Content);
+                if (!response.IsSuccessful)
+                {
+                    string e = json["errors"].ToString();
+                    List<ServerError>? errors = JsonConvert.DeserializeObject<List<ServerError>>(e);
+                    throw new ServerException($"{getErrMsg(errors)}");
+                }                
                 res = json["success"].ToObject<bool>();
                 if (res == null)
                     throw new NoDataReceivedException();

@@ -1,8 +1,11 @@
-﻿using Avalonia.Data;
+﻿using Avalonia.Controls.Selection;
+using Avalonia.Data;
 using crm.Models.appcontext;
 using crm.Models.autocompletions;
 using crm.Models.user;
 using crm.Models.validators;
+using crm.ViewModels.dialogs;
+using crm.ViewModels.Helpers;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -34,6 +37,9 @@ namespace crm.ViewModels.tabs.home.screens.users
            isTelegram,
            isWallet;
 
+        TagsAndRolesConvetrer convetrer = new();
+        public List<tagsListItem> SelectedTags { get; } = new();
+        public SelectionModel<tagsListItem> Selection { get; }
         #endregion
 
         #region properties
@@ -132,6 +138,8 @@ namespace crm.ViewModels.tabs.home.screens.users
             }
         }
 
+        public ObservableCollection<tagsListItem> Tags { get; } = new();
+
         #endregion
 
         #region commands
@@ -161,6 +169,8 @@ namespace crm.ViewModels.tabs.home.screens.users
                     UseShellExecute = true
                 });
             });
+
+            Tags = convetrer.GetAllTags();
 
             editCmd = ReactiveCommand.Create(() => { });
             saveCmd = ReactiveCommand.Create(() => { });
