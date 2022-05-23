@@ -15,7 +15,7 @@
 	</UserControl.Styles>
 	<Grid
 		RowDefinitions="Auto, *"
-		ColumnDefinitions="1*, 1*">
+		ColumnDefinitions="1.4*, 1*">
 		<TextBlock
 			Text="Основная информация"
 			Grid.Row="0"
@@ -236,6 +236,13 @@
 				</StackPanel.Styles>
 			</StackPanel>
 		</ScrollViewer>
-
+		<Grid
+			Grid.Column="1"
+			Grid.RowSpan="2"
+			VerticalAlignment="Center">
+			<Image
+				Source="avares://crm/Assets/png/screens/userinfo.png" Width="400"
+				Margin="0, -150, 0, 0"/>
+		</Grid>
 	</Grid>
 </UserControl>
