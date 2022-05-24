@@ -101,7 +101,7 @@
 		</Grid>
 		<Grid
 			Grid.Row="3">
-			<ScrollViewer >
+			<ScrollViewer>
 				<Grid RowDefinitions="Auto, *">
 					<Grid
 						VerticalAlignment="Center"

@@ -119,6 +119,40 @@
 	<Style Selector="Button.PageRight Svg">
 		<Setter Property="Path" Value="/Assets/svgs/screens/arrow_right.svg"/>
 	</Style>
+	<!--ToggleButton-->
+	<Style Selector="ToggleButton.Dialog">		
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="CornerRadius" Value="3"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="Margin" Value="0"/>
+		<Setter Property="Height" Value="30"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Padding" Value="10, 0, 10, 0"/>
+	</Style>
+	<Style Selector="Button.Dialog:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
+	</Style>
 	
-	
+	<Style Selector="ToggleButton.Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>		
+	</Style>
+
+	<Style Selector="ToggleButton.Dialog:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>		
+	</Style>
+	<!--<Style Selector="ToggleButton Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Content" Value="Сохранить"/>
+	</Style>
+	<Style Selector="ToggleButton Dialog:not(:checked) /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Content" Value="Редактировать"/>
+	</Style>-->
+
 </Styles>

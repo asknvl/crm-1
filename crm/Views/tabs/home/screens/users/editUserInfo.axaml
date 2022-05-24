@@ -12,20 +12,55 @@
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/DataValidationErros.axaml"/>
 		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
+		<StyleInclude Source="/Styles/UserListStyle.axaml"/>
 	</UserControl.Styles>
-	<Grid
-		RowDefinitions="Auto, *"
-		ColumnDefinitions="620, 400">
-		<TextBlock
-			Text="Основная информация"
-			Grid.Row="0"
-			FontSize="16"
-			FontWeight="Bold"/>
-		<ScrollViewer			
-			Grid.Row="1"
-			Grid.Column="0"
-			VerticalScrollBarVisibility="Hidden">
-			<StackPanel					
+	<ScrollViewer
+		VerticalScrollBarVisibility="Hidden"
+		HorizontalScrollBarVisibility="Hidden">
+		<Grid
+			RowDefinitions="Auto, *"
+			ColumnDefinitions="620, 400">
+			<TextBlock
+				Text="Основная информация"
+				Grid.Row="0"
+				FontSize="16"
+				VerticalAlignment="Center"
+				FontWeight="Bold"/>
+			<StackPanel
+				Grid.Row="0"
+				Grid.Column="0"
+				HorizontalAlignment="Left"
+				VerticalAlignment="Center"
+				Margin="350, 0, 0, 0"
+				Orientation="Horizontal">
+				<ToggleButton Width="130"
+						Classes="ToggleButton Dialog"
+						Height="30"
+						Margin="0, 0, 4, 0"
+						HorizontalContentAlignment="Center"
+						VerticalContentAlignment="Center">
+					Отменить
+				</ToggleButton>
+				<ToggleButton
+					Name="PART_EditSave"
+					Width="130"
+					Classes="ToggleButton Dialog"
+					Height="30"
+					Margin="4, 0, 0, 0"
+					HorizontalContentAlignment="Center"
+					VerticalContentAlignment="Center">
+					<ToggleButton.Styles>
+						<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+							<Setter Property="Content" Value="Сохранить"/>
+						</Style>
+						<Style Selector="ToggleButton:not(:checked) /template/ ContentPresenter#PART_ContentPresenter">
+							<Setter Property="Content" Value="Редактировать"/>
+						</Style>
+					</ToggleButton.Styles>
+				</ToggleButton>
+			</StackPanel>
+
+			<StackPanel
 				Margin="0, 20, 0, 0"
 				Grid.Row="1"
 				Grid.Column="0"
@@ -125,7 +160,7 @@
 					ColumnDefinitions="1*, 2*">
 					<TextBlock
 						Classes="TextBlock Param"
-						VerticalAlignment="Center"						
+						VerticalAlignment="Center"
 						Grid.Column="0">
 						USDT TRC20
 					</TextBlock>
@@ -134,15 +169,15 @@
 						Grid.Column="1"/>
 				</Grid>
 				<Separator BorderBrush="#FFE5E5E5" BorderThickness="0.5"/>
-				<Grid					
+				<Grid
 					ColumnDefinitions="1*, 2*">
-					<TextBlock						
+					<TextBlock
 						Classes="TextBlock Param"
 						VerticalAlignment="Top"
 						Grid.Column="0"
 						Margin="0, 10, 0, 0">
 						Тэги
-					</TextBlock>										
+					</TextBlock>
 					<ListBox
 						Items="{Binding Tags}"
 						Selection="{Binding Selection}"
@@ -202,12 +237,45 @@
 						</ListBox.Styles>
 					</ListBox>
 				</Grid>
-				
+
+				<!--<Grid
+					ColumnDefinitions="1*, 2*">
+					<StackPanel						
+						Grid.Row="0"						
+						Grid.Column="1"						
+						Margin="5, 10, 0, 0"
+						Orientation="Horizontal">
+						<ToggleButton Width="130"	
+								Classes="ToggleButton Dialog"
+								Height="30"
+								Margin="0, 0, 2, 0"
+								HorizontalContentAlignment="Center"
+								VerticalContentAlignment="Center">
+							Отменить
+						</ToggleButton>
+						<ToggleButton Width="130"			
+								Classes="ToggleButton Dialog"
+								Height="30"
+								Margin="2, 0, 0, 0"
+								HorizontalContentAlignment="Center"
+								VerticalContentAlignment="Center">
+							<ToggleButton.Styles>
+								<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+									<Setter Property="Content" Value="Сохранить"/>
+								</Style>
+								<Style Selector="ToggleButton:not(:checked) /template/ ContentPresenter#PART_ContentPresenter">
+									<Setter Property="Content" Value="Редактировать"/>
+								</Style>
+							</ToggleButton.Styles>						
+						</ToggleButton>
+					</StackPanel>
+				</Grid>-->
+
 				<StackPanel.Styles>
 					<Style Selector="Grid.Items">
 						<Setter Property="HorizontalAlignment" Value="Stretch"/>
 						<Setter Property="Height" Value="40"/>
-					</Style>					
+					</Style>
 					<Style Selector="TextBlock.Param">
 						<Setter Property="VerticalAlignment" Value="Center"/>
 						<Setter Property="FontSize" Value="12"/>
@@ -215,6 +283,7 @@
 						<Setter Property="Margin" Value="0, 1, 0, 0"/>
 					</Style>
 					<Style Selector="TextBox">
+						<Setter Property="IsReadOnly" Value="{Binding #PART_EditSave.IsChecked}"/>
 						<Setter Property="VerticalAlignment" Value="Center"/>
 						<Setter Property="VerticalContentAlignment" Value="Center"/>
 						<Setter Property="FontSize" Value="12"/>
@@ -235,16 +304,16 @@
 					</Style>
 				</StackPanel.Styles>
 			</StackPanel>
-		</ScrollViewer>
-		<Grid
-			Grid.Column="1"
-			Grid.Row="1"			
-			VerticalAlignment="Top"
-			HorizontalAlignment="Left"
-			Margin="50, 50, 0, 0">
-			<Image
-				Source="avares://crm/Assets/png/screens/userinfo.png" Width="400"/>
-				
+
+			<Grid
+				Grid.Column="1"
+				Grid.Row="1"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Left"
+				Margin="50, 50, 0, 0">
+				<Image
+					Source="avares://crm/Assets/png/screens/userinfo.png" Width="400" Height="329"/>
+			</Grid>
 		</Grid>
-	</Grid>
+	</ScrollViewer>
 </UserControl>
