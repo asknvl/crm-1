@@ -45,11 +45,21 @@ namespace crm.ViewModels.tabs.home.screens.users
         #region properties
         public override string Title => "Редактировать";
 
-        bool isInputValid;
+        bool isInputValid = true;
         public bool IsInputValid
         {
             get => isInputValid;
-            set => this.RaiseAndSetIfChanged(ref isInputValid, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isInputValid, value);
+            }
+        }
+
+        bool isEditChecked = false;
+        public bool IsEditChecked
+        {
+            get => isEditChecked;
+            set => this.RaiseAndSetIfChanged(ref isEditChecked, value);
         }
 
         string fullname;
@@ -59,9 +69,9 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isFullName = fn_vl.IsValid(value);
-                if (!isFullName)
-                    throw new DataValidationException(fn_vl.Message);
                 updateValidity();
+                if (!isFullName)
+                    throw new DataValidationException(fn_vl.Message);                
                 this.RaiseAndSetIfChanged(ref fullname, value);
             }
         }
@@ -73,9 +83,9 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isEmail = email_vl.IsValid(value);
-                if (!isEmail)
-                    throw new DataValidationException("Введен некорректный e-mail");
                 updateValidity();
+                if (!isEmail)
+                    throw new DataValidationException("Введен некорректный e-mail");                
                 this.RaiseAndSetIfChanged(ref email, value);
             }
         }
@@ -87,9 +97,9 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isPhoneNumber = phone_vl.IsValid(value);
-                if (!isPhoneNumber)
-                    throw new DataValidationException(phone_vl.Message);
                 updateValidity();
+                if (!isPhoneNumber)
+                    throw new DataValidationException(phone_vl.Message);                
                 this.RaiseAndSetIfChanged(ref phonenumber, value);
             }
         }
@@ -101,9 +111,9 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isBirthDate = birth_vl.IsValid(value);
-                if (!isBirthDate)
-                    throw new DataValidationException(birth_vl.Message);
                 updateValidity();
+                if (!isBirthDate)
+                    throw new DataValidationException(birth_vl.Message);                
                 this.RaiseAndSetIfChanged(ref birthdate, value);
             }
         }
@@ -117,9 +127,9 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isTelegram = tg_vl.IsValid(value);
-                if (!isTelegram)
-                    throw new DataValidationException(tg_vl.Message);
                 updateValidity();
+                if (!isTelegram)
+                    throw new DataValidationException(tg_vl.Message);                
                 this.RaiseAndSetIfChanged(ref telegram, value);
             }
         }
@@ -131,9 +141,9 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isWallet = wallet_vl.IsValid(value);
-                if (!isWallet)
-                    throw new DataValidationException(wallet_vl.Message);
                 updateValidity();
+                if (!isWallet)
+                    throw new DataValidationException(wallet_vl.Message);                
                 this.RaiseAndSetIfChanged(ref wallet, value);
             }
         }

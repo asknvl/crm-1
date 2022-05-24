@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-			<Button Classes="Button HyperLink">				
+			<ToggleButton Classes="Button Dialog" IsEnabled="True" IsChecked="True">				
 				123
-			</Button>
+			</ToggleButton>
         </Border>
     </Design.PreviewWith>
 	<Styles.Resources>
@@ -131,18 +131,26 @@
 		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="Padding" Value="10, 0, 10, 0"/>
 	</Style>
-	<Style Selector="Button.Dialog:disabled /template/ ContentPresenter#PART_ContentPresenter">
+	<Style Selector="ToggleButton.Dialog /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>
+	</Style>
+	<Style Selector="ToggleButton.Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>
+	</Style>
+	<Style Selector="ToggleButton.Dialog:disabled /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="#FFFFFFFF"/>
 		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
 		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
 	</Style>
-	
-	<Style Selector="ToggleButton.Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
+	<Style Selector="ToggleButton.Dialog:checked:disabled /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FF464646"/>
-		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>		
-	</Style>
-
+		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
+	</Style>	
 	<Style Selector="ToggleButton.Dialog:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="#FFFFFFFF"/>
 		<Setter Property="BorderBrush" Value="#FF464646"/>

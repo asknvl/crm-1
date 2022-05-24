@@ -61,9 +61,9 @@ namespace crm.ViewModels.tabs
             {
                 value = email_ac.AutoComplete(value);
                 isEmail = email_vl.IsValid(value);
-                if (!isEmail)
-                    throw new DataValidationException("Введен некорректный e-mail");
                 updateValidity();
+                if (!isEmail)
+                    throw new DataValidationException("Введен некорректный e-mail");                
                 this.RaiseAndSetIfChanged(ref email, value);
             }
         }
@@ -136,9 +136,9 @@ namespace crm.ViewModels.tabs
             set
             {
                 isFullName = fn_vl.IsValid(value);
-                if (!isFullName)
-                    throw new DataValidationException(fn_vl.Message);
                 updateValidity();
+                if (!isFullName)
+                    throw new DataValidationException(fn_vl.Message);                
                 this.RaiseAndSetIfChanged(ref fullname, value);
             }
         }
@@ -151,9 +151,9 @@ namespace crm.ViewModels.tabs
             {
                 value = birth_ac.AutoComplete(value);
                 isBirthDate = birth_vl.IsValid(value);
-                if (!isBirthDate)
-                    throw new DataValidationException(birth_vl.Message);
                 updateValidity();
+                if (!isBirthDate)
+                    throw new DataValidationException(birth_vl.Message);                
                 this.RaiseAndSetIfChanged(ref birthdate, value);
             }
         }
@@ -165,9 +165,9 @@ namespace crm.ViewModels.tabs
             set
             {
                 isPhoneNumber = phone_vl.IsValid(value);
-                if (!isPhoneNumber)
-                    throw new DataValidationException(phone_vl.Message);
                 updateValidity();
+                if (!isPhoneNumber)
+                    throw new DataValidationException(phone_vl.Message);                
                 this.RaiseAndSetIfChanged(ref phonenumber, value);
             }
         }
@@ -179,9 +179,9 @@ namespace crm.ViewModels.tabs
             set
             {
                 isTelegram = tg_vl.IsValid(value);
-                if (!isTelegram)
-                    throw new DataValidationException(tg_vl.Message);
                 updateValidity();
+                if (!isTelegram)
+                    throw new DataValidationException(tg_vl.Message);                
                 this.RaiseAndSetIfChanged(ref telegram, value);
             }
         }
@@ -193,9 +193,9 @@ namespace crm.ViewModels.tabs
             set
             {
                 isWallet = wallet_vl.IsValid(value);
-                if (!isWallet)
-                    throw new DataValidationException(wallet_vl.Message);
                 updateValidity();
+                if (!isWallet)
+                    throw new DataValidationException(wallet_vl.Message);                
                 this.RaiseAndSetIfChanged(ref wallet, value);
             }
         }
