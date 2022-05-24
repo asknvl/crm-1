@@ -1,4 +1,5 @@
-﻿using crm.Models.user;
+﻿using crm.Models.appcontext;
+using crm.Models.user;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,15 @@ namespace crm.ViewModels.tabs.home.screens.users
 {
     public class UserItemTest : UserListItem
     {
-        public UserItemTest()
+
+        static int cntr;
+
+        public UserItemTest(ApplicationContext appcontext) : base(appcontext)
         {
-            Id = "1";
+            Id = $"{++cntr}";            
             Litera = "Y";
             Email = "asknvl@protonmail.com";
-            FullName = "Коновалов Алексей Сергеевич";
+            FullName = $"Коновалов Алексей Сергеевич";
             LastName = "Коновалов";
             FirstName = "Алексей";
             MiddleName = "Сергеевич";

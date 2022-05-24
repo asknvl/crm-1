@@ -15,5 +15,6 @@ namespace crm.Models.api.server
         Task<User> GetUser(string id, string token);
         Task<(List<User>, int, int)> GetUsers(int page, int size, string token);
         Task<string> GetNewUserToken(List<Role> roles, string token);
+        Task<bool> UpdateUserInfo(string token, BaseUser user);
     }
 }

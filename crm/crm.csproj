@@ -7,6 +7,12 @@
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>ONLINE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>ONLINE</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>		  
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaXaml Remove="libs\**" />	  

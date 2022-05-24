@@ -14,7 +14,7 @@ namespace crm.Models.user
         #region properties
         string id;
         [JsonProperty("id")]
-        public string Id
+        public virtual string Id
         {
             get => id;
             set => this.RaiseAndSetIfChanged(ref id, value);

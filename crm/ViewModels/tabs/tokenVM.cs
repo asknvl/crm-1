@@ -1,6 +1,4 @@
-﻿//#define ALLOK
-
-using Avalonia.Data;
+﻿using Avalonia.Data;
 using crm.Models.api.server;
 using crm.Models.appcontext;
 using crm.Models.validators;
@@ -58,9 +56,9 @@ namespace crm.ViewModels.tabs
             #region commands
             continueCmd = ReactiveCommand.CreateFromTask(async () =>
             {
-#if ALLOK
+#if OFFLINE
                 onTokenCheckResult?.Invoke(true, Token);
-#else
+#elif ONLINE
 
                 bool res = false;
                 try

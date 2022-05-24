@@ -34,13 +34,31 @@ namespace crm.Models.user
         public const string link = "Связка";
         public const string farm = "Фарм";
 
+        
+        int id;
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public int Id { 
+            get => id;
+            set
+            {
+                id = value;
+                Type = (RoleType)id;
+            }
+        }
         //[JsonProperty("name")]
         [JsonIgnore]
         public string Name { get; set; }
+        
+        RoleType type;
         [JsonIgnore]
-        public RoleType Type { get; }
+        public RoleType Type {
+            get => type;
+            set
+            {
+                type = value;
+                //Id = (int)type;
+            }
+        }
 
         public Role(RoleType type)
         {
@@ -59,7 +77,6 @@ namespace crm.Models.user
         public Role()
         {
         }    
-       
     }
 
 }

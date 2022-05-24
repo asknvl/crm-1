@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace crm.ViewModels.tabs.home.screens.users
 {
-    public class editUserInfo : BaseScreen
+    public class editUserInfo : BaseScreen, ICommandActions
     {
         #region vars
         IValidator<string> fn_vl = new FullNameValidator();
@@ -35,15 +35,23 @@ namespace crm.ViewModels.tabs.home.screens.users
            isBirthDate,
            isPhoneNumber,
            isTelegram,
-           isWallet;
+           isWallet,
+           isRoles;
 
         TagsAndRolesConvetrer convetrer = new();
-        public List<tagsListItem> SelectedTags { get; } = new();
-        public SelectionModel<tagsListItem> Selection { get; }
+
+        BaseUser user;
+        string token;
         #endregion
 
         #region properties
         public override string Title => "Редактировать";
+
+        bool isEditable;
+        public bool IsEditable { 
+            get => isEditable;
+            set => this.RaiseAndSetIfChanged(ref isEditable, value);
+        }
 
         bool isInputValid = true;
         public bool IsInputValid
@@ -55,13 +63,6 @@ namespace crm.ViewModels.tabs.home.screens.users
             }
         }
 
-        bool isEditChecked = false;
-        public bool IsEditChecked
-        {
-            get => isEditChecked;
-            set => this.RaiseAndSetIfChanged(ref isEditChecked, value);
-        }
-
         string fullname;
         public string FullName
         {
@@ -69,9 +70,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isFullName = fn_vl.IsValid(value);
-                updateValidity();
+                //updateValidity();
+                //if (!isFullName) { 
+                //    throw new DataValidationException(fn_vl.Message);                
                 if (!isFullName)
-                    throw new DataValidationException(fn_vl.Message);                
+                    AddError(nameof(FullName), fn_vl.Message);
+                else
+                    RemoveError(nameof(FullName));
+                updateValidity();
                 this.RaiseAndSetIfChanged(ref fullname, value);
             }
         }
@@ -83,9 +89,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isEmail = email_vl.IsValid(value);
-                updateValidity();
+                //updateValidity();
+                //if (!isEmail)
+                //    throw new DataValidationException("Введен некорректный e-mail");                
                 if (!isEmail)
-                    throw new DataValidationException("Введен некорректный e-mail");                
+                    AddError(nameof(Email), fn_vl.Message);
+                else
+                    RemoveError(nameof (Email));
+                updateValidity();
                 this.RaiseAndSetIfChanged(ref email, value);
             }
         }
@@ -97,9 +108,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isPhoneNumber = phone_vl.IsValid(value);
-                updateValidity();
+                //updateValidity();
+                //if (!isPhoneNumber)
+                //    throw new DataValidationException(phone_vl.Message);                
                 if (!isPhoneNumber)
-                    throw new DataValidationException(phone_vl.Message);                
+                    AddError(nameof(PhoneNumber), phone_vl.Message);
+                else
+                    RemoveError(nameof(PhoneNumber));
+                updateValidity();
                 this.RaiseAndSetIfChanged(ref phonenumber, value);
             }
         }
@@ -111,9 +127,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isBirthDate = birth_vl.IsValid(value);
-                updateValidity();
+                //updateValidity();
+                //if (!isBirthDate)
+                //    throw new DataValidationException(birth_vl.Message);                
                 if (!isBirthDate)
-                    throw new DataValidationException(birth_vl.Message);                
+                    AddError(nameof(BirthDate), birth_vl.Message);
+                else
+                    RemoveError(nameof(BirthDate));
+                updateValidity();
                 this.RaiseAndSetIfChanged(ref birthdate, value);
             }
         }
@@ -127,9 +148,13 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isTelegram = tg_vl.IsValid(value);
-                updateValidity();
+                //updateValidity();
+                //if (!isTelegram)
+                //    throw new DataValidationException(tg_vl.Message);                
                 if (!isTelegram)
-                    throw new DataValidationException(tg_vl.Message);                
+                    AddError(nameof(Telegram), tg_vl.Message);
+                else
+                    RemoveError(nameof(Telegram));                    
                 this.RaiseAndSetIfChanged(ref telegram, value);
             }
         }
@@ -141,25 +166,30 @@ namespace crm.ViewModels.tabs.home.screens.users
             set
             {
                 isWallet = wallet_vl.IsValid(value);
-                updateValidity();
+                //updateValidity();
+                //if (!isWallet)
+                //    throw new DataValidationException(wallet_vl.Message);                
                 if (!isWallet)
-                    throw new DataValidationException(wallet_vl.Message);                
+                    AddError(nameof(Wallet), wallet_vl.Message);
+                else
+                    RemoveError(nameof(Wallet));
+                updateValidity();
                 this.RaiseAndSetIfChanged(ref wallet, value);
             }
         }
 
-        public ObservableCollection<tagsListItem> Tags { get; } = new();
+        public List<tagsListItem> Tags { get; set; } = new();
+        public List<tagsListItem> SelectedTags { get; set; } = new();
+        public SelectionModel<tagsListItem> Selection { get; set; }
 
         #endregion
 
-        #region commands
-        public ReactiveCommand<Unit, Unit> editCmd { get; }
-        public ReactiveCommand<Unit, Unit> saveCmd { get; }
-        public ReactiveCommand<Unit, Unit> openTelegram { get; }
+        #region commands        
+        public ReactiveCommand<Unit, Unit> openTelegram { get; }        
         #endregion
 
         public editUserInfo() : base(new ApplicationContext())
-        {
+        {        
 
             TestUser user = new TestUser();
             FullName = user.FullName;
@@ -172,25 +202,45 @@ namespace crm.ViewModels.tabs.home.screens.users
             foreach (var item in user.SocialNetworks)
                 SocialNetworks.Add(item);
 
+            //SelectedTags = convetrer.RolesToTags(user.Roles);
+
+            Tags = convetrer.GetAllTagsList();
+            Selection = new SelectionModel<tagsListItem>();
+            Selection.SingleSelect = false;           
+            SelectedTags = convetrer.RolesToTags(user.Roles);
+            foreach (var item in SelectedTags) {
+                int index = Tags.IndexOf(Tags.FirstOrDefault(t => t.Name.Equals(item.Name)));
+                Selection.Select(index);
+            }
+
+            Selection.SelectionChanged += Selection_SelectionChanged;
+
             openTelegram = ReactiveCommand.Create(() => {
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = $"tg://resolve?domain={Telegram}",
                     UseShellExecute = true
                 });
-            });
-
-            Tags = convetrer.GetAllTags();
-
-            editCmd = ReactiveCommand.Create(() => { });
-            saveCmd = ReactiveCommand.Create(() => { });
-
+            });         
+            
         }
 
-        public editUserInfo(ApplicationContext context) : base(context)
+        public editUserInfo(ApplicationContext context, BaseUser user) : base(context)
         {
-            BaseUser user = context.User;
+            this.user = user;
+            token = AppContext.User.Token;
 
+            Tags = convetrer.GetAllTagsList();
+            Selection = new SelectionModel<tagsListItem>();
+            Selection.SingleSelect = false;
+
+            init(user);
+        }
+
+        #region helpers
+        void init(BaseUser user)
+        {
+            
             FullName = user.FullName;
             Email = user.Email;
             PhoneNumber = user.PhoneNumber;
@@ -201,11 +251,17 @@ namespace crm.ViewModels.tabs.home.screens.users
             foreach (var item in user.SocialNetworks)
                 SocialNetworks.Add(item);
 
-            editCmd = ReactiveCommand.Create(() => { });
-            saveCmd = ReactiveCommand.Create(() => { });
-        }
+            Selection.Clear();
+            Selection.SelectionChanged -= Selection_SelectionChanged;
+            SelectedTags = convetrer.RolesToTags(user.Roles);
+            foreach (var item in SelectedTags)
+            {
+                int index = Tags.IndexOf(Tags.FirstOrDefault(t => t.Name.Equals(item.Name)));
+                Selection.Select(index);
+            }
+            Selection.SelectionChanged += Selection_SelectionChanged;
 
-        #region helpers
+        }
         protected bool CheckValidity(bool[] fields)
         {
             return !fields.Any(p => p == false);
@@ -218,9 +274,60 @@ namespace crm.ViewModels.tabs.home.screens.users
                 isBirthDate,
                 isPhoneNumber,
                 isTelegram,
-                isWallet
+                isWallet,
+                isRoles
             });
         }
         #endregion
+
+        #region private
+        private void Selection_SelectionChanged(object? sender, SelectionModelSelectionChangedEventArgs<tagsListItem> e)
+        {
+
+            foreach (var item in e.SelectedItems)
+            {
+                SelectedTags.Add(item);
+            }
+
+            foreach (var item in e.DeselectedItems)
+            {
+                SelectedTags.Remove(item);
+            }
+
+            bool isTeamLead = SelectedTags.Any(t => t.Name.Equals(Role.teamlead));
+            bool isAdmin = SelectedTags.Any(t => t.Name.Equals(Role.admin));
+            bool isAnyOne = SelectedTags.Any(t => !t.Name.Equals(Role.teamlead) && !t.Name.Equals(Role.admin));
+
+            isRoles = (isAdmin && !isTeamLead) || (isTeamLead && isAnyOne) || isAnyOne;
+            updateValidity();
+
+        }
+        #endregion
+
+        #region public
+        public async Task<bool> Save()
+        {
+
+            BaseUser updUser = new User();
+            updUser.Copy(user);
+
+            updUser.Email = Email;
+            updUser.FullName = FullName;
+            updUser.BirthDate = BirthDate;
+            updUser.PhoneNumber = PhoneNumber;
+            updUser.Telegram = Telegram;
+            updUser.Wallet = Wallet;
+            updUser.Roles = convetrer.TagsToRoles(SelectedTags);
+
+            return await AppContext.ServerApi.UpdateUserInfo(token, updUser);
+        }
+
+        public void Cancel()
+        {
+            init(user);
+        }
+
+        #endregion
+
     }
 }

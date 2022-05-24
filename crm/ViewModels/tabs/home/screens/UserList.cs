@@ -40,7 +40,8 @@ namespace crm.ViewModels.tabs.home.screens
         public override string Title => "Список сотрудников";
 
         ObservableCollection<UserListItem> users = new();
-        public ObservableCollection<UserListItem> Users {
+        public ObservableCollection<UserListItem> Users
+        {
             get => users;
             set => this.RaiseAndSetIfChanged(ref users, value);
         }
@@ -116,36 +117,44 @@ namespace crm.ViewModels.tabs.home.screens
             SelectedPage = 1;
 
             #region commands
-            addUserCmd = ReactiveCommand.Create(() => {
+            addUserCmd = ReactiveCommand.Create(() =>
+            {
                 ws.ShowDialog(new rolesDlgVM(AppContext));
             });
 
-            editUserCmd = ReactiveCommand.Create(() => {
+            editUserCmd = ReactiveCommand.Create(() =>
+            {
             });
 
-            showTagsCmd = ReactiveCommand.Create(() => {
+            showTagsCmd = ReactiveCommand.Create(() =>
+            {
             });
 
-            showPaspCmd = ReactiveCommand.Create(() => {
+            showPaspCmd = ReactiveCommand.Create(() =>
+            {
             });
 
-            prevPageCmd = ReactiveCommand.CreateFromTask(async () => {
+            prevPageCmd = ReactiveCommand.CreateFromTask(async () =>
+            {
                 SelectedPage--;
                 try
                 {
                     await updatePageInfo(SelectedPage, PageSize);
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     ws.ShowDialog(new errMsgVM(ex.Message));
                 }
             });
 
-            nextPageCmd = ReactiveCommand.CreateFromTask(async () => {
+            nextPageCmd = ReactiveCommand.CreateFromTask(async () =>
+            {
                 SelectedPage++;
                 try
                 {
                     await updatePageInfo(SelectedPage, PageSize);
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     ws.ShowDialog(new errMsgVM(ex.Message));
                 }
@@ -165,6 +174,10 @@ namespace crm.ViewModels.tabs.home.screens
 
         async Task updatePageInfo(int page, int pagesize)
         {
+#if OFFLINE
+            Users.Add(new UserItemTest(AppContext) { FullName = "Иванов Иван Иванович" });
+            Users.Add(new UserItemTest(AppContext) { FullName = "Петров Петр Петрович" });
+#elif ONLINE
             await Task.Run(async () =>
             {
                 List<User> users;
@@ -174,49 +187,41 @@ namespace crm.ViewModels.tabs.home.screens
                 {
                     Users.Clear();
                 });
-                
+
                 (users, TotalPages, total_users) = await srvApi.GetUsers(page - 1, pagesize, token);
 
                 PageInfo = getPageInfo(page, users.Count, total_users);
 
                 foreach (var user in users)
                 {
-                    var tmp = new UserListItem();
+                    var tmp = new UserListItem(AppContext);
                     tmp.Copy(user);
 
                     await Dispatcher.UIThread.InvokeAsync(() =>
                     {
-                        Users.Add(tmp);                    
+                        Users.Add(tmp);
                     });
                 }
 
                 sckApi.RequestConnectedUsers();
             });
-
-            //Users.Add(new UserItemTest());
-            //Users.Add(new UserItemTest());
-            //Users.Add(new UserItemTest());
-            //Users.Add(new UserItemTest());
-            //Users.Add(new UserItemTest());
-            //Users.Add(new UserItemTest());
-            //Users.Add(new UserItemTest());
-
+#endif
         }
         #endregion
 
         #region override
         public override async void OnActivate()
-        {       
-            base.OnActivate();                        
+        {
+            base.OnActivate();
 
             sckApi.ReceivedConnectedUsersEvent += SckApi_ReceivedConnectedUsersEvent;
 
             try
             {
-                await updatePageInfo(SelectedPage, PageSize);               
+                await updatePageInfo(SelectedPage, PageSize);
             }
             catch (OperationCanceledException ex)
-            {                
+            {
             }
             catch (Exception ex)
             {
@@ -226,7 +231,7 @@ namespace crm.ViewModels.tabs.home.screens
 
         public override void OnDeactivate()
         {
-            sckApi.ReceivedConnectedUsersEvent -= SckApi_ReceivedConnectedUsersEvent;            
+            sckApi.ReceivedConnectedUsersEvent -= SckApi_ReceivedConnectedUsersEvent;
             base.OnDeactivate();
         }
         #endregion

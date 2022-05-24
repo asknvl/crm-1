@@ -1,4 +1,5 @@
-﻿using crm.Models.user;
+﻿using crm.Models.appcontext;
+using crm.Models.user;
 using crm.ViewModels.dialogs;
 using crm.WS;
 using ReactiveUI;
@@ -17,7 +18,7 @@ namespace crm.ViewModels.tabs.home.screens.users
         IWindowService ws = WindowService.getInstance();
         #endregion
 
-        #region properties
+        #region properties        
         bool status;
         public bool Status
         {
@@ -31,14 +32,20 @@ namespace crm.ViewModels.tabs.home.screens.users
 
         #region commands
         public ReactiveCommand<Unit, Unit> showTagsCmd { get; }
+        public ReactiveCommand<Unit, Unit> editUserCmd { get; }
         #endregion
 
-        public UserListItem()
+        public UserListItem(ApplicationContext appcontext)
         {
             #region commands
             showTagsCmd = ReactiveCommand.Create(() => {
                 tagsDlgVM tags = new tagsDlgVM(Roles);
                 ws.ShowDialog(tags);
+            });
+
+            editUserCmd = ReactiveCommand.Create(() => {
+                ScreenTab editTab = new ScreenTab(appcontext.TabService, new UserEdit(appcontext, this));
+                editTab.Show();
             });
             #endregion
         }

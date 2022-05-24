@@ -260,7 +260,7 @@ namespace crm.Models.api.server
             return (users, total_pages, total_users);
         }
 
-        public async Task<string> GetNewUserToken(List<Role> roles, string token)
+        public virtual async Task<string> GetNewUserToken(List<Role> roles, string token)
         {
             string newtoken = string.Empty;
 
@@ -294,6 +294,37 @@ namespace crm.Models.api.server
             });
 
             return newtoken;
+        }
+
+        public virtual async Task<bool> UpdateUserInfo(string token, BaseUser user)
+        {
+            bool res = false;
+
+            await Task.Run(() => {
+
+                var client = new RestClient($"{url}/v1/users/{user.Id}");
+                var request = new RestRequest(Method.PUT);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+
+                user.BirthDate = converter.date(user.BirthDate, Direction.user_server);
+                user.PhoneNumber = converter.phone(user.PhoneNumber, Direction.user_server);
+                user.Telegram = converter.telegram(user.Telegram, Direction.user_server);
+
+                string juser = JsonConvert.SerializeObject(user);
+
+                request.AddParameter("application/json", juser, ParameterType.RequestBody);
+                var response = client.Execute(request);
+                var json = JObject.Parse(response.Content);
+                res = json["success"].ToObject<bool>();
+                if (!res)                
+                {
+                    string e = json["errors"].ToString();
+                    List<ServerError>? errors = JsonConvert.DeserializeObject<List<ServerError>>(e);
+                    throw new ServerException($"{getErrMsg(errors)}");
+                }
+            });
+
+            return res;
         }
 
         #endregion

@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-			<ToggleButton Classes="Button Dialog" IsEnabled="True" IsChecked="True">				
+			<Button Classes="Button Confirm">				
 				123
-			</ToggleButton>
+			</Button>
         </Border>
     </Design.PreviewWith>
 	<Styles.Resources>
@@ -65,6 +65,36 @@
 	<Style Selector="Button.HyperLink /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="Transparent"/>
 	</Style>
+	<Style Selector="Button.Confirm">
+		<Setter Property="Background" Value="#FF0BB3E8"/>
+		<Setter Property="BorderBrush" Value="#FF0BB3E8"/>
+		<Setter Property="CornerRadius" Value="3"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="Margin" Value="0"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Padding" Value="10, 0, 10, 0"/>
+	</Style>
+	<Style Selector="Button.Confirm /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF0BB3E8"/>
+		<Setter Property="BorderBrush" Value="#FF0BB3E8"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
+	</Style>
+	<Style Selector="Button.Confirm:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF0BB3E8"/>
+		<Setter Property="BorderBrush" Value="#FF0BB3E8"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
+	</Style>
+	<Style Selector="Button.Confirm:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF0BB3E8"/>
+		<Setter Property="BorderBrush" Value="#FF0BB3E8"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
+	</Style>	
+	<Style Selector="Button.Confirm:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF1BD3F8"/>
+		<Setter Property="BorderBrush" Value="#FF1BD3F8"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
+	</Style>
 	<!--Pages-->
 	<Style Selector="Border.Page">
 		<Setter Property="Margin" Value="5, 0, 5, 0"/>
@@ -120,41 +150,40 @@
 		<Setter Property="Path" Value="/Assets/svgs/screens/arrow_right.svg"/>
 	</Style>
 	<!--ToggleButton-->
-	<Style Selector="ToggleButton.Dialog">		
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FF464646"/>
+	<Style Selector="ToggleButton.EditCancel">		
+		<Setter Property="Background" Value="#FF747374"/>
+		<Setter Property="BorderBrush" Value="#FF747374"/>
 		<Setter Property="CornerRadius" Value="3"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="Margin" Value="0"/>
-		<Setter Property="Height" Value="30"/>
+		<Setter Property="Margin" Value="0"/>		
 		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="Padding" Value="10, 0, 10, 0"/>
 	</Style>
-	<Style Selector="ToggleButton.Dialog /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FF464646"/>
-		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>
+	<Style Selector="ToggleButton.EditCancel /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF747374"/>
+		<Setter Property="BorderBrush" Value="#FF747374"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
 	</Style>
-	<Style Selector="ToggleButton.Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FF464646"/>
-		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>
+	<Style Selector="ToggleButton.EditCancel:checked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF747374"/>
+		<Setter Property="BorderBrush" Value="#FF747374"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
 	</Style>
-	<Style Selector="ToggleButton.Dialog:disabled /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
-		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
+	<Style Selector="ToggleButton.EditCancel:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF747374"/>
+		<Setter Property="BorderBrush" Value="#FF747374"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>
 	</Style>
-	<Style Selector="ToggleButton.Dialog:checked:disabled /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
+	<Style Selector="ToggleButton.EditCancel:checked:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF747374"/>
+		<Setter Property="BorderBrush" Value="#FF747374"/>
 		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
 	</Style>	
-	<Style Selector="ToggleButton.Dialog:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#FFFFFFFF"/>
-		<Setter Property="BorderBrush" Value="#FF464646"/>
-		<Setter Property="TextBlock.Foreground" Value="#FF464646"/>		
+	<Style Selector="ToggleButton.EditCancel:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FF848384"/>
+		<Setter Property="BorderBrush" Value="#FF848384"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>		
 	</Style>
 	<!--<Style Selector="ToggleButton Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Content" Value="Сохранить"/>

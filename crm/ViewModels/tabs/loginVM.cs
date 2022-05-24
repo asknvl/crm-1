@@ -1,6 +1,4 @@
-﻿//#define ALLOK
-
-using Avalonia.Data;
+﻿using Avalonia.Data;
 using crm.Models.api.server;
 using crm.Models.appcontext;
 using crm.Models.autocompletions;
@@ -91,11 +89,11 @@ namespace crm.ViewModels.tabs
             {
                 try
                 {
-#if ALLOK
+#if OFFLINE
                     Login = "asknvl@protonmail.com";
                     Password = "F123qwe$%^0000";
                     BaseUser user = new TestUser();
-#else
+#elif ONLINE
 
                     BaseUser user = await appcontext.ServerApi.Login(Login, Password);
 #endif

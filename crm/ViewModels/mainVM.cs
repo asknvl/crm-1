@@ -41,9 +41,10 @@ namespace crm.ViewModels
         }
 
         WindowState windowState;
-        public WindowState WindowState { 
-            get => windowState; 
-            set => this.RaiseAndSetIfChanged(ref windowState, value); 
+        public WindowState WindowState
+        {
+            get => windowState;
+            set => this.RaiseAndSetIfChanged(ref windowState, value);
         }
 
         BaseUser user;
@@ -76,7 +77,7 @@ namespace crm.ViewModels
         #region commands
         public ReactiveCommand<Unit, Unit> closeCmd { get; }
         public ReactiveCommand<Unit, Unit> maximizeCmd { get; }
-        public ReactiveCommand<Unit, Unit> minimizeCmd { get; }        
+        public ReactiveCommand<Unit, Unit> minimizeCmd { get; }
         public ReactiveCommand<Unit, Unit> profileMenuOpenCmd { get; }
         public ReactiveCommand<Unit, Unit> editUserCmd { get; }
         public ReactiveCommand<Unit, Unit> quitCmd { get; }
@@ -88,8 +89,8 @@ namespace crm.ViewModels
             ApplicationContext AppContext = new ApplicationContext();
             AppContext.ServerApi = new ServerApi("http://185.46.9.229:4000");
             AppContext.SocketApi = new SocketApi("http://185.46.9.229:4000");
-            
-            AppContext.TabService = this;            
+
+            AppContext.TabService = this;
             #endregion
 
             #region init
@@ -97,7 +98,8 @@ namespace crm.ViewModels
             #endregion
 
             #region commands           
-            maximizeCmd = ReactiveCommand.Create(() => {
+            maximizeCmd = ReactiveCommand.Create(() =>
+            {
                 if (WindowState == WindowState.Maximized)
                     WindowState = WindowState.Normal;
                 else
@@ -108,21 +110,24 @@ namespace crm.ViewModels
                     WindowState = WindowState.Maximized;
             });
 
-            closeCmd = ReactiveCommand.Create(() => {
+            closeCmd = ReactiveCommand.Create(() =>
+            {
                 OnCloseRequest();
             });
 
-            minimizeCmd = ReactiveCommand.Create(() => {
+            minimizeCmd = ReactiveCommand.Create(() =>
+            {
                 WindowState = WindowState.Normal;
                 WindowState = WindowState.Minimized;
             });
 
-            profileMenuOpenCmd = ReactiveCommand.Create(() => {
+            profileMenuOpenCmd = ReactiveCommand.Create(() =>
+            {
                 IsProfileMenuOpen = true;
             });
 
             editUserCmd = ReactiveCommand.Create(() =>
-            {                
+            {
                 Tab edit = new ScreenTab(this, new UserEdit(AppContext, AppContext.User));
                 edit.Show();
                 IsProfileMenuOpen = false;
@@ -147,29 +152,30 @@ namespace crm.ViewModels
 
             #region registrationTab
             registrationTab = new registrationVM(this, AppContext);
-            registrationTab.onUserRegistered += () => 
+            registrationTab.onUserRegistered += () =>
             {
                 registrationTab.Close();
                 loginTab.Clear();
                 loginTab.Show();
-            };            
+            };
             #endregion
 
             #region loginTab
-            loginTab = new loginVM(this, AppContext);            
-            loginTab.onLoginDone += async (user) => {
+            loginTab = new loginVM(this, AppContext);
+            loginTab.onLoginDone += async (user) =>
+            {
 
                 User = user;
                 IsUserMenuVisible = true;
 
                 AppContext.User = user;
-                
+#if ONLINE
                 AppContext.SocketApi.Connect(user.Token);
-                
+#endif
 
-                homeVM homeTab = new homeVM(this, AppContext);                
+                homeVM homeTab = new homeVM(this, AppContext);
                 homeTab.TabClosedEvent += (tab) =>
-                {                 
+                {
                     loginTab.Password = "";
                     loginTab.Show();
                 };
@@ -192,7 +198,7 @@ namespace crm.ViewModels
                 {
                     CloseTab(tokenTab);
                     registrationTab.Token = token;
-                    ShowTab(registrationTab);                    
+                    ShowTab(registrationTab);
                 }
             };
             #endregion
@@ -219,17 +225,18 @@ namespace crm.ViewModels
                 //tab.CloseTabEvent += CloseTab;
 
                 if (tab is homeVM)
-                {              
+                {
 
                     TabsList.Insert(0, tab);
-                } else
+                }
+                else
                     TabsList.Add(tab);
-                
+
                 Content = tab;
             }
-            else            
+            else
                 Content = fTab;
-            
+
         }
 
         public void AddTab(Tab tab)
@@ -239,8 +246,8 @@ namespace crm.ViewModels
             {
                 tab.TabClosedEvent += CloseTab;
 
-                TabsList.Add(tab);                
-            }            
+                TabsList.Add(tab);
+            }
         }
 
         public void CloseTab(Tab tab)
@@ -253,7 +260,7 @@ namespace crm.ViewModels
                     ShowTab(prev);
             }
             TabsList.Remove(tab);
-        }       
+        }
         #endregion
 
     }

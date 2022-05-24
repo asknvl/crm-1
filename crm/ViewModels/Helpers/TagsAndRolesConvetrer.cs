@@ -128,7 +128,25 @@ namespace crm.ViewModels.Helpers
 
         public ObservableCollection<tagsListItem> GetAllTags()
         {
-            ObservableCollection<tagsListItem> tags = new() {
+            ObservableCollection<tagsListItem> tags = new()
+            {
+                adminItem,
+                financierItem,
+                commentItem,
+                creativeItem,
+                mediaItem,
+                teamleadItem,
+                linkItem,
+                farmItem
+            };
+
+            return tags;
+        }
+
+        public List<tagsListItem> GetAllTagsList()
+        {
+            List<tagsListItem> tags = new()
+            {
                 adminItem,
                 financierItem,
                 commentItem,
