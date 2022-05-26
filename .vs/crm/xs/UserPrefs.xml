@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{9EFCE830-79D1-4B15-89B7-9B0E90DD6B74}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="crm/crm.csproj">
+    <Files>
+      <File FileName="crm/crm.csproj" Line="18" Column="34" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="crm" expanded="True">
+            <Node name="crm" expanded="True" selected="True">
+              <Node name="Assets" expanded="True">
+                <Node name="svgs" expanded="True">
+                  <Node name="common" expanded="True" />
+                  <Node name="leftslidemenu" expanded="True" />
+                  <Node name="screens" expanded="True" />
+                  <Node name="topmenu" expanded="True" />
+                  <Node name="window" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.crm PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

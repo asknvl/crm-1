@@ -6,32 +6,18 @@
     <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-	  
-	  
-	  	<UseAppHost>true</UseAppHost>
-		<CFBundleName>XTime CRM</CFBundleName>
-		<!-- Also defines .app file name -->
-		<CFBundleDisplayName>XTime CRM</CFBundleDisplayName>
-		<CFBundleIdentifier>com.xtime.crm</CFBundleIdentifier>
-		<CFBundleShortVersionString>0.2</CFBundleShortVersionString>
-		<CFBundleVersion>1.0.0</CFBundleVersion>
-		<CFBundlePackageType>APPL</CFBundlePackageType>
-		<CFBundleSignature>????</CFBundleSignature>
-		<CFBundleExecutable>XTime CRM</CFBundleExecutable>
-		<CFBundleIconFile>icon.icns</CFBundleIconFile>
-		<!-- Will be copied from output directory -->
-		<NSPrincipalClass>NSApplication</NSPrincipalClass>
-		<NSHighResolutionCapable>true</NSHighResolutionCapable>
+	 
+	  	
 	  <UseAppHost>true</UseAppHost>
-	  <CFBundleName>XTime CRM</CFBundleName>
+	  <CFBundleName>crm</CFBundleName>
 	  <!-- Also defines .app file name -->
 	  <CFBundleDisplayName>XTime CRM</CFBundleDisplayName>
 	  <CFBundleIdentifier>com.xtime.crm</CFBundleIdentifier>
-	  <CFBundleShortVersionString>0.2</CFBundleShortVersionString>
+	  <CFBundleShortVersionString>1.0</CFBundleShortVersionString>
 	  <CFBundleVersion>1.0.0</CFBundleVersion>
 	  <CFBundlePackageType>APPL</CFBundlePackageType>
 	  <CFBundleSignature>????</CFBundleSignature>
-	  <CFBundleExecutable>XTime CRM</CFBundleExecutable>
+	  <CFBundleExecutable>crm</CFBundleExecutable>
 	  <CFBundleIconFile>icon.icns</CFBundleIconFile>
 	  <!-- Will be copied from output directory -->
 	  <NSPrincipalClass>NSApplication</NSPrincipalClass>
