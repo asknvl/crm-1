@@ -20,40 +20,45 @@
 				Command="{Binding Path=editUserCmd}"
 				Classes="Button PopUpMenuItem">
 				<Grid ColumnDefinitions="20, *">
-					<material:MaterialIconExt Kind="Person" Size="20"/>
+					<!--<material:MaterialIconExt Kind="Person" Size="20"/>-->
+					<Svg
+						Height="18"
+						Width="18"
+						Path="/Assets/svgs/topmenu/profile.svg">						
+					</Svg>
 					<TextBlock
 						Grid.Column="1">
-						Редактировать профиль
+						Мой профиль
 					</TextBlock>
 				</Grid>
 			</Button>
 			<Button
+				IsEnabled="False"
 				Classes="Button PopUpMenuItem">
 				<Grid ColumnDefinitions="20, *">
-					<material:MaterialIconExt Kind="SettingsVertical" Size="20"/>
+					<!--<material:MaterialIconExt Kind="SettingsVertical" Size="20"/>-->
+					<Svg
+						Height="18"
+						Width="18"
+						Path="/Assets/svgs/topmenu/settings.svg">						
+					</Svg>
 					<TextBlock
 						Grid.Column="1">
 						Настройки
 					</TextBlock>
 				</Grid>
 			</Button>
-			<Grid Height="1" Background="Gray" HorizontalAlignment="Stretch"/>
-			<!--<Button
-				Command="{Binding addUserCmd}"
-				Classes="Button PopUpMenuItem">
-				<Grid ColumnDefinitions="20, *">
-					<material:MaterialIconExt Kind="Plus" Size="20"/>
-					<TextBlock
-						Grid.Column="1">
-						Добавить аккаунт
-					</TextBlock>
-				</Grid>
-			</Button>-->
+			<Grid Height="1" Background="Gray" HorizontalAlignment="Stretch"/>			
 			<Button
 				Command="{Binding Path=quitCmd}"
 				Classes="Button PopUpMenuItem">
 				<Grid ColumnDefinitions="20, *">
-					<material:MaterialIconExt Kind="ExitToApp" Size="20"/>
+					<!--<material:MaterialIconExt Kind="ExitToApp" Size="20"/>-->
+					<Svg
+						Height="18"
+						Width="18"
+						Path="/Assets/svgs/topmenu/quit.svg">
+					</Svg>
 					<TextBlock
 						Grid.Column="1">
 						Выйти

@@ -18,10 +18,10 @@ namespace crm.ViewModels.tabs.home.screens.users
             Id = $"{++cntr}";            
             Litera = "Y";
             Email = "asknvl@protonmail.com";
-            FullName = $"Коновалов Алексей Сергеевич";
-            LastName = "Коновалов";
-            FirstName = "Алексей";
-            MiddleName = "Сергеевич";
+            FullName = $"Петров Иван Николаевич";
+            LastName = "Петров";
+            FirstName = "Иван";
+            MiddleName = "Николаевич";
             BirthDate = "28.06.1986";
             PhoneNumber = "+7 (925) 618-69-36";
             SocialNetworks = new List<SocialNetwork> { new SocialNetwork() { Address = "Instagram", Account = "@xeylov" }  };

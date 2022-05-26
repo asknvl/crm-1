@@ -137,5 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\svgs\screens\" />
+    <Folder Include="Assets\svgs\topmenu\" />
   </ItemGroup>
 </Project>

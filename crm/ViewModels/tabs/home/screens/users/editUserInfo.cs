@@ -45,7 +45,7 @@ namespace crm.ViewModels.tabs.home.screens.users
         #endregion
 
         #region properties
-        public override string Title => "Редактировать";
+        public override string Title => "Редактировать";        
 
         bool isEditable;
         public bool IsEditable { 

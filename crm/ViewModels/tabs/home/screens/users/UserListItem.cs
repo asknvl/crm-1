@@ -26,8 +26,8 @@ namespace crm.ViewModels.tabs.home.screens.users
             set => this.RaiseAndSetIfChanged(ref status, value);
         }
 
-        //public string ShortWallet => $"{Wallet.Substring(0, 15)}...";
-        public string ShortWallet => $"{Wallet}";
+        public string ShortWallet => (Wallet.Length > 15) ? $"{Wallet.Substring(0, 15)}..." : Wallet;
+        //public string ShortWallet => $"{Wallet}";
         #endregion
 
         #region commands

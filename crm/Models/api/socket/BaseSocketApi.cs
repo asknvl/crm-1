@@ -18,6 +18,7 @@ namespace crm.Models.api.socket
         bool isConnected;
 
         public event Action<List<usersOnlineDTO>> ReceivedConnectedUsersEvent;
+        public event Action<List<usersDatesDTO>> ReceivedUsersDatesEvent;
         #endregion
 
         public BaseSocketApi(string url)
@@ -50,6 +51,9 @@ namespace crm.Models.api.socket
                 ReceivedConnectedUsersEvent?.Invoke(users.ToList());
             });
 
+            client.On("user-activity", (response) => { 
+                usersDatesDTO dates = response.GetValue<usersDatesDTO>(1);
+            });
             await client.ConnectAsync();            
         }
 

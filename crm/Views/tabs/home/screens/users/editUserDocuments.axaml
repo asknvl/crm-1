@@ -4,6 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:tbd="using:crm.Views.tabs.home.screens"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="crm.Views.tabs.home.screens.users.editUserDevices">
-  <tbd:TBD/>
+             x:Class="crm.Views.tabs.home.screens.users.editUserDocuments">
+	<tbd:TBD/>
 </UserControl>

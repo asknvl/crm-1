@@ -162,9 +162,6 @@ namespace crm.ViewModels.tabs.home.screens
             #endregion
         }
 
-        #region public
-        #endregion
-
         #region helpers
         string getPageInfo(int page, int users_count, int total_users)
         {

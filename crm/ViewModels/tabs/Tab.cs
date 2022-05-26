@@ -11,6 +11,7 @@ namespace crm.ViewModels.tabs
         #region vars
         ITabService tabService;
         #endregion
+
         #region properties       
         string title;
         public string Title

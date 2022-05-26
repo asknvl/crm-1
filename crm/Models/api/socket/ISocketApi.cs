@@ -13,6 +13,7 @@ namespace crm.Models.api.socket
         Task Disconnect();
 
         public event Action<List<usersOnlineDTO>> ReceivedConnectedUsersEvent;
+        public event Action<List<usersDatesDTO>> ReceivedUsersDatesEvent;
     }
 
     public class SocketApiException : Exception

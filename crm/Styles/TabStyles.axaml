@@ -121,7 +121,8 @@
 		<Setter Property="TextBlock.Foreground" Value="{DynamicResource  HomeTabPrimaryTextForeground}"/>
 	</Style>
 	<Style Selector="Button.ArrowDown /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="Transparent"/>		
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource  HomeTabPrimaryTextForeground}"/>
 	</Style>
 	<Style Selector="Button.ArrowDown">
 		<Setter Property="RenderTransform" Value="none" />

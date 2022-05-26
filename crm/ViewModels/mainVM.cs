@@ -30,16 +30,7 @@ namespace crm.ViewModels
         //BaseServerApi api;
         #endregion
 
-        #region properties      
-        public ObservableCollection<Tab> TabsList { get; set; } = new ObservableCollection<Tab>();
-
-        object? content;
-        public object? Content
-        {
-            get => content;
-            set => this.RaiseAndSetIfChanged(ref content, value);
-        }
-
+        #region properties             
         WindowState windowState;
         public WindowState WindowState
         {
@@ -207,35 +198,45 @@ namespace crm.ViewModels
         }
 
         #region tabservice
+        public ObservableCollection<Tab> TabsList { get; set; } = new ObservableCollection<Tab>();
+
+        object? content;
+        public object? Content
+        {
+            get => content;
+            set => this.RaiseAndSetIfChanged(ref content, value);
+        }
+
+        int itemwidth;
+        public int ItemWidth
+        {
+            get => itemwidth;
+            set => this.RaiseAndSetIfChanged(ref itemwidth, value);
+        }
+
         public void ShowTab(Tab tab)
         {
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
-            //if (fTab is homeVM)
+
+            //if (fTab == null)
             //{
-            //    var found = TabsList.FirstOrDefault(o => o is homeVM);
-            //    if (found != null)
-            //        TabsList.Remove(found);
+            //    if (tab is homeVM)
+            //    {
+
+            //        TabsList.Insert(0, tab);
+            //    } else
+            //        TabsList.Add(tab);
+
+            //    Content = tab;
+            //} else
             //    Content = fTab;
-            //    return;
-            //}
 
-            if (fTab == null)
-            {
-
-                //tab.CloseTabEvent += CloseTab;
-
-                if (tab is homeVM)
-                {
-
-                    TabsList.Insert(0, tab);
-                }
-                else
-                    TabsList.Add(tab);
-
-                Content = tab;
-            }
+            if (tab is homeVM)
+                TabsList.Insert(0, tab);
             else
-                Content = fTab;
+                TabsList.Add(tab);
+
+            Content = tab;
 
         }
 

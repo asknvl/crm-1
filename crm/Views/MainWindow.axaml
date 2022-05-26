@@ -283,49 +283,72 @@
 					Grid.Column="1"
 					Background="{DynamicResource HomeTabPrimaryHeaderBackground}">
 				</Grid>
-				<Grid
+				<Grid					
 					Grid.Column="2"
 					Name="profileGrid"
 					Background="{DynamicResource HomeTabPrimaryHeaderBackground}"
-					Width="200">
-					<Button
-						Classes="Button ArrowDown"
-						HorizontalAlignment="Right"
-						Margin="-300, 0, 0, 0">
-						<material:MaterialIconExt Kind="Bell" Size="20"/>
-					</Button>
-					<controls:InitialLetter
-						HorizontalAlignment="Right"
-						Margin="-150, 0, 0, 0">
-						<controls:InitialLetter.Styles>
-							<Style Selector="TextBlock">
-								<Setter Property="Text" Value="{Binding User.FullName[0]}"/>
-							</Style>
-						</controls:InitialLetter.Styles>
-					</controls:InitialLetter>
-					<Button
-						Command="{Binding profileMenuOpenCmd}"
-						Classes="Button ArrowDown"
-						HorizontalAlignment="Right"
-						Margin="-90, 0, 0, 0">
-						<!--<Button.Styles>
-						<Style Selector="Button:pressed Popup">
-							<Setter Property="IsOpen" Value="True"/>
-						</Style>
-					</Button.Styles>-->
-						<Grid Height="40" Width="40">
-							<material:MaterialIconExt Kind="ChevronDown" Size="20"/>
-							<Popup
-								IsOpen="{Binding IsProfileMenuOpen, Mode=TwoWay}"
-								WindowManagerAddShadowHint="False"
-								StaysOpen="False"
-								VerticalOffset="7"
-								HorizontalOffset="-10"
-								PlacementTarget="{Binding ElementName=profileGrid}">
-								<controls:userProfilePopup/>
-							</Popup>
-						</Grid>
-					</Button>
+					Width="160">
+					<Grid
+						HorizontalAlignment="Right"						
+						ColumnDefinitions="40, 80, 40">
+						<ToggleButton
+							Grid.Column="0"
+							Height="50"
+							Width="50"
+							CornerRadius="0"
+							BorderThickness="0"							
+							HorizontalAlignment="Right"
+							Margin="0">
+							<Svg
+								Height="15"
+								Width="15"
+								Name="PART_Bell">								
+							</Svg>
+							<ToggleButton.Styles>
+								<Style Selector="ToggleButton[IsChecked=True] Svg#PART_Bell">
+									<Setter Property="Path" Value="/Assets/svgs/topmenu/bell_enabled.svg"/>
+								</Style>
+								<Style Selector="ToggleButton[IsChecked=False] Svg#PART_Bell">
+									<Setter Property="Path" Value="/Assets/svgs/topmenu/bell_disable.svg"/>
+								</Style>
+								<Style Selector="ToggleButton:not(:checked) /template/ ContentPresenter#PART_ContentPresenter">
+									<Setter Property="Background" Value="Transparent"/>
+								</Style>
+								<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+									<Setter Property="Background" Value="{DynamicResource TopPanelActiveColor}"/>
+								</Style>
+							</ToggleButton.Styles>
+						</ToggleButton>
+						<controls:InitialLetter
+							Grid.Column="1"
+							HorizontalAlignment="Right">
+							<controls:InitialLetter.Styles>
+								<Style Selector="TextBlock">
+									<Setter Property="Text" Value="{Binding User.FullName[0]}"/>
+								</Style>
+							</controls:InitialLetter.Styles>
+						</controls:InitialLetter>
+						<Button
+							Grid.Column="2"
+							Command="{Binding profileMenuOpenCmd}"
+							Classes="Button ArrowDown">							
+							<Grid								
+								Grid.Column="2">
+								<material:MaterialIconExt
+									Kind="ChevronDown"
+									Size="20"/>
+								<Popup
+									IsOpen="{Binding IsProfileMenuOpen, Mode=TwoWay}"
+									WindowManagerAddShadowHint="False"
+									StaysOpen="False"
+									VerticalOffset="7"
+									HorizontalOffset="-48"
+									PlacementTarget="{Binding ElementName=profileGrid}">
+									<controls:userProfilePopup/>
+								</Popup>
+							</Grid>
+						</Button>
+					</Grid>
 				</Grid>
 			</Grid>
 

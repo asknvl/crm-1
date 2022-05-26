@@ -18,13 +18,17 @@ namespace crm.ViewModels.tabs.home.screens.users
     {
         #region vars
         editUserInfo editUser;
+        editUserDocuments editUserDocuments;
+
         IWindowService ws = WindowService.getInstance();
+        BaseUser user;
         #endregion
 
         #region properties
         public ObservableCollection<BaseScreen> EditActions { get; }
-        
-        public override string Title => $"{AppContext.User.FirstName} {AppContext.User.LastName}";
+
+        //public override string Title => $"{AppContext.User.FirstName} {AppContext.User.LastName}";
+        public override string Title => $"{user.FirstName} {user.LastName}";
 
         Object content;
         public Object Content
@@ -57,13 +61,15 @@ namespace crm.ViewModels.tabs.home.screens.users
         {
             EditActions = new ObservableCollection<BaseScreen>();
 
-            editUser = new editUserInfo(AppContext, new TestUser());
-            EditActions.Add(editUser);
+            EditActions.Add(new editUserInfo(AppContext, user));
             EditActions.Add(new editUserDevices(AppContext));
+            EditActions.Add(new editUserDocuments(AppContext));
             Content = EditActions[0];
         }
         public UserEdit(ApplicationContext context, BaseUser user) : base(context)
         {
+
+            this.user = user;
 
             confirmCmd = ReactiveCommand.CreateFromTask(async () => {
                 try
@@ -79,8 +85,11 @@ namespace crm.ViewModels.tabs.home.screens.users
             });
 
             EditActions = new ObservableCollection<BaseScreen>();
+            
             EditActions.Add(new editUserInfo(AppContext, user));
             EditActions.Add(new editUserDevices(AppContext));
+            EditActions.Add(new editUserDocuments(AppContext));
+
             Content = EditActions[0];
         }        
     }
