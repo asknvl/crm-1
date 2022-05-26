@@ -94,13 +94,13 @@ namespace crm.ViewModels
 #endif
 
             AppContext.TabService = this;
-#endregion
+            #endregion
 
-#region init
+            #region init
             WindowState = WindowState.Normal;
-#endregion
+            #endregion
 
-#region commands           
+            #region commands           
             maximizeCmd = ReactiveCommand.Create(() =>
             {
                 if (WindowState == WindowState.Maximized)
@@ -148,13 +148,15 @@ namespace crm.ViewModels
                     TabsList[index].Close();
                 }
 
+                AppContext.SocketApi.Disconnect();
+
                 loginTab.Show();
                 IsUserMenuVisible = false;
                 IsProfileMenuOpen = false;
             });
-#endregion
+            #endregion
 
-#region registrationTab
+            #region registrationTab
             registrationTab = new registrationVM(this, AppContext);
             registrationTab.onUserRegistered += () =>
             {
@@ -162,9 +164,9 @@ namespace crm.ViewModels
                 loginTab.Clear();
                 loginTab.Show();
             };
-#endregion
+            #endregion
 
-#region loginTab
+            #region loginTab
             loginTab = new loginVM(this, AppContext);
             loginTab.onLoginDone += async (user) =>
             {
@@ -190,9 +192,9 @@ namespace crm.ViewModels
             {
                 tokenTab.Show();
             };
-#endregion
+            #endregion
 
-#region tokenTab
+            #region tokenTab
             tokenTab = new tokenVM(this, AppContext);
             //tokenTab.CloseTabEvent += CloseTab;
             tokenTab.onTokenCheckResult += (result, token) =>
@@ -205,12 +207,12 @@ namespace crm.ViewModels
                     ShowTab(registrationTab);
                 }
             };
-#endregion
+            #endregion
 
             loginTab.Show();
         }
 
-#region tabservice
+        #region tabservice
         public ObservableCollection<Tab> TabsList { get; set; } = new ObservableCollection<Tab>();
 
         object? content;
@@ -237,13 +239,11 @@ namespace crm.ViewModels
                 {
 
                     TabsList.Insert(0, tab);
-                }
-                else
+                } else
                     TabsList.Add(tab);
 
                 Content = tab;
-            }
-            else
+            } else
                 Content = fTab;
 
             //if (tab is homeVM)
@@ -277,7 +277,7 @@ namespace crm.ViewModels
             }
             TabsList.Remove(tab);
         }
-#endregion
+        #endregion
 
     }
 }
