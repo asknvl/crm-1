@@ -100,14 +100,14 @@ namespace crm.ViewModels.tabs
             Menu = new admin_menu(appcontext);
         }
 
-        //public override void Show()
-        //{
-        //    foreach (var item in Menu.Items)
-        //        foreach (var screen in item.Screens)
-        //            screen.OnActivate();
+        public override void Show()
+        {
+            foreach (var item in Menu.Items)
+                foreach (var screen in item.Screens)
+                    screen.OnActivate();
 
-        //    base.Show();
-        //}
+            base.Show();
+        }
 
         public override void Close()
         {
