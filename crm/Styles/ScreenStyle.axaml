@@ -24,18 +24,18 @@
 	<!--Buttons-->	
 	<Style Selector="Button.Top">						
 		<Setter Property="Height" Value="35"/>
-		<Setter Property="Width" Value="300"/>
+		<Setter Property="Width" Value="200"/>
 		<Setter Property="Margin" Value="0, 20, 20, 20"/>
 	</Style>
 	<Style Selector="Button.Top Grid TextBlock">
 		<Setter Property="Foreground" Value="#FFFFFFFF"/>		
 		<Setter Property="TextAlignment" Value="Center"/>
 	</Style>
-	<Style Selector="Button.Top Grid Border">
+	<!--<Style Selector="Button.Top Grid Border">
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="BorderBrush" Value="#FF939393"/>
 		<Setter Property="BorderThickness" Value="1, 0, 0, 0"/>
-	</Style>
+	</Style>-->
 	<Style Selector="Button.Top:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="#FF747374" />
 		<Setter Property="BorderBrush" Value="Transparent"/>
@@ -64,6 +64,7 @@
 	</Style>
 	<Style Selector="Button.HyperLink /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="Transparent" />
 	</Style>
 	<Style Selector="Button.Confirm">
 		<Setter Property="Background" Value="#FF0BB3E8"/>
@@ -185,11 +186,4 @@
 		<Setter Property="BorderBrush" Value="#FF848384"/>
 		<Setter Property="TextBlock.Foreground" Value="#FFFFFFFF"/>		
 	</Style>
-	<!--<Style Selector="ToggleButton Dialog:checked /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Content" Value="Сохранить"/>
-	</Style>
-	<Style Selector="ToggleButton Dialog:not(:checked) /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Content" Value="Редактировать"/>
-	</Style>-->
-
 </Styles>

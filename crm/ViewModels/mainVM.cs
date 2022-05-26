@@ -46,6 +46,13 @@ namespace crm.ViewModels
 
         }
 
+        bool isUserLogined;
+        public bool IsUserLogined
+        {
+            get => isUserLogined;
+            set => this.RaiseAndSetIfChanged(ref isUserLogined, value);
+        }
+
         bool isUserMenuVisible;
         public bool IsUserMenuVisible
         {
@@ -137,6 +144,7 @@ namespace crm.ViewModels
                 }
 
                 loginTab.Show();
+                IsUserMenuVisible = false;
                 IsProfileMenuOpen = false;
             });
             #endregion
@@ -218,25 +226,27 @@ namespace crm.ViewModels
         {
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
 
-            //if (fTab == null)
-            //{
-            //    if (tab is homeVM)
-            //    {
+            if (fTab == null)
+            {
+                if (tab is homeVM)
+                {
 
-            //        TabsList.Insert(0, tab);
-            //    } else
-            //        TabsList.Add(tab);
+                    TabsList.Insert(0, tab);
+                }
+                else
+                    TabsList.Add(tab);
 
-            //    Content = tab;
-            //} else
-            //    Content = fTab;
-
-            if (tab is homeVM)
-                TabsList.Insert(0, tab);
+                Content = tab;
+            }
             else
-                TabsList.Add(tab);
+                Content = fTab;
 
-            Content = tab;
+            //if (tab is homeVM)
+            //    TabsList.Insert(0, tab);
+            //else
+            //    TabsList.Add(tab);
+
+            //Content = tab;
 
         }
 
@@ -258,7 +268,7 @@ namespace crm.ViewModels
             {
                 var prev = TabsList[index - 1];
                 if (prev != null)
-                    ShowTab(prev);
+                    prev.Show();
             }
             TabsList.Remove(tab);
         }

@@ -218,7 +218,7 @@ namespace crm.ViewModels.tabs.home.screens.users
             openTelegram = ReactiveCommand.Create(() => {
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = $"tg://resolve?domain={Telegram}",
+                    FileName = $"tg://resolve?domain={Telegram.Replace("@", "")}",
                     UseShellExecute = true
                 });
             });         
@@ -235,6 +235,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             Selection.SingleSelect = false;
 
             init(user);
+
+            openTelegram = ReactiveCommand.Create(() => {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = $"tg://resolve?domain={Telegram.Replace("@", "")}",
+                    UseShellExecute = true
+                });
+            });
         }
 
         #region helpers

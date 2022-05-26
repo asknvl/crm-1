@@ -77,14 +77,16 @@ namespace crm.ViewModels.tabs
         {
             Title = "Вход";
 
+#if DEBUG
             Login = "asknvl@protonmail.com";
             Password = "F123qwe$%^0000";
+#endif
 
-            #region dependencies
+#region dependencies
 
-            #endregion
+#endregion
 
-            #region commands
+#region commands
             enterCmd = ReactiveCommand.CreateFromTask(async () =>
             {
                 try
@@ -116,7 +118,7 @@ namespace crm.ViewModels.tabs
 #endregion
         }
 
-        #region public
+#region public
         public event Action<BaseUser> onLoginDone;
         public event Action onCreateUserAction;
         public event Action onForgotPasswordAction;
@@ -128,6 +130,6 @@ namespace crm.ViewModels.tabs
             Password = "";
             needValidate = true;
         }
-        #endregion
+#endregion
     }
 }

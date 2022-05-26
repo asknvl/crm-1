@@ -30,12 +30,14 @@ namespace crm.Models.api.server
             {"auth-0009", "Не указан адрес телеграм"},
             {"auth-0010", "Не указан номер кошелька"},
             {"auth-0011", "Не указаны устройства"},
-            {"auth-0012", "Пароль не соответствет требованиям"},
-            {"auth-0013", "Пароль должен содержать более 8 символов"},
-            {"auth-0014", "Пароль должен содержать заглавные, строчные буквы и цифры"},
-            {"auth-0015", "Электронный адрес должен принадлежать protonmail.com"},
+            {"auth-0012", "Пароль не должен быть короче 12 символов"},
+            {"auth-0013", "Пароль должен содержать цифры, строчные и заглавные буквы"},
+            {"auth-0014", "Электронный адрес должен принадлежать protonmail.com"},
+            {"auth-0015", "Не задан ID"},
             {"auth-0016", "ID должен быть целым числом"},
+            {"auth-0017", "Неправильный электронный адрес"},
             {"auth-0018", "Неверный формат электронной почты"},
+            {"auth-0019", "Не задана буква пользователя"},
             {"auth-0050", "Не удалось хэшировать пароль"},
             {"auth-0051", "Пользователь уже существует"},
             {"auth-0052", "Не удалось создать пользователя"},
@@ -91,14 +93,17 @@ namespace crm.Models.api.server
                     var request = new RestRequest(Method.POST);
                     request.AddHeader($"Authorization", $"Bearer {token}");
                     IRestResponse response = client.Execute(request);
-                    if (response.StatusCode != HttpStatusCode.OK)
-                        throw new ServerResponseException(response.StatusCode);
+                    //if (response.StatusCode != HttpStatusCode.OK)
+                    //    throw new ServerResponseException(response.StatusCode);
                     JObject json = JObject.Parse(response.Content);
                     res = json["success"].ToObject<bool>();
-                    if (res == null)
-                        throw new NoDataReceivedException();
-                    if (!res)                    
-                        throw new ApiException("Невалидный токен или его срок действия истек");                                        
+                    if (!res)
+                    {
+                        string e = json["errors"].ToString();
+                        List<ServerError>? errors = JsonConvert.DeserializeObject<List<ServerError>>(e);
+                        throw new ServerException($"{getErrMsg(errors)}");
+                    }                   
+                    
                 });
 
             }  catch (Exception ex)

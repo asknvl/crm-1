@@ -4,14 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:uservm="using:crm.ViewModels.tabs.home.screens.users"
 			 xmlns:conv="using:crm.Views.converters"
+			 xmlns:vm="using:crm.ViewModels.tabs.home.screens"
+			 xmlns:views="using:crm.Views.tabs.home.screens"
              mc:Ignorable="d" d:DesignWidth="2800" d:DesignHeight="450"
              x:Class="crm.Views.tabs.home.screens.UserList">
+	<Design.DataContext>
+		<vm:UserList/>
+	</Design.DataContext>
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
 		<StyleInclude Source="/Styles/UserListStyle.axaml"/>
 	</UserControl.Styles>
 	<UserControl.Resources>
 		<conv:StatusToSvgPathConverter x:Key="statusConverter"/>
+		<conv:UserCheckedToListItemBackgroundConverter x:Key="checkedToItemBackground"/>
 		<conv:IdPadLeftConverter x:Key="padLeftConverter"/>
 	</UserControl.Resources>
 	<Grid
@@ -36,43 +42,34 @@
 			Grid.Row="1">
 			<StackPanel
 				Orientation="Horizontal">
-				<Button
+				<Button					
 					Command="{Binding addUserCmd}"
 					Classes="Button Top">
-					<Grid
-						ColumnDefinitions="*, 40">
+					<Grid>
 						<TextBlock
-							Grid.Column="0"
 							VerticalAlignment="Center">
 							Новый пользователь
 						</TextBlock>
-						<Border
-							Grid.Column="1">
-							<Svg
-								Height="15"
-								Width="15"
-								Path="/Assets/svgs/screens/new_user.svg">
-							</Svg>
-						</Border>
 					</Grid>
 				</Button>
 				<Button
 					IsEnabled="False"
 					Classes="Button Top">
-					<Grid ColumnDefinitions="*, 40">
+					<Grid>
 						<TextBlock
-							Grid.Column="0"
 							VerticalAlignment="Center">
-							Фильтры и редактирование полей
+							Фильтры
 						</TextBlock>
-						<Border
-							Grid.Column="1">
-							<Svg
-								Height="15"
-								Width="15"
-								Path="/Assets/svgs/screens/filters.svg">
-							</Svg>
-						</Border>
+					</Grid>
+				</Button>
+				<Button
+					IsEnabled="False"
+					Classes="Button Top">
+					<Grid>
+						<TextBlock
+							VerticalAlignment="Center">
+							Поля
+						</TextBlock>
 					</Grid>
 				</Button>
 				<!--<Button Classes="Button Top">
@@ -131,6 +128,7 @@
 							120,
 							180">
 						<ToggleButton
+							IsChecked="{Binding IsAllChecked}"
 							Grid.Column="0"
 							Classes="ToggleButton CheckButton"
 							Padding="5, 0, 0, 0">
@@ -153,7 +151,7 @@
 							Grid.Column="3">
 							Статус
 						</TextBlock>
-						<TextBlock							
+						<TextBlock
 							Grid.Column="4">
 							Последняя активность
 						</TextBlock>
@@ -226,140 +224,7 @@
 					<ItemsPresenter Grid.Row="1" Items="{Binding Users}">
 						<ItemsPresenter.DataTemplates>
 							<DataTemplate>
-								<Grid
-									Classes="Grid Highlight"
-									VerticalAlignment="Center"
-									Height="35"
-									Margin="0, 0, 0, 0"
-									Name="PART_UserList"
-									Grid.Row="0"
-									RowDefinitions="*, 1"
-									ColumnDefinitions="
-											30, 
-											80,
-											80,
-											80,
-											180,
-											180,
-											100,
-											100,
-											100,
-											180,
-											250,
-											180,
-											180,
-											120,
-											120,
-											150,
-											120,
-											180">
-									<ToggleButton
-										Grid.Column="0"
-										Classes="ToggleButton CheckButton"
-										Padding="5, 0, 0, 0">
-										<Svg Name="PART_CHB"
-											StretchDirection="DownOnly"
-											Stretch="Fill"											
-											Width="15"
-											Height="15"/>
-									</ToggleButton>
-									<Button
-										Command="{Binding editUserCmd}"
-										Classes="Button Hyper"
-										Grid.Column="1">
-										<TextBlock Text="{Binding Id, Converter={StaticResource padLeftConverter}}"/>
-									</Button>
-									<Button
-										Command="{Binding editUserCmd}"
-										Classes="Button Hyper"
-										Grid.Column="2">
-										<TextBlock Text="{Binding Litera}"/>
-									</Button>
-									<Svg
-										Path="{Binding Status, Converter={StaticResource statusConverter}}"
-										Width="10"
-										Height="10"
-										Grid.Column="3">
-									</Svg>
-									<TextBlock
-										Text="{Binding LastEventDate}"
-										Grid.Column="4">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding LastLoginDate}"
-										Grid.Column="5">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding LastName}"
-										Grid.Column="6">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding FirstName}"
-										Grid.Column="7">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding MiddleName}"
-										Grid.Column="8">
-									</TextBlock>
-									<Button
-										Command="{Binding showTagsCmd}"
-										Classes="Button List"
-										VerticalAlignment="Center"
-										HorizontalAlignment="Center"
-										Grid.Column="9">
-										<TextBlock>
-											Посмотреть
-										</TextBlock>
-									</Button>
-									<TextBlock
-										Text="{Binding Email}"
-										Grid.Column="10">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding BirthDate}"
-										Grid.Column="11">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding PhoneNumber}"
-										Grid.Column="12">
-										Номер телефона
-									</TextBlock>
-									<TextBlock
-										Text="{Binding SocialNetworks[0].Account}"
-										Grid.Column="13">
-										Соц. сети
-									</TextBlock>
-									<TextBlock
-										Text="{Binding Telegram}"
-										Grid.Column="14">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding ShortWallet}"
-										Grid.Column="15">
-									</TextBlock>
-									<TextBlock
-										Text="{Binding Devices[0].Name}"
-										Grid.Column="16">
-									</TextBlock>
-									<Button Classes="Button Passport"
-										Grid.Column="17">
-										<Svg
-											Height="15"
-											Width="30"/>
-									</Button>
-									<Grid
-										Background="{DynamicResource SeparatorColor}"
-										Height="1"
-										Grid.Row="1"
-										Grid.ColumnSpan="18">
-									</Grid>
-									<Grid.Styles>
-										<Style Selector="Grid#PART_UserList TextBlock">
-											<Setter Property="VerticalAlignment" Value="Center"/>
-											<Setter Property="HorizontalAlignment" Value="Center"/>
-										</Style>
-									</Grid.Styles>
-								</Grid>
+								<views:userListItem/>
 							</DataTemplate>
 						</ItemsPresenter.DataTemplates>
 					</ItemsPresenter>

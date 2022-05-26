@@ -39,7 +39,7 @@ namespace crm.ViewModels.tabs
 
         IValidator<string> email_vl = new LoginValidator();
         IAutoComplete email_ac = new EmailAutoComplete();
-        IValidator<string> pswrd_vl = new PasswordValidator();
+        IValidator<string> pswrd_vl = new PasswordValidator_server();
         IValidator<string> fn_vl = new FullNameValidator();
         IValidator<string> birth_vl = new BirthDateValidator();
         IAutoComplete birth_ac = new BirtDateAutoCompletion();
@@ -80,7 +80,7 @@ namespace crm.ViewModels.tabs
                 else
                     RemoveError(nameof(Password1));
 
-                if (Password2 != null)
+                if (!string.IsNullOrEmpty(Password2))
                 {
                     isPasswordsEql = value == Password2;
                     if (!isPasswordsEql)
@@ -111,7 +111,7 @@ namespace crm.ViewModels.tabs
                 else
                     RemoveError(nameof(Password2));
 
-                if (Password1 != null)
+                if (!string.IsNullOrEmpty(Password1))
                 {
                     isPasswordsEql = value == Password1;
                     if (!isPasswordsEql)
@@ -213,13 +213,13 @@ namespace crm.ViewModels.tabs
             Title = "Регистрация";
 #if DEBUG
             Email = "test@protonmail.com";
-            Password1 = "F123qwe$%^0000";
-            Password2 = "F123qwe$%^0000";
+            //Password1 = "F123qwe$%^0000";
+            //Password2 = "F123qwe$%^0000";
             FullName = "Коновалов Алексей Сергеевич";
             BirthDate = "28.06.1986";
             PhoneNumber = "+7 (925) 618-69-36";
             Telegram = "@xeylov";
-            Wallet = "$$$$$$";            
+            //Wallet = "$$$$$$";            
 #endif
 
             #region commands

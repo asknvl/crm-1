@@ -69,11 +69,11 @@
 				Margin="5"
 				/>
 			<TextBox
-				Text="{Binding Wallet}"
+				Text="{Binding Wallet, Mode=TwoWay}"
 				Classes="TextBox CenterBlack"
 				Watermark="USDT TRC20"
 				Margin="5">
-				<TextBox.Styles>
+				<!--<TextBox.Styles>
 					<Style Selector="TextBox">						
 						<Setter Property="InnerRightContent">
 							<Template>								
@@ -86,7 +86,7 @@
 					<Style Selector="TextBox:error Panel#PART_InlineErrorTemplatePanel">						
 						<Setter Property="IsVisible" Value="False"/>
 					</Style>
-				</TextBox.Styles>				
+				</TextBox.Styles>-->				
 			</TextBox>
 			<!--<AutoCompleteBox
 				Text="{Binding Device}"

@@ -85,8 +85,6 @@
 			<Setter Property="Path" Value="/Assets/svgs/window/empty.svg"/>
 		</Style>
 
-
-
 		<Style Selector="Button.ArrowDown">
 			<Setter Property="Foreground" Value="{DynamicResource  HomeTabSecondaryTextForeground}"/>
 			<Setter Property="Background" Value="Transparent"/>

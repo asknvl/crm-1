@@ -9,7 +9,7 @@ namespace crm.Models.validators
     public class PasswordValidator : IValidator<string>
     {
 #if DEBUG
-        const int min_length = 2;
+        const int min_length = 5;
         const bool isSimple = true;
 #else
         const int min_length = 12;
