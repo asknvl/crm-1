@@ -60,7 +60,7 @@ namespace crm.ViewModels.tabs.home.screens.users
             openTelegram = ReactiveCommand.Create(() => {
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = $"tg://resolve?domain={Telegram.Replace("@", "")}1",
+                    FileName = $"tg://resolve?domain={Telegram.Replace("@", "")}",
                     UseShellExecute = true
                 });
             });

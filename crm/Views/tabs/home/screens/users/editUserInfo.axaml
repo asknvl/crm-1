@@ -107,12 +107,12 @@
 						Телеграм
 					</TextBlock>
 					<Button
-						IsVisible="{Binding !IsEditable}"						
+						IsVisible="{Binding !IsEditable}"
 						Command="{Binding openTelegram}"
 						HorizontalAlignment="Left"
 						Classes="Button HyperLink"
-						Grid.Column="1"
-						Content="{Binding Telegram}">
+						Grid.Column="1">
+						<TextBlock Text="{Binding Telegram}"/>
 					</Button>
 					<TextBox
 						IsVisible="{Binding IsEditable}"
