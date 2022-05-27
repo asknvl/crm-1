@@ -1,13 +1,12 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 
-namespace crm.Views.dialogs
+namespace crm.Views.popups
 {
-    public partial class rolesDlg : Window
+    public partial class botomPopup : Window
     {
-        public rolesDlg()
+        public botomPopup()
         {
             InitializeComponent();
 #if DEBUG
@@ -18,12 +17,6 @@ namespace crm.Views.dialogs
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                Close();
         }
     }
 }

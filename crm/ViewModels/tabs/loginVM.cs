@@ -121,6 +121,12 @@ namespace crm.ViewModels.tabs
         public event Action onCreateUserAction;
         public event Action onForgotPasswordAction;
 
+        public override void Show()
+        {
+            Clear();
+            base.Show(); 
+        }
+
         public override void Clear()
         {
             needValidate = false;

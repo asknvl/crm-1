@@ -235,6 +235,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             Selection.SingleSelect = false;
 
             init(user);
+
+            openTelegram = ReactiveCommand.Create(() => {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = $"tg://resolve?domain={Telegram}",
+                    UseShellExecute = true
+                });
+            });
         }
 
         #region helpers

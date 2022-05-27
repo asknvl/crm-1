@@ -26,5 +26,15 @@ namespace crm.ViewModels.tabs
             Title = screen.Title;
             Screen = screen;
         }
+
+        public override void Show()
+        {
+            base.Show();
+        }
+
+        public override void Close()
+        {
+            base.Close();
+        }
     }
 }

@@ -64,8 +64,8 @@ namespace crm.Models.api.socket
 
         public virtual void RequestConnectedUsers()
         {
-            if (!isConnected)
-                throw new SocketApiException("Соединение с сервером не установлено (sock)");
+            //if (!isConnected)
+            //    throw new SocketApiException("Соединение с сервером не установлено (sock)");
 
             client.EmitAsync("get-connected-users");
         }

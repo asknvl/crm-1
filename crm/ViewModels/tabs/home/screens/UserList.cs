@@ -32,10 +32,6 @@ namespace crm.ViewModels.tabs.home.screens
         string token;
         #endregion
 
-        #region commands
-        public ReactiveCommand<Unit, Unit> addUserCmd { get; }
-        #endregion
-
         #region properties       
         public override string Title => "Список сотрудников";
 
@@ -44,6 +40,19 @@ namespace crm.ViewModels.tabs.home.screens
         {
             get => users;
             set => this.RaiseAndSetIfChanged(ref users, value);
+        }
+
+        bool isAllChecked;
+        public bool IsAllChecked
+        {
+            get => isAllChecked;
+            set
+            {
+                foreach (var item in Users)
+                    item.IsChecked = value;
+
+                this.RaiseAndSetIfChanged(ref isAllChecked, value);
+            }
         }
 
         int page = 1;
@@ -99,14 +108,17 @@ namespace crm.ViewModels.tabs.home.screens
         }
         #endregion
 
-        #region commands
-        ReactiveCommand<Unit, Unit> editUserCmd { get; }
-        ReactiveCommand<Unit, Unit> showTagsCmd { get; }
-        ReactiveCommand<Unit, Unit> showPaspCmd { get; }
-        ReactiveCommand<Unit, Unit> nextPageCmd { get; }
-        ReactiveCommand<Unit, Unit> prevPageCmd { get; }
-
+        #region commands        
+        public ReactiveCommand<Unit, Unit> addUserCmd { get; }
+        public ReactiveCommand<Unit, Unit> nextPageCmd { get; }
+        public ReactiveCommand<Unit, Unit> prevPageCmd { get; }
         #endregion
+
+        public UserList() : base(new ApplicationContext())
+        {
+            Users = new();
+            Users.Add(new UserItemTest(new ApplicationContext()));
+        }
 
         public UserList(ApplicationContext context) : base(context)
         {
@@ -120,18 +132,6 @@ namespace crm.ViewModels.tabs.home.screens
             addUserCmd = ReactiveCommand.Create(() =>
             {
                 ws.ShowDialog(new rolesDlgVM(AppContext));
-            });
-
-            editUserCmd = ReactiveCommand.Create(() =>
-            {
-            });
-
-            showTagsCmd = ReactiveCommand.Create(() =>
-            {
-            });
-
-            showPaspCmd = ReactiveCommand.Create(() =>
-            {
             });
 
             prevPageCmd = ReactiveCommand.CreateFromTask(async () =>
@@ -172,6 +172,7 @@ namespace crm.ViewModels.tabs.home.screens
         async Task updatePageInfo(int page, int pagesize)
         {
 #if OFFLINE
+            Users.Clear();
             Users.Add(new UserItemTest(AppContext) { FullName = "Иванов Иван Иванович" });
             Users.Add(new UserItemTest(AppContext) { FullName = "Петров Петр Петрович" });
 #elif ONLINE

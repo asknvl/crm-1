@@ -30,7 +30,8 @@ namespace crm.Views.dialogs
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            Close();
+            if (e.Key == Key.Escape)
+                Close();
         }
 
     }

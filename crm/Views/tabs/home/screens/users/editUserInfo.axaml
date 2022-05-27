@@ -19,7 +19,12 @@
 		HorizontalScrollBarVisibility="Hidden">
 		<Grid
 			RowDefinitions="Auto, *"
-			ColumnDefinitions="620, 400">
+			ColumnDefinitions="600, 400">
+			<Grid.Styles>
+				<Style Selector="Grid TextBox">
+					<Setter Property="Padding" Value="0"/>
+				</Style>				
+			</Grid.Styles>
 			<TextBlock
 				Text="Основная информация"
 				Grid.Row="0"
@@ -93,7 +98,7 @@
 						Grid.Column="0">
 						Соц. сети
 					</TextBlock>
-					<TextBox
+					<TextBox						
 						Text="{Binding SocialNetworks[0].Address}"
 						Grid.Column="1"/>
 				</Grid>
@@ -107,16 +112,20 @@
 						Телеграм
 					</TextBlock>
 					<Button
-						IsVisible="False"
-						Background="Yellow"
+						IsVisible="{Binding !IsEditable}"						
 						Command="{Binding openTelegram}"
-						HorizontalAlignment="Left"
-						Classes="Button HyperLink"
-						Grid.Column="1"
-						Content="{Binding Telegram}">
+						HorizontalAlignment="Left"						
+						Classes="Button HyperLink"						
+						HorizontalContentAlignment="Left"
+						Grid.Column="1">
+						<TextBox
+							Text="{Binding Telegram}"
+							Padding="0"							
+							IsEnabled="False">							
+						</TextBox>
 					</Button>
 					<TextBox
-						IsVisible="True"
+						IsVisible="{Binding IsEditable}"						
 						Text="{Binding Telegram}"
 						Grid.Column="1"/>
 				</Grid>
@@ -140,7 +149,7 @@
 					<TextBlock
 						Classes="TextBlock Param"
 						VerticalAlignment="Top"
-						Grid.Column="0"
+						Grid.Column="0"						
 						Margin="0, 10, 0, 0">
 						Тэги
 					</TextBlock>
@@ -153,7 +162,7 @@
 						HorizontalAlignment="Left"
 						SelectionMode="Multiple, Toggle"
 						Background="#FFFFFFFF"
-						Margin="2, 12, 0, 0">
+						Margin="0, 12, 0, 0">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
 								<WrapPanel MinWidth="410"

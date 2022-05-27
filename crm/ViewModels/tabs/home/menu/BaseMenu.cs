@@ -41,10 +41,6 @@ namespace crm.ViewModels.tabs.home.menu
         }
         #endregion
 
-        #region commands
-        public ReactiveCommand<Unit, Unit> collapseCmd { get; }
-        #endregion
-
         #region protected
         protected void Menu_ExpandedEvent(bool expanded)
         {

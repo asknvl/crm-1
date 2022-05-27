@@ -47,21 +47,21 @@ namespace crm.ViewModels.tabs
         {
             return !fields.Any(p => p == false);
         }
-        protected virtual void CloseRequest()
-        {
-            TabClosedEvent?.Invoke(this);
-        }
+        //protected virtual void CloseRequest()
+        //{
+        //    TabClosedEvent?.Invoke(this);
+        //}
         #endregion
 
         #region public                
         public virtual void Show()
         {            
-            tabService.ShowTab(this);
+            tabService.ShowTab(this);            
         }
 
         public virtual void Close()
         {   
-            tabService.CloseTab(this);
+            tabService.CloseTab(this);            
         }
         #endregion
 
@@ -69,8 +69,5 @@ namespace crm.ViewModels.tabs
         public virtual void Clear() { }
         #endregion
 
-        #region callbacks
-        public event Action<Tab> TabClosedEvent;        
-        #endregion
     }
 }

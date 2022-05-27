@@ -63,6 +63,13 @@ namespace crm.ViewModels
                 this.RaisePropertyChanged("IsProfileMenuOpen");
             }
         }
+
+        bool isStripVisible;
+        public bool IsStripVisible
+        {
+            get => isStripVisible;
+            set => this.RaiseAndSetIfChanged(ref isStripVisible, value);
+        }
         #endregion
 
         #region commands
@@ -125,20 +132,19 @@ namespace crm.ViewModels
             });
 
             quitCmd = ReactiveCommand.Create(() =>
-            {
-                //разлогин для юзера OnDeactivate для всех экранов
-                //for (int i = 0; i < TabsList.Count; i++)
-                //    TabsList[i].Close();
+            {                
                 int index = TabsList.Count;
                 while (index > 0)
                 {
                     index = TabsList.Count - 1;
                     TabsList[index].Close();
                 }
-
                 loginTab.Show();
+                IsUserMenuVisible = false;
                 IsProfileMenuOpen = false;
             });
+
+            TabShownEvent += MainVM_TabShownEvent;
             #endregion
 
             #region registrationTab
@@ -146,7 +152,7 @@ namespace crm.ViewModels
             registrationTab.onUserRegistered += () =>
             {
                 registrationTab.Close();
-                loginTab.Clear();
+                //loginTab.Clear();
                 loginTab.Show();
             };
             #endregion
@@ -165,11 +171,12 @@ namespace crm.ViewModels
 #endif
 
                 homeVM homeTab = new homeVM(this, AppContext);
-                homeTab.TabClosedEvent += (tab) =>
-                {
-                    loginTab.Password = "";
-                    loginTab.Show();
-                };
+                homeTab.Menu.MenuExpandedEvent += Menu_MenuExpandedEvent;
+                //homeTab.TabClosedEvent += (tab) =>
+                //{
+                //    loginTab.Password = "";
+                //    loginTab.Show();
+                //};
                 loginTab.Close();
                 homeTab.Show();
             };
@@ -197,6 +204,17 @@ namespace crm.ViewModels
             loginTab.Show();
         }
 
+        #region callbacks
+        private void MainVM_TabShownEvent(Tab tab)
+        {
+            IsStripVisible = tab is homeVM;
+        }
+        private void Menu_MenuExpandedEvent(bool expanded)
+        {            
+            IsStripVisible = expanded;
+        }
+        #endregion
+
         #region tabservice
         public ObservableCollection<Tab> TabsList { get; set; } = new ObservableCollection<Tab>();
 
@@ -204,7 +222,11 @@ namespace crm.ViewModels
         public object? Content
         {
             get => content;
-            set => this.RaiseAndSetIfChanged(ref content, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref content, value);
+                TabShownEvent?.Invoke((Tab)content);
+            }
         }
 
         int itemwidth;
@@ -218,25 +240,27 @@ namespace crm.ViewModels
         {
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
 
-            //if (fTab == null)
-            //{
-            //    if (tab is homeVM)
-            //    {
+            if (fTab == null)
+            {
+                if (tab is homeVM)
+                {
 
-            //        TabsList.Insert(0, tab);
-            //    } else
-            //        TabsList.Add(tab);
+                    TabsList.Insert(0, tab);
+                }
+                else
+                    TabsList.Add(tab);
 
-            //    Content = tab;
-            //} else
-            //    Content = fTab;
-
-            if (tab is homeVM)
-                TabsList.Insert(0, tab);
+                Content = tab;                
+            }
             else
-                TabsList.Add(tab);
+                Content = fTab;            
 
-            Content = tab;
+            //if (tab is homeVM)
+            //    TabsList.Insert(0, tab);
+            //else
+            //    TabsList.Add(tab);
+
+            //Content = tab;
 
         }
 
@@ -245,8 +269,7 @@ namespace crm.ViewModels
             var fTab = TabsList.FirstOrDefault(t => t.Title.Equals(tab.Title));
             if (fTab == null)
             {
-                tab.TabClosedEvent += CloseTab;
-
+                //tab.TabClosedEvent += CloseTab;                
                 TabsList.Add(tab);
             }
         }
@@ -258,10 +281,12 @@ namespace crm.ViewModels
             {
                 var prev = TabsList[index - 1];
                 if (prev != null)
-                    ShowTab(prev);
+                    prev.Show();
             }
             TabsList.Remove(tab);
         }
+
+        public event Action<Tab> TabShownEvent;
         #endregion
 
     }

@@ -16,13 +16,28 @@
 		<StyleInclude Source="/Styles/ScreenStyle.axaml"/>
 		<StyleInclude Source="/Styles/UserListStyle.axaml"/>
 	</Window.Styles>
-	<Grid>
-		<ListBox			
+	<Grid
+		RowDefinitions="Auto, *">
+		<Grid
+			Height="50"
+			Background="#FFF2F2F2"
+			Grid.Row="0">
+			<TextBlock
+				VerticalAlignment="Center"
+				FontSize="14"
+				FontWeight="Bold"
+				Foreground="#FF000000"
+				Margin="50, 0, 0, 0">
+				Роли пользователя
+			</TextBlock>
+		</Grid>
+		<ListBox				
+			Grid.Row="1"
 			IsEnabled="False"
 			Items="{Binding Tags}"
 			SelectedItems="{Binding SelectedTags}"
 			VirtualizationMode="None"
-			SelectionMode="Multiple, Toggle"
+			SelectionMode="Multiple, Toggle"			
 			Background="White">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>

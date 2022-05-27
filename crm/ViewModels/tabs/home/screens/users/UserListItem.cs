@@ -5,6 +5,7 @@ using crm.WS;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Text;
@@ -19,6 +20,13 @@ namespace crm.ViewModels.tabs.home.screens.users
         #endregion
 
         #region properties        
+        bool isChecked;
+        public bool IsChecked
+        {
+            get => isChecked;
+            set => this.RaiseAndSetIfChanged(ref isChecked, value);
+        }
+
         bool status;
         public bool Status
         {
@@ -33,6 +41,7 @@ namespace crm.ViewModels.tabs.home.screens.users
         #region commands
         public ReactiveCommand<Unit, Unit> showTagsCmd { get; }
         public ReactiveCommand<Unit, Unit> editUserCmd { get; }
+        public ReactiveCommand<Unit, Unit> openTelegram { get; set; }
         #endregion
 
         public UserListItem(ApplicationContext appcontext)
@@ -46,6 +55,14 @@ namespace crm.ViewModels.tabs.home.screens.users
             editUserCmd = ReactiveCommand.Create(() => {
                 ScreenTab editTab = new ScreenTab(appcontext.TabService, new UserEdit(appcontext, this));
                 editTab.Show();
+            });
+
+            openTelegram = ReactiveCommand.Create(() => {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = $"tg://resolve?domain={Telegram}",
+                    UseShellExecute = true
+                });
             });
             #endregion
         }

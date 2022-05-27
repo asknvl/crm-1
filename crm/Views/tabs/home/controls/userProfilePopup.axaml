@@ -22,8 +22,8 @@
 				<Grid ColumnDefinitions="20, *">
 					<!--<material:MaterialIconExt Kind="Person" Size="20"/>-->
 					<Svg
-						Height="18"
-						Width="18"
+						Height="20"
+						Width="20"
 						Path="/Assets/svgs/topmenu/profile.svg">						
 					</Svg>
 					<TextBlock
@@ -38,8 +38,8 @@
 				<Grid ColumnDefinitions="20, *">
 					<!--<material:MaterialIconExt Kind="SettingsVertical" Size="20"/>-->
 					<Svg
-						Height="18"
-						Width="18"
+						Height="20"
+						Width="20"
 						Path="/Assets/svgs/topmenu/settings.svg">						
 					</Svg>
 					<TextBlock
@@ -55,8 +55,8 @@
 				<Grid ColumnDefinitions="20, *">
 					<!--<material:MaterialIconExt Kind="ExitToApp" Size="20"/>-->
 					<Svg
-						Height="18"
-						Width="18"
+						Height="20"
+						Width="20"
 						Path="/Assets/svgs/topmenu/quit.svg">
 					</Svg>
 					<TextBlock

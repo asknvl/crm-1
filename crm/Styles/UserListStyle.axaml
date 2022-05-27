@@ -38,19 +38,23 @@
 	<Style Selector="Button">
 		<Setter Property="FontSize" Value="12"/>
 	</Style>
-	<Style Selector="Button.List">
-		<Style.Resources>
-			<Color x:Key="ButtonBackgroundPressed">#FFFFFFFF</Color>
-			<Color x:Key="ButtonBackgroundPointerOver">#FFF5F5F5</Color>
-			<Color x:Key="ButtonBorderBrushPointerOver">#FF464646</Color>
-			<Color x:Key="ButtonBorderBrushPressed">#FF464646</Color>
-		</Style.Resources>
+	<Style Selector="Button.List">		
 		<Setter Property="Background" Value="#FFFFFFFF"/>
 		<Setter Property="BorderBrush" Value="#FF464646"/>		
 		<Setter Property="CornerRadius" Value="15"/>
 		<Setter Property="Margin" Value="0"/>
 		<Setter Property="Height" Value="20"/>
-		<Setter Property="Padding" Value="10, 0, 10, 0"/>
+		<Setter Property="Padding" Value="10, 0, 10, 0"/>		
+	</Style>
+
+	<Style Selector="Button.List:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFF5F5F5"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>
+		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
+	</Style>
+	<Style Selector="Button.List:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#FFFFFFFF"/>
+		<Setter Property="BorderBrush" Value="#FF464646"/>		
 	</Style>
 
 	<Style Selector="Button.Dialog">
@@ -74,8 +78,6 @@
 		<Setter Property="BorderBrush" Value="#FFC4C4C4"/>
 		<Setter Property="TextBlock.Foreground" Value="#FFC4C4C4"/>
 	</Style>
-
-
 
 	<Style Selector="Button.Hyper">
 		<Setter Property="Background" Value="Transparent"/>
@@ -117,12 +119,5 @@
 		<Setter Property="Path" Value="/Assets/svgs/screens/passport_on.svg"/>		
 	</Style>
 	
-	<!--Grid-->
-	<Style Selector="Grid.Highlight">
-		<Setter Property="Background" Value="Transparent"/>
-	</Style>
-	<Style Selector="Grid.Highlight:pointerover">
-		<Setter Property="Background" Value="#FFF5F5F5"/>
-	</Style>
-	
+	<!--Grid-->	
 </Styles>

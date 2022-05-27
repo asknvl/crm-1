@@ -15,7 +15,8 @@
 		ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
 		WindowState="{Binding WindowState}"
-        ExtendClientAreaTitleBarHeightHint="-1">
+        ExtendClientAreaTitleBarHeightHint="-1"
+		Name="mainWindow">
 
     <Design.DataContext>
         <vm:mainVM/>
@@ -32,8 +33,9 @@
 			<Setter Property="FontFamily" Value="/Assets/fonts/Inter/Inter.ttf#Inter"/>			
 		</Style>
 		<Style Selector="Button /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="TextBlock.FontFamily" Value="/Assets/fonts/Inter/Inter.ttf#Inter"/>
+			<Setter Property="TextBlock.FontFamily" Value="/Assets/fonts/Inter/Inter.ttf#Inter"/>			
 		</Style>
+		
 		
 		<Style Selector="Button.Semaphore">
 			<Setter Property="CornerRadius" Value="50"/>			
@@ -84,8 +86,6 @@
 		<Style Selector="Grid#DOTS:not(:pointerover) Button#b3 Svg">
 			<Setter Property="Path" Value="/Assets/svgs/window/empty.svg"/>
 		</Style>
-
-
 
 		<Style Selector="Button.ArrowDown">
 			<Setter Property="Foreground" Value="{DynamicResource  HomeTabSecondaryTextForeground}"/>
@@ -200,11 +200,12 @@
 						</Style>
 						<Style Selector="ListBoxItem">						
 							<Setter Property="TextBlock.Foreground" Value="{DynamicResource TopPanelControlForeground}"/>						
+							<Setter Property="Padding" Value="15, 0, 15, 0"/>
 						</Style>
 					</ListBox.Styles>
 					<ListBox.DataTemplates>
 						<DataTemplate DataType="{x:Type tabvms:loginVM}">
-							<tabview:TextTabHeader/>
+							<tabview:TextTabHeaderNoClose/>
 						</DataTemplate>
 						<DataTemplate DataType="{x:Type tabvms:tokenVM}">
 							<tabview:TextTabHeader/>
@@ -251,12 +252,12 @@
 				Height="50"
 				IsVisible="{Binding IsUserMenuVisible}"
 				Background="{DynamicResource TopPanelActiveColor}"
-				ColumnDefinitions="230, *, Auto">
+				ColumnDefinitions="276, *, Auto">
 					<Grid
 						Grid.Column="0"
 						ColumnDefinitions="5*, 1*"
 						Background="{DynamicResource HomeTabPrimaryHeaderBackground}"
-						Margin="0, 0, 1, 0">
+						>
 						<StackPanel
 							Grid.Column="0"
 							Margin="30, 0, 0, 0"
@@ -278,6 +279,10 @@
 								FontSize="12">
 							</TextBlock>
 						</StackPanel>
+						<Separator
+							IsVisible="{Binding IsStripVisible}"
+							BorderBrush="{DynamicResource TopPanelActiveColor}"
+							BorderThickness="0, 0, 1, 0"/>
 					</Grid>
 				<Grid
 					Grid.Column="1"
@@ -287,18 +292,15 @@
 					Grid.Column="2"
 					Name="profileGrid"
 					Background="{DynamicResource HomeTabPrimaryHeaderBackground}"
-					Width="160">
+					Width="200">
 					<Grid
-						HorizontalAlignment="Right"						
-						ColumnDefinitions="40, 80, 40">
-						<ToggleButton
-							Grid.Column="0"
+						HorizontalAlignment="Right">
+						<ToggleButton							
 							Height="50"
 							Width="50"
 							CornerRadius="0"
-							BorderThickness="0"							
-							HorizontalAlignment="Right"
-							Margin="0">
+							BorderThickness="0"		
+							Margin="-140, 0, 0, 0">
 							<Svg
 								Height="15"
 								Width="15"
@@ -320,8 +322,7 @@
 							</ToggleButton.Styles>
 						</ToggleButton>
 						<controls:InitialLetter
-							Grid.Column="1"
-							HorizontalAlignment="Right">
+							Margin="-130, 0, 0, 0">
 							<controls:InitialLetter.Styles>
 								<Style Selector="TextBlock">
 									<Setter Property="Text" Value="{Binding User.FullName[0]}"/>
@@ -329,8 +330,11 @@
 							</controls:InitialLetter.Styles>
 						</controls:InitialLetter>
 						<Button
+							Background="Yellow"
 							Grid.Column="2"
 							Command="{Binding profileMenuOpenCmd}"
+							HorizontalAlignment="Right"
+							Margin="-80, 0, 0, 0"
 							Classes="Button ArrowDown">							
 							<Grid								
 								Grid.Column="2">
@@ -342,7 +346,7 @@
 									WindowManagerAddShadowHint="False"
 									StaysOpen="False"
 									VerticalOffset="7"
-									HorizontalOffset="-48"
+									HorizontalOffset="-7"
 									PlacementTarget="{Binding ElementName=profileGrid}">
 									<controls:userProfilePopup/>
 								</Popup>
@@ -382,5 +386,57 @@
 		</Grid>
 		<Grid Name="OverlayGrid" Background="Gray" Opacity="0.7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">			
 		</Grid>
+
+		<!--<Grid Name="Popup"			  			  			  
+			  IsVisible="{Binding #popup.IsChecked}"
+			  VerticalAlignment="Bottom"
+			  Margin="0, 0, 0, 50"
+			  HorizontalAlignment="Center">
+			<Border
+				Background="#FF2C2C2C"
+				CornerRadius="5"
+				Padding="10">
+				<TextBlock
+					Text="PopupText"
+					Foreground="White"
+					FontSize="12">					
+				</TextBlock>
+			</Border>
+			<Grid.Styles>
+				
+				<Style Selector="Grid[IsVisible=True]">					
+					<Style.Animations>
+						<Animation Duration="0:0:1">
+							<KeyFrame Cue="0%">
+								<Setter Property="Opacity" Value="0.0"/>
+							</KeyFrame>
+							<KeyFrame Cue="100%">
+								<Setter Property="Opacity" Value="1.0"/>
+							</KeyFrame>
+						</Animation>
+					</Style.Animations>
+				</Style>
+				<Style Selector="Grid[IsVisible=False]">
+					<Style.Animations>
+						<Animation Duration="0:0:1">
+							<KeyFrame Cue="0%">
+								<Setter Property="Opacity" Value="1.0"/>
+							</KeyFrame>
+							<KeyFrame Cue="100%">
+								<Setter Property="Opacity" Value="0.0"/>
+							</KeyFrame>
+						</Animation>
+					</Style.Animations>
+				</Style>				
+			</Grid.Styles>
+		</Grid>
+
+
+
+		<ToggleButton
+			Name="popup">
+			123
+		</ToggleButton>-->
+		
 	</Grid>
 </Window>
